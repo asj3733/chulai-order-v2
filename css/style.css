@@ -166,3 +166,41 @@ body{
 .quick-links a:active{
     transform:scale(.97);
 }
+/* ===== 公告 ===== */
+
+.notice{
+
+    margin:35px auto;
+
+    width:90%;
+    max-width:700px;
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:20px;
+
+    box-shadow:0 6px 18px rgba(0,0,0,.12);
+
+}
+
+.notice h2{
+
+    color:#D4AF37;
+
+    margin-bottom:15px;
+
+    font-size:24px;
+
+}
+
+#notice{
+
+    font-size:17px;
+
+    color:#555;
+
+    line-height:1.7;
+
+}
