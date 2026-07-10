@@ -1,49 +1,141 @@
-body{
+/* ===== 基本設定 ===== */
+
+*{
     margin:0;
-    font-family:Arial,sans-serif;
-    background:#f5f5f5;
+    padding:0;
+    box-sizing:border-box;
 }
+
+body{
+    font-family:Arial, sans-serif;
+    background:#f4f4f4;
+    color:#333;
+}
+
+/* ===== 首頁 ===== */
 
 .hero{
-    background:#2F2F2F;
-    color:white;
+
+    min-height:100vh;
+
+    background:linear-gradient(135deg,#2F2F2F,#454545);
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
     text-align:center;
-    padding:40px 20px;
+
+    padding:30px;
+
 }
+
+/* Logo */
 
 .logo{
-    width:140px;
+
+    width:170px;
+
     border-radius:20px;
-    margin-bottom:20px;
+
+    margin-bottom:25px;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.35);
+
 }
+
+/* 店名 */
 
 .hero h1{
+
     color:#D4AF37;
-    margin:0;
-    font-size:34px;
+
+    font-size:38px;
+
+    letter-spacing:3px;
+
+    margin-bottom:10px;
+
 }
 
-.hero p{
-    color:#ddd;
-    margin:12px 0 25px;
+/* 標語 */
+
+.slogan{
+
+    color:#eeeeee;
+
+    font-size:18px;
+
+    margin-bottom:30px;
+
 }
+
+/* 營業狀態 */
 
 .status{
-    display:inline-block;
+
     background:#28a745;
+
     color:white;
-    padding:8px 18px;
+
+    padding:10px 24px;
+
     border-radius:30px;
-    margin-bottom:25px;
+
+    font-size:18px;
+
+    margin-bottom:15px;
+
 }
 
+/* 等待時間 */
+
+.wait{
+
+    color:#FFD966;
+
+    font-size:18px;
+
+    margin-bottom:35px;
+
+}
+
+/* 點餐按鈕 */
+
 .order-btn{
+
     display:inline-block;
+
     background:#D4AF37;
-    color:#222;
-    padding:16px 34px;
+
+    color:#2F2F2F;
+
     text-decoration:none;
-    border-radius:12px;
-    font-size:20px;
+
+    font-size:22px;
+
     font-weight:bold;
+
+    padding:18px 45px;
+
+    border-radius:15px;
+
+    transition:.25s;
+
+}
+
+.order-btn:hover{
+
+    transform:scale(1.05);
+
+}
+
+.order-btn:active{
+
+    transform:scale(.95);
+
 }
