@@ -253,3 +253,50 @@ body{
     transform:scale(.92);
 
 }
+/* ===== 今日推薦 ===== */
+
+.today-special{
+    width:90%;
+    max-width:700px;
+    margin:30px auto;
+}
+
+.today-special h2{
+    color:#D4AF37;
+    margin-bottom:15px;
+}
+
+.special-card{
+    background:white;
+    border-radius:18px;
+    padding:25px;
+    text-align:center;
+    box-shadow:0 8px 20px rgba(0,0,0,.12);
+}
+
+.special-card h3{
+    margin:10px 0;
+    font-size:26px;
+}
+
+.special-card p{
+    color:#666;
+    line-height:1.6;
+}
+
+.price{
+    font-size:34px;
+    color:#D4AF37;
+    font-weight:bold;
+    margin:20px 0;
+}
+
+.special-btn{
+    display:inline-block;
+    background:#D4AF37;
+    color:#222;
+    text-decoration:none;
+    padding:14px 28px;
+    border-radius:12px;
+    font-weight:bold;
+}
