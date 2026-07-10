@@ -169,8 +169,7 @@ body{
 /* ===== 公告 ===== */
 
 .notice{
-
-    margin:35px auto;
+    margin:25px auto 50px;
 
     width:90%;
     max-width:700px;
@@ -258,21 +257,30 @@ body{
 .today-special{
     width:90%;
     max-width:700px;
-    margin:30px auto;
+    margin:45px auto 25px;
 }
 
 .today-special h2{
     color:#D4AF37;
-    margin-bottom:15px;
+    font-size:26px;
+    margin-bottom:18px;
+    text-align:center;
 }
 
 .special-card{
-    background:#ffffff;
-    border:2px solid #D4AF37;
-    border-radius:18px;
-    padding:25px;
+
+    background:linear-gradient(135deg,#ffffff,#f8f8f8);
+
+    border:3px solid #D4AF37;
+
+    border-radius:20px;
+
+    padding:28px;
+
     text-align:center;
-    box-shadow:0 8px 20px rgba(0,0,0,.12);
+
+    box-shadow:0 10px 25px rgba(0,0,0,.18);
+
 }
 
 .special-card h3{
@@ -294,11 +302,31 @@ body{
 }
 
 .special-btn{
+
     display:inline-block;
+
+    margin-top:15px;
+
     background:#D4AF37;
-    color:#222;
+
+    color:#2f2f2f;
+
     text-decoration:none;
-    padding:14px 28px;
+
+    padding:16px 40px;
+
     border-radius:12px;
+
+    font-size:18px;
+
     font-weight:bold;
+
+    transition:.25s;
+
+}
+
+.special-btn:hover{
+
+    transform:scale(1.05);
+
 }
