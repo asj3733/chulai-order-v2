@@ -139,3 +139,30 @@ body{
     transform:scale(.95);
 
 }
+/* ===== 快捷按鈕 ===== */
+
+.quick-links{
+    margin-top:35px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    width:100%;
+    max-width:320px;
+}
+
+.quick-links a{
+    display:block;
+    text-align:center;
+    background:white;
+    color:#333;
+    text-decoration:none;
+    padding:15px;
+    border-radius:12px;
+    font-weight:bold;
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
+    transition:.2s;
+}
+
+.quick-links a:active{
+    transform:scale(.97);
+}
