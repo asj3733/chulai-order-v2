@@ -204,3 +204,52 @@ body{
     line-height:1.7;
 
 }
+/* ===== LINE 浮動按鈕 ===== */
+
+.line-float{
+
+    position:fixed;
+
+    right:20px;
+
+    bottom:25px;
+
+    width:65px;
+
+    height:65px;
+
+    background:#06C755;
+
+    color:white;
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-decoration:none;
+
+    font-size:32px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+
+    z-index:9999;
+
+    transition:.25s;
+
+}
+
+.line-float:hover{
+
+    transform:scale(1.08);
+
+}
+
+.line-float:active{
+
+    transform:scale(.92);
+
+}
