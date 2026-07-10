@@ -267,7 +267,8 @@ body{
 }
 
 .special-card{
-    background:white;
+    background:#ffffff;
+    border:2px solid #D4AF37;
     border-radius:18px;
     padding:25px;
     text-align:center;
@@ -275,18 +276,19 @@ body{
 }
 
 .special-card h3{
+    color:#333;
+    font-size:28px;
     margin:10px 0;
-    font-size:26px;
 }
 
 .special-card p{
     color:#666;
-    line-height:1.6;
+    line-height:1.8;
 }
 
 .price{
-    font-size:34px;
     color:#D4AF37;
+    font-size:36px;
     font-weight:bold;
     margin:20px 0;
 }
