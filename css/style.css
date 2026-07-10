@@ -139,16 +139,3 @@ body{
     transform:scale(.95);
 
 }
-/* ===== 店面照片 ===== */
-
-.store{
-    background:#ffffff;
-    padding:20px;
-}
-
-.store img{
-    width:100%;
-    border-radius:18px;
-    display:block;
-    box-shadow:0 6px 18px rgba(0,0,0,.15);
-}
