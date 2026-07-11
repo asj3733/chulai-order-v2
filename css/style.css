@@ -418,3 +418,78 @@ body{
     margin:8px 0;
     font-size:15px;
 }
+/* ===== 點餐頁 ===== */
+
+.page-header{
+
+    background:#2F2F2F;
+
+    color:white;
+
+    text-align:center;
+
+    padding:30px;
+
+}
+
+.page-header h1{
+
+    color:#D4AF37;
+
+    margin-bottom:10px;
+
+}
+
+.order-page{
+
+    width:90%;
+
+    max-width:700px;
+
+    margin:30px auto;
+
+}
+
+.order-page h2{
+
+    color:#D4AF37;
+
+    margin-bottom:20px;
+
+}
+
+.menu-item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    background:white;
+
+    padding:18px;
+
+    border-radius:15px;
+
+    margin-bottom:15px;
+
+    box-shadow:0 4px 12px rgba(0,0,0,.1);
+
+}
+
+.menu-item button{
+
+    background:#D4AF37;
+
+    color:#222;
+
+    border:none;
+
+    padding:12px 20px;
+
+    border-radius:10px;
+
+    font-weight:bold;
+
+}
