@@ -399,3 +399,22 @@ body{
     font-weight:bold;
     margin:18px 0 20px;
 }
+/* ===== 頁尾 ===== */
+
+.footer{
+    margin-top:60px;
+    padding:40px 20px;
+    background:#2F2F2F;
+    color:#ddd;
+    text-align:center;
+}
+
+.footer h3{
+    color:#D4AF37;
+    margin-bottom:15px;
+}
+
+.footer p{
+    margin:8px 0;
+    font-size:15px;
+}
