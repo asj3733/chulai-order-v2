@@ -45,21 +45,26 @@
    <div id="menu"></div>
 
 <!-- 浮動購物車 -->
-<div id="floating-cart">
+<div id="floating-cart" class="floating-cart">
 
-    <span id="cart-count">
-        🛒 0 項
-    </span>
+    <div class="cart-left">
+        <div class="cart-count">
+            🛒 <span id="cart-count">0</span> 項
+        </div>
 
-    <span id="total">
-        NT$0
-    </span>
+        <div class="cart-total">
+            NT$ <span id="total">0</span>
+        </div>
+    </div>
 
-    <button id="checkoutBtn">
+    <button id="checkout-btn">
         前往結帳 →
     </button>
 
 </div>
+
+<!-- 原本購物車 -->
+<div id="cart" style="display:none;"></div>
 
 
 </main>
