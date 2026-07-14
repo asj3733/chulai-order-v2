@@ -1,47 +1,13 @@
 const menuArea = document.getElementById("menu");
 let cart = [];
 
-function renderMenu(category = "麵類") {
+function renderMenu() {
 
     let html = "";
 
-    html += `<h2>${category}</h2>`;
+    for (const category in menu) {
 
-    menu[category].forEach(item => {
-
-        html += `
-        <div class="menu-item">
-
-            <div>
-                <h3>${item.name}</h3>
-                <p>NT$${item.price}</p>
-            </div>
-
-            <button onclick="addCart('${item.name}',${item.price})">
-                加入
-            </button>
-
-        </div>
-        `;
-
-    });
-
-    menuArea.innerHTML = html;
-
-}
-function changeCategory(category, btn){
-
-    renderMenu(category);
-
-    document.querySelectorAll(".category-btn").forEach(item=>{
-        item.classList.remove("active");
-    });
-
-    btn.classList.add("active");
-
-}
-
-html += `<h2 id="${categoryId[category]}">${category}</h2>`;
+        html += `<h2>${category}</h2>`;
 
         menu[category].forEach(item => {
 
@@ -50,7 +16,7 @@ html += `<h2 id="${categoryId[category]}">${category}</h2>`;
 
                 <div>
                     <h3>${item.name}</h3>
-                    <p>$${item.price}</p>
+                    <p>NT$${item.price}</p>
                 </div>
 
                 <button onclick="addCart('${item.name}',${item.price})">
@@ -102,8 +68,8 @@ function updateCart() {
         <p>
             ${item.name}
             × ${item.qty}
-           　
-            $${item.price * item.qty}
+            　
+            NT$${item.price * item.qty}
         </p>
         `;
 
@@ -119,11 +85,11 @@ function updateCart() {
     document.getElementById("cart").innerHTML = html;
     document.getElementById("total").textContent = total;
 
-    const cartCount=document.getElementById("cart-count");
+    const cartCount = document.getElementById("cart-count");
     if(cartCount){
-        cartCount.textContent=totalQty;
+        cartCount.textContent = totalQty;
     }
 
 }
 
-renderMenu("麵類");
+renderMenu();
