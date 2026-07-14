@@ -65,6 +65,12 @@ function updateCart() {
     document.getElementById("cart").innerHTML = html;
     document.getElementById("total").textContent = total;
 
+    // 更新左下角購物車數量
+    const cartCount = document.getElementById("cart-count");
+    if(cartCount){
+        cartCount.textContent = cart.length;
+    }
+
 }
 
 renderMenu();
