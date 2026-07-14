@@ -36,10 +36,21 @@ function renderMenu() {
 
 function addCart(name, price) {
 
-    cart.push({
-        name,
-        price
-    });
+    const item = cart.find(p => p.name === name);
+
+    if(item){
+
+        item.qty++;
+
+    }else{
+
+        cart.push({
+            name,
+            price,
+            qty:1
+        });
+
+    }
 
     updateCart();
 
@@ -49,26 +60,34 @@ function updateCart() {
 
     let html = "";
     let total = 0;
+    let totalQty = 0;
 
     cart.forEach(item => {
 
-        html += `<p>${item.name}　$${item.price}</p>`;
+        html += `
+        <p>
+            ${item.name}
+            × ${item.qty}
+           　
+            $${item.price * item.qty}
+        </p>
+        `;
 
-        total += item.price;
+        total += item.price * item.qty;
+        totalQty += item.qty;
 
     });
 
-    if (cart.length === 0) {
-        html = "尚未加入商品";
+    if(cart.length===0){
+        html="尚未加入商品";
     }
 
     document.getElementById("cart").innerHTML = html;
     document.getElementById("total").textContent = total;
 
-    // 更新左下角購物車數量
-    const cartCount = document.getElementById("cart-count");
+    const cartCount=document.getElementById("cart-count");
     if(cartCount){
-        cartCount.textContent = cart.length;
+        cartCount.textContent=totalQty;
     }
 
 }
