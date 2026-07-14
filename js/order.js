@@ -7,7 +7,16 @@ function renderMenu() {
 
     for (const category in menu) {
 
-        html += `<h2>${category}</h2>`;
+       const categoryId = {
+    "麵類":"noodle",
+    "關東煮":"oden",
+    "小菜":"side",
+    "湯品":"soup",
+    "飯類":"rice",
+    "青菜":"veg"
+};
+
+html += `<h2 id="${categoryId[category]}">${category}</h2>`;
 
         menu[category].forEach(item => {
 
