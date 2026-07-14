@@ -15,8 +15,8 @@ function renderMenu() {
             <div class="menu-item">
 
 <div>
-    <strong>${item.name}</strong><br>
-    NT$${item.price} × ${item.qty} = NT$${item.price * item.qty}
+    <h3>${item.name}</h3>
+    <p>NT$${item.price}</p>
 </div>
 
                 <button onclick="addCart('${item.name}',${item.price})">
