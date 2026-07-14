@@ -1,20 +1,45 @@
 const menuArea = document.getElementById("menu");
 let cart = [];
 
-function renderMenu() {
+function renderMenu(category = "麵類") {
 
     let html = "";
 
-    for (const category in menu) {
+    html += `<h2>${category}</h2>`;
 
-       const categoryId = {
-    "麵類":"noodle",
-    "關東煮":"oden",
-    "小菜":"side",
-    "湯品":"soup",
-    "飯類":"rice",
-    "青菜":"veg"
-};
+    menu[category].forEach(item => {
+
+        html += `
+        <div class="menu-item">
+
+            <div>
+                <h3>${item.name}</h3>
+                <p>NT$${item.price}</p>
+            </div>
+
+            <button onclick="addCart('${item.name}',${item.price})">
+                加入
+            </button>
+
+        </div>
+        `;
+
+    });
+
+    menuArea.innerHTML = html;
+
+}
+function changeCategory(category, btn){
+
+    renderMenu(category);
+
+    document.querySelectorAll(".category-btn").forEach(item=>{
+        item.classList.remove("active");
+    });
+
+    btn.classList.add("active");
+
+}
 
 html += `<h2 id="${categoryId[category]}">${category}</h2>`;
 
@@ -101,4 +126,4 @@ function updateCart() {
 
 }
 
-renderMenu();
+renderMenu("麵類");
