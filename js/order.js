@@ -14,10 +14,10 @@ function renderMenu() {
             html += `
             <div class="menu-item">
 
-                <div>
-                    <h3>${item.name}</h3>
-                    <p>NT$${item.price}</p>
-                </div>
+<div>
+    <strong>${item.name}</strong><br>
+    NT$${item.price} × ${item.qty} = NT$${item.price * item.qty}
+</div>
 
                 <button onclick="addCart('${item.name}',${item.price})">
                     加入
@@ -65,12 +65,24 @@ function updateCart() {
     cart.forEach(item => {
 
         html += `
-        <p>
-            ${item.name}
-            × ${item.qty}
-            　
-            NT$${item.price * item.qty}
-        </p>
+        <div class="cart-item">
+
+            <div>
+                <strong>${item.name}</strong><br>
+                NT$${item.price}
+            </div>
+
+            <div class="cart-control">
+
+                <button onclick="changeQty('${item.name}',-1)">－</button>
+
+                <span>${item.qty}</span>
+
+                <button onclick="changeQty('${item.name}',1)">＋</button>
+
+            </div>
+
+        </div>
         `;
 
         total += item.price * item.qty;
@@ -89,6 +101,21 @@ function updateCart() {
     if(cartCount){
         cartCount.textContent = totalQty;
     }
+
+}
+function changeQty(name, change){
+
+    const item = cart.find(p => p.name === name);
+
+    if(!item) return;
+
+    item.qty += change;
+
+    if(item.qty <= 0){
+        cart = cart.filter(p => p.name !== name);
+    }
+
+    updateCart();
 
 }
 
