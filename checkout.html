@@ -21,9 +21,7 @@
 
         <h2>🧾 您的餐點</h2>
 
-        <div id="order-list">
-            載入中...
-        </div>
+        <div id="order-list"></div>
 
     </div>
 
@@ -39,12 +37,24 @@
 
         <label>用餐方式</label>
 
-        <label><input type="radio" name="type" value="外帶" checked> 外帶</label>
-        <label><input type="radio" name="type" value="內用"> 內用</label>
+        <div class="order-type">
+
+            <label>
+                <input type="radio" name="type" value="外帶" checked>
+                🍱 外帶
+            </label>
+
+            <label>
+                <input type="radio" name="type" value="內用">
+                🍜 內用
+            </label>
+
+        </div>
 
         <label>備註</label>
 
-        <textarea id="remark" rows="4" placeholder="例如：不要蔥、加辣、不要香菜"></textarea>
+        <textarea id="remark"
+        placeholder="例如：不要香菜、加辣、不要蔥"></textarea>
 
         <button id="submit-order">
             確認送出訂單
