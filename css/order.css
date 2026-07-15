@@ -135,3 +135,12 @@ body{
     font-size:18px;
     font-weight:bold;
 }
+.delete-btn{
+    background:#ff4d4f;
+    color:#fff;
+    border:none;
+    border-radius:50%;
+    width:32px;
+    height:32px;
+    cursor:pointer;
+}
