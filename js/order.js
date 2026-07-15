@@ -130,3 +130,12 @@ function removeItem(name){
 console.log("新版 order.js 已載入");
 
 renderMenu();
+
+const checkoutBtn = document.getElementById("checkout-btn");
+
+if (checkoutBtn) {
+    checkoutBtn.addEventListener("click", () => {
+        localStorage.setItem("cart", JSON.stringify(cart));
+        window.location.href = "checkout.html";
+    });
+}
