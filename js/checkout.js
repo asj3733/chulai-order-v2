@@ -21,3 +21,20 @@ cart.forEach(item => {
 html += `<hr><h3>合計 NT$${total}</h3>`;
 
 orderList.innerHTML = html;
+
+// 取得欄位
+const nameInput = document.getElementById("customer-name");
+const phoneInput = document.getElementById("customer-phone");
+
+// 載入上次資料
+nameInput.value = localStorage.getItem("customerName") || "";
+phoneInput.value = localStorage.getItem("customerPhone") || "";
+
+// 即時儲存
+nameInput.addEventListener("input", () => {
+    localStorage.setItem("customerName", nameInput.value);
+});
+
+phoneInput.addEventListener("input", () => {
+    localStorage.setItem("customerPhone", phoneInput.value);
+});
