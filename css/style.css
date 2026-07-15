@@ -554,3 +554,103 @@ label{
     margin-top:20px;
 
 }
+/* ===== 結帳頁 ===== */
+
+.checkout-page{
+
+    max-width:700px;
+
+    margin:auto;
+
+    padding:20px;
+
+}
+
+.checkout-card{
+
+    background:#fff;
+
+    border-radius:18px;
+
+    padding:20px;
+
+    margin-bottom:20px;
+
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+
+}
+
+.checkout-card h2{
+
+    margin-top:0;
+
+    color:#444;
+
+}
+
+.checkout-card label{
+
+    display:block;
+
+    margin-top:16px;
+
+    margin-bottom:8px;
+
+    font-weight:bold;
+
+}
+
+.checkout-card input[type=text],
+.checkout-card input[type=tel],
+.checkout-card textarea{
+
+    width:100%;
+
+    box-sizing:border-box;
+
+    padding:16px;
+
+    font-size:18px;
+
+    border:2px solid #ddd;
+
+    border-radius:12px;
+
+}
+
+.checkout-card textarea{
+
+    resize:vertical;
+
+}
+
+.checkout-card input:focus,
+.checkout-card textarea:focus{
+
+    border-color:#D4AF37;
+
+    outline:none;
+
+}
+
+#submit-order{
+
+    width:100%;
+
+    margin-top:25px;
+
+    padding:18px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:#D4AF37;
+
+    color:#222;
+
+    font-size:22px;
+
+    font-weight:bold;
+
+}
