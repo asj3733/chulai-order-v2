@@ -93,3 +93,45 @@
 body{
     padding-bottom:110px;
 }
+.category-nav button{
+    flex:none;
+    border:none;
+    background:#f5f5f5;
+    color:#333;
+    padding:10px 16px;
+    border-radius:30px;
+    font-weight:bold;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:15px;
+}
+
+.category-nav button:hover{
+    background:#D4AF37;
+    color:#fff;
+}
+
+.cart-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px 0;
+    border-bottom:1px solid #eee;
+}
+
+.cart-control{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.cart-control button{
+    width:32px;
+    height:32px;
+    border:none;
+    border-radius:50%;
+    background:#D4AF37;
+    color:#222;
+    font-size:18px;
+    font-weight:bold;
+}
