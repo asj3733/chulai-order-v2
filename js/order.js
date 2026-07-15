@@ -69,7 +69,7 @@ function updateCart() {
 
             <div>
                 <strong>${item.name}</strong><br>
-                NT$${item.price}
+                NT$${item.price} × ${item.qty}
             </div>
 
             <div class="cart-control">
@@ -118,5 +118,7 @@ function changeQty(name, change){
     updateCart();
 
 }
+
+console.log("新版 order.js 已載入");
 
 renderMenu();
