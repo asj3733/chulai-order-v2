@@ -74,13 +74,15 @@ function updateCart() {
 
             <div class="cart-control">
 
-                <button onclick="changeQty('${item.name}',-1)">－</button>
+    <button onclick="changeQty('${item.name}',-1)">－</button>
 
-                <span>${item.qty}</span>
+    <span>${item.qty}</span>
 
-                <button onclick="changeQty('${item.name}',1)">＋</button>
+    <button onclick="changeQty('${item.name}',1)">＋</button>
 
-            </div>
+    <button class="delete-btn" onclick="removeItem('${item.name}')">🗑️</button>
+
+</div>
 
         </div>
         `;
@@ -118,7 +120,13 @@ function changeQty(name, change){
     updateCart();
 
 }
+function removeItem(name){
 
+    cart = cart.filter(item => item.name !== name);
+
+    updateCart();
+
+}
 console.log("新版 order.js 已載入");
 
 renderMenu();
