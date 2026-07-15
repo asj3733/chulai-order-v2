@@ -493,3 +493,64 @@ body{
     font-weight:bold;
 
 }
+/* ===== 結帳頁 ===== */
+
+input,
+textarea,
+select{
+
+    width:100%;
+    box-sizing:border-box;
+
+    padding:16px;
+
+    margin-top:8px;
+    margin-bottom:20px;
+
+    font-size:18px;
+
+    border:2px solid #ddd;
+
+    border-radius:12px;
+
+    background:#fff;
+
+}
+
+input:focus,
+textarea:focus{
+
+    border-color:#D4AF37;
+    outline:none;
+
+}
+
+label{
+
+    font-size:18px;
+    display:block;
+    margin:12px 0;
+
+}
+
+#submit-order{
+
+    width:100%;
+
+    padding:18px;
+
+    font-size:22px;
+
+    font-weight:bold;
+
+    background:#D4AF37;
+
+    color:#222;
+
+    border:none;
+
+    border-radius:15px;
+
+    margin-top:20px;
+
+}
