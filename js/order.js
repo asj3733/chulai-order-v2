@@ -45,10 +45,30 @@ function addCart(name, price) {
     }else{
 
         cart.push({
-            name,
-            price,
-            qty:1
-        });
+
+    id: Date.now(),
+
+    name,
+
+    price,
+
+    qty:1,
+
+    options:{
+
+        noodle:null,
+
+        onion:true,
+
+        vegetable:true,
+
+        spicy:"",
+
+        sauce:["醬油膏"]
+
+    }
+
+});
 
     }
 
