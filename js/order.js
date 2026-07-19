@@ -36,6 +36,43 @@ function renderMenu() {
 
 function addCart(name, price) {
 
+    // 找商品資料
+    let menuItem = null;
+
+    for (const category in menu) {
+
+        const found = menu[category].find(m => m.name === name);
+
+        if(found){
+            menuItem = found;
+            break;
+        }
+
+    }
+
+    // ===== 麵類 =====
+    if(menuItem && menuItem.type === "noodle"){
+
+        openNoodleModal(name, price);
+
+        return;
+
+    }
+
+    // ===== 關東煮 =====
+    if(menuItem && menuItem.type === "oden"){
+
+        openOdenModal(name, price);
+
+        return;
+
+    }
+
+    addCartDirect(name, price);
+
+}
+function addCartDirect(name, price){
+
     const item = cart.find(p => p.name === name);
 
     if(item){
@@ -46,33 +83,44 @@ function addCart(name, price) {
 
         cart.push({
 
-    id: Date.now(),
+            id:Date.now(),
 
-    name,
+            name,
 
-    price,
+            price,
 
-    qty:1,
+            qty:1,
 
-    options:{
+            options:{
 
-        noodle:null,
+                noodle:null,
+                onion:true,
+                vegetable:true,
+                spicy:"",
+                sauce:["醬油膏"]
 
-        onion:true,
+            }
 
-        vegetable:true,
-
-        spicy:"",
-
-        sauce:["醬油膏"]
-
-    }
-
-});
+        });
 
     }
 
     updateCart();
+
+}
+function openNoodleModal(name, price){
+
+    alert("🍜 下一步我們做麵類客製化");
+
+    addCartDirect(name, price);
+
+}
+
+function openOdenModal(name, price){
+
+    alert("🍢 下一步我們做關東煮醬料");
+
+    addCartDirect(name, price);
 
 }
 
