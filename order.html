@@ -83,92 +83,56 @@
 
         <!-- 麵類選項 -->
 
-        <div id="noodleOption">
+<h3 id="noodleSelect">🍜 麵條</h3>
 
-            <h3>🍜 麵體</h3>
+<div id="noodleSelectBox">
 
-            <label>
-                <input type="radio" name="noodle" value="細麵" checked>
-                細麵
-            </label>
+<label>
+<input type="radio" name="noodle" value="細麵" checked>
+細麵
+</label>
 
-            <label>
-                <input type="radio" name="noodle" value="粗麵">
-                粗麵
-            </label>
+<label>
+<input type="radio" name="noodle" value="粗麵">
+粗麵
+</label>
 
+</div>
 
-            <h3>🌶 辣度</h3>
+<h3>🥬 客製化</h3>
 
-            <label>
-                <input type="radio" name="spicy" value="不辣" checked>
-                不辣
-            </label>
+<label>
+<input type="checkbox" id="noVegetable">
+不加菜
+</label>
 
-            <label>
-                <input type="radio" name="spicy" value="小辣">
-                小辣
-            </label>
+<label>
+<input type="checkbox" id="noOnion">
+不加蔥
+</label>
 
-            <label>
-                <input type="radio" name="spicy" value="中辣">
-                中辣
-            </label>
+<h3>🍢 醬料</h3>
 
-            <label>
-                <input type="radio" name="spicy" value="大辣">
-                大辣
-            </label>
+<label>
+<input type="radio" name="sauce" value="醬油膏" checked>
+醬油膏
+</label>
 
+<label>
+<input type="radio" name="sauce" value="番茄醬">
+番茄醬
+</label>
 
-            <h3>菜</h3>
+<label>
+<input type="radio" name="sauce" value="辣椒">
+辣椒
+</label>
 
-            <label>
-                <input type="checkbox" id="onion" checked>
-                不加菜
-            </label>
-            
-            <label>
-                <input type="checkbox" id="onion" checked>
-                不加蔥
-            </label>
+<label>
+<input type="radio" name="sauce" value="都不加">
+都不加
+</label>
 
-        </div>
-
-
-
-        <!-- 關東煮選項 -->
-
-        <div id="odenOption" style="display:none;">
-
-            <h3>🍢 醬料</h3>
-
-            <label>
-                <input type="radio" name="sauce" value="醬油膏" checked>
-                醬油膏
-            </label>
-
-            <label>
-                <input type="radio" name="sauce" value="番茄醬">
-                蕃茄醬
-            </label>
-
-            <label>
-                <input type="radio" name="sauce" value="辣椒">
-                辣椒
-            </label>
-
-            <label>
-                <input type="radio" name="sauce" value="都不加">
-                都不加
-            </label>
-
-
-            <label>
-
-
-
-        </div>
 
 
         <button onclick="confirmCustom()">
