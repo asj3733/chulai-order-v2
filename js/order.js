@@ -51,23 +51,38 @@ function addCart(name, price) {
     }
 
     // ===== 麵類 =====
-    if(menuItem && menuItem.type === "noodle"){
+ if(item.type==="noodle"){
 
-        openNoodleModal(name, price);
+    document.getElementById("noodleSelectBox").style.display="block";
+    document.getElementById("noodleSelect").style.display="block";
 
-        return;
+    openNoodleModal(item);
 
-    }
+    return;
+
+}
+if(item.type==="riceNoodle"){
+
+    document.getElementById("noodleSelectBox").style.display="none";
+    document.getElementById("noodleSelect").style.display="none";
+
+    openNoodleModal(item);
+
+    return;
+
+}
 
     // ===== 關東煮 =====
-    if(menuItem && menuItem.type === "oden"){
+if(item.type==="oden"){
 
-        openOdenModal(name, price);
+    document.getElementById("noodleOption").style.display="none";
+    document.getElementById("odenOption").style.display="block";
 
-        return;
+    openOdenModal(item);
 
-    }
+    return;
 
+}
     addCartDirect(name, price);
 
 }
