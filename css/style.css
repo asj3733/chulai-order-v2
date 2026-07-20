@@ -808,28 +808,25 @@ label{
 
     position:absolute;
 
-    bottom:0;
-
     left:0;
+
+    bottom:0;
 
     width:100%;
 
-    max-height:85vh;
+    max-height:90vh;
 
     overflow:auto;
 
-    background:#fff;
+    background:white;
 
-    border-radius:25px 25px 0 0;
+    border-radius:28px 28px 0 0;
 
-    padding:25px;
+    padding:24px;
 
-    box-sizing:border-box;
-
-    animation:slideUp .25s ease;
+    animation:slideUp .25s;
 
 }
-
 @keyframes slideUp{
 
     from{
@@ -866,19 +863,19 @@ label{
 
 .modal label{
 
-    display:block;
+    display:flex;
 
-    padding:12px;
+    align-items:center;
 
-    margin:8px 0;
+    padding:14px;
+
+    margin:10px 0;
 
     border:1px solid #ddd;
 
-    border-radius:12px;
+    border-radius:14px;
 
-    cursor:pointer;
-
-    font-size:15px;
+    font-size:17px;
 
 }
 
@@ -892,15 +889,13 @@ label{
 
     width:100%;
 
-    padding:15px;
+    padding:18px;
 
     border:none;
 
-    border-radius:12px;
+    border-radius:14px;
 
-    margin-top:15px;
-
-    font-size:16px;
+    font-size:18px;
 
     font-weight:bold;
 
