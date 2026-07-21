@@ -5,16 +5,29 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
 
 <title>初萊食麵｜線上點餐</title>
 
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/order.css">
+<link
+    rel="stylesheet"
+    href="css/style.css">
+
+<link
+    rel="stylesheet"
+    href="css/order.css">
 
 </head>
 
+
 <body>
+
+
+<!-- =========================
+     頁首
+========================= -->
 
 <header class="page-header">
 
@@ -23,6 +36,7 @@
     <p>線上點餐</p>
 
 </header>
+
 
 
 <main class="order-page">
@@ -34,27 +48,52 @@
 
 <nav class="category-nav">
 
-    <button type="button" data-category="麵類">
+    <button
+        type="button"
+        data-category="麵類">
+
         🍜 麵類
+
     </button>
 
-    <button type="button" data-category="關東煮">
+
+    <button
+        type="button"
+        data-category="關東煮">
+
         🍢 關東煮
+
     </button>
 
-    <button type="button" data-category="小菜">
+
+    <button
+        type="button"
+        data-category="小菜">
+
         🥟 小菜
+
     </button>
 
-    <button type="button" data-category="湯類">
+
+    <button
+        type="button"
+        data-category="湯類">
+
         🥣 湯品
+
     </button>
 
-    <button type="button" data-category="其他">
+
+    <button
+        type="button"
+        data-category="其他">
+
         🍚 飯類
+
     </button>
 
 </nav>
+
 
 
 <!-- =========================
@@ -64,30 +103,45 @@
 <div id="menu"></div>
 
 
+
 <!-- =========================
      浮動購物車
 ========================= -->
 
-<div id="floating-cart" class="floating-cart">
+<div
+    id="floating-cart"
+    class="floating-cart">
+
 
     <div class="cart-left">
+
 
         <div class="cart-count">
 
             🛒
-            <span id="cart-count">0</span>
+
+            <span id="cart-count">
+                0
+            </span>
+
             項
 
         </div>
 
+
         <div class="cart-total">
 
             NT$
-            <span id="total">0</span>
+
+            <span id="total">
+                0
+            </span>
 
         </div>
 
+
     </div>
+
 
 
     <button
@@ -98,14 +152,19 @@
 
     </button>
 
+
 </div>
+
 
 
 <!-- =========================
      購物車
 ========================= -->
 
-<h2>🛒 購物車</h2>
+<h2>
+    🛒 購物車
+</h2>
+
 
 <div id="cart">
 
@@ -114,13 +173,14 @@
 </div>
 
 
+
 </main>
 
 
 
-<!-- =========================
+<!-- =================================================
      客製化視窗
-========================= -->
+================================================= -->
 
 <div
     id="customModal"
@@ -141,15 +201,19 @@
 
 
         <!-- =========================
-             麵類選項
+             麵類／米粉共用選項
         ========================= -->
 
         <div id="noodleOption">
 
 
-            <!-- 麵條 -->
+            <!-- =========================
+                 麵條
+                 只有麵類顯示
+            ========================= -->
 
             <div id="noodleSelectArea">
+
 
                 <h3>
                     🍜 麵條
@@ -173,18 +237,20 @@
                     <input
                         type="radio"
                         name="noodle"
-                        value="粗麵"
-                        checked>
+                        value="粗麵">
 
                     粗麵
 
                 </label>
 
+
             </div>
 
 
 
-            <!-- 辣度 -->
+            <!-- =========================
+                 辣度
+            ========================= -->
 
             <h3>
                 🌶 辣度
@@ -196,8 +262,7 @@
                 <input
                     type="radio"
                     name="spicy"
-                    value="不辣"
-                    checked>
+                    value="不辣">
 
                 不辣
 
@@ -241,7 +306,9 @@
 
 
 
-            <!-- 客製化 -->
+            <!-- =========================
+                 客製化
+            ========================= -->
 
             <h3>
                 🥬 客製化
@@ -274,68 +341,73 @@
 
 
 
-<!-- =========================
-     關東煮選項
-========================= -->
+        <!-- =========================
+             關東煮
+        ========================= -->
 
-<div
-    id="odenOption"
-    style="display:none;">
-
-    <h3>
-        🍢 醬料（可複選）
-    </h3>
-
-    <label>
-
-        <input
-            type="checkbox"
-            name="sauce"
-            value="醬油膏"
-            checked>
-
-        醬油膏
-
-    </label>
+        <div
+            id="odenOption"
+            style="display:none;">
 
 
-    <label>
-
-        <input
-            type="checkbox"
-            name="sauce"
-            value="番茄醬">
-
-        番茄醬
-
-    </label>
+            <h3>
+                🍢 醬料（可複選）
+            </h3>
 
 
-    <label>
+            <label>
 
-        <input
-            type="checkbox"
-            name="sauce"
-            value="辣椒">
+                <input
+                    type="checkbox"
+                    name="sauce"
+                    value="醬油膏">
 
-        辣椒
+                醬油膏
 
-    </label>
+            </label>
 
 
-    <label>
+            <label>
 
-        <input
-            type="checkbox"
-            id="noSauce"
-            name="sauce"
-            value="都不加">
+                <input
+                    type="checkbox"
+                    name="sauce"
+                    value="番茄醬">
 
-        都不加
+                番茄醬
 
-    </label>
+            </label>
 
-</div>
+
+            <label>
+
+                <input
+                    type="checkbox"
+                    name="sauce"
+                    value="辣椒">
+
+                辣椒
+
+            </label>
+
+
+            <label>
+
+                <input
+                    type="checkbox"
+                    id="noSauce"
+                    name="sauce"
+                    value="都不加">
+
+                都不加
+
+            </label>
+
+
+        </div>
+
+
+
         <!-- =========================
              數量
         ========================= -->
@@ -346,6 +418,7 @@
 
 
         <div class="modal-qty">
+
 
             <button
                 type="button"
@@ -370,6 +443,7 @@
                 ＋
 
             </button>
+
 
         </div>
 
