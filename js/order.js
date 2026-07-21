@@ -914,15 +914,29 @@ function getOptionText(item) {
         醬料
     */
 
+if (
+    options.sauce
+) {
+
     if (
-        options.sauce
+        Array.isArray(options.sauce)
     ) {
+
+        texts.push(
+            options.sauce.join("＋")
+        );
+
+    }
+
+    else {
 
         texts.push(
             options.sauce
         );
 
     }
+
+}
 
 
     if (
@@ -1423,3 +1437,109 @@ console.log(
     "🍜 初萊食麵 v2.0 order.js 已載入"
 
 );
+/* =========================================
+   關東煮醬料複選控制
+========================================= */
+
+const sauceInputs =
+    document.querySelectorAll(
+        '#odenOption input[name="sauce"]'
+    );
+
+
+sauceInputs.forEach(input => {
+
+    input.addEventListener(
+        "change",
+        function() {
+
+            const noSauce =
+                document.getElementById(
+                    "noSauce"
+                );
+
+
+            /*
+                如果選擇「都不加」
+                取消其他醬料
+            */
+
+            if (
+                this.value === "都不加"
+                &&
+                this.checked
+            ) {
+
+                sauceInputs.forEach(
+                    otherInput => {
+
+                        if (
+                            otherInput !== this
+                        ) {
+
+                            otherInput.checked =
+                                false;
+
+                        }
+
+                    }
+                );
+
+            }
+
+
+            /*
+                如果選擇其他醬料
+                自動取消「都不加」
+            */
+
+            else if (
+                this.value !== "都不加"
+                &&
+                this.checked
+            ) {
+
+                if (noSauce) {
+
+                    noSauce.checked =
+                        false;
+
+                }
+
+            }
+
+
+            /*
+                如果全部都取消
+                自動恢復醬油膏
+            */
+
+            const checkedSauces =
+                document.querySelectorAll(
+                    '#odenOption input[name="sauce"]:checked'
+                );
+
+
+            if (
+                checkedSauces.length === 0
+            ) {
+
+                const soySauce =
+                    document.querySelector(
+                        '#odenOption input[value="醬油膏"]'
+                    );
+
+
+                if (soySauce) {
+
+                    soySauce.checked =
+                        true;
+
+                }
+
+            }
+
+        }
+    );
+
+});
