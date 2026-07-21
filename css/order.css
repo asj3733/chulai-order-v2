@@ -542,3 +542,219 @@ cursor:pointer;
 }
 
 }
+/* =========================================
+   🔧 客製化視窗最終修正版
+   修正手機版文字跑到最右側
+========================================= */
+
+/* 客製化視窗內所有元素 */
+#customModal,
+#customModal * {
+    box-sizing: border-box;
+}
+
+/* 白色視窗 */
+#customModal .modal-box {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 25px 20px 30px;
+    background: #fff;
+    border-radius: 25px 25px 0 0;
+    overflow-x: hidden;
+}
+
+/* 標題 */
+#customModal .modal-box h2,
+#customModal .modal-box h3 {
+    width: 100%;
+    display: block;
+    text-align: left;
+    white-space: normal;
+    word-break: normal;
+}
+
+/* 選項 Label */
+#customModal .modal-box label {
+    width: 100% !important;
+    max-width: 100% !important;
+
+    display: flex !important;
+
+    flex-direction: row !important;
+
+    justify-content: flex-start !important;
+
+    align-items: center !important;
+
+    position: relative;
+
+    padding: 14px 16px !important;
+
+    margin: 8px 0 !important;
+
+    min-height: 52px;
+
+    border: 1px solid #ddd;
+
+    border-radius: 12px;
+
+    background: #fff;
+
+    color: #333;
+
+    font-size: 18px;
+
+    line-height: 1.5;
+
+    text-align: left !important;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    word-break: normal;
+
+}
+
+/* Radio / Checkbox */
+#customModal .modal-box label input[type="radio"],
+#customModal .modal-box label input[type="checkbox"] {
+
+    display: inline-block !important;
+
+    width: 22px !important;
+
+    min-width: 22px !important;
+
+    max-width: 22px !important;
+
+    height: 22px !important;
+
+    min-height: 22px !important;
+
+    margin: 0 12px 0 0 !important;
+
+    padding: 0 !important;
+
+    flex: 0 0 22px !important;
+
+}
+
+/* 讓文字正常顯示 */
+#customModal .modal-box label {
+
+    text-indent: 0 !important;
+
+}
+
+/* 選取狀態 */
+#customModal .modal-box label:has(input:checked) {
+
+    border: 2px solid #D4AF37;
+
+    background: #fffaf0;
+
+}
+
+/* 數量 */
+#customModal .modal-qty {
+
+    width: 100%;
+
+    display: flex;
+
+    flex-direction: row;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 25px;
+
+}
+
+/* 數量按鈕 */
+#customModal .modal-qty button {
+
+    width: 45px !important;
+
+    min-width: 45px !important;
+
+    height: 45px !important;
+
+    padding: 0 !important;
+
+    flex: 0 0 45px !important;
+
+}
+
+/* 加入購物車 */
+#customModal .add-cart-btn {
+
+    width: 100% !important;
+
+    max-width: 100% !important;
+
+}
+
+/* 取消 */
+#customModal .cancel-btn {
+
+    width: 100% !important;
+
+    max-width: 100% !important;
+
+}
+
+
+/* =========================================
+   📱 iPhone 手機版
+========================================= */
+
+@media screen and (max-width: 600px) {
+
+    #customModal .modal-box {
+
+        width: 100%;
+
+        max-width: 100%;
+
+        padding: 22px 16px 25px;
+
+    }
+
+    #customModal .modal-box label {
+
+        width: 100% !important;
+
+        display: flex !important;
+
+        flex-direction: row !important;
+
+        align-items: center !important;
+
+        justify-content: flex-start !important;
+
+        font-size: 18px;
+
+        white-space: nowrap;
+
+    }
+
+    #customModal .modal-box label input[type="radio"],
+    #customModal .modal-box label input[type="checkbox"] {
+
+        width: 22px !important;
+
+        min-width: 22px !important;
+
+        max-width: 22px !important;
+
+        height: 22px !important;
+
+        flex: 0 0 22px !important;
+
+    }
+
+}
