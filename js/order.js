@@ -1,6 +1,6 @@
 /* =========================================
    初萊食麵 v2.0
-   點餐系統
+   點餐系統｜完整 order.js
 ========================================= */
 
 
@@ -28,7 +28,8 @@ let modalQty = 1;
 
 try {
 
-    const savedCart = localStorage.getItem("cart");
+    const savedCart =
+        localStorage.getItem("cart");
 
     if (savedCart) {
 
@@ -69,7 +70,9 @@ function renderMenu(category = null) {
 
 
         if (!menu[categoryName]) {
+
             return;
+
         }
 
 
@@ -80,9 +83,7 @@ function renderMenu(category = null) {
                 data-category="${categoryName}">
 
                 <h2>
-
                     ${categoryName}
-
                 </h2>
 
         `;
@@ -91,26 +92,22 @@ function renderMenu(category = null) {
         menu[categoryName].forEach(item => {
 
 
+            const itemId =
+                item.id || item.name;
+
+
             html += `
 
-                <div
-                    class="menu-item">
+                <div class="menu-item">
 
-
-                    <div
-                        class="menu-info">
+                    <div class="menu-info">
 
                         <h3>
-
                             ${item.name}
-
                         </h3>
 
-
                         <p>
-
                             NT$${item.price}
-
                         </p>
 
                     </div>
@@ -118,12 +115,11 @@ function renderMenu(category = null) {
 
                     <button
                         type="button"
-                        onclick="addCartById('${item.id || item.name}')">
+                        onclick="addCartById('${itemId}')">
 
                         加入
 
                     </button>
-
 
                 </div>
 
@@ -158,13 +154,21 @@ function findMenuItem(itemId) {
     ) {
 
 
-        const found = menu[category].find(
+        const found =
+            menu[category].find(
 
-            item =>
-                String(item.id || item.name)
-                === String(itemId)
+                item =>
 
-        );
+                    String(
+                        item.id ||
+                        item.name
+                    )
+
+                    ===
+
+                    String(itemId)
+
+            );
 
 
         if (found) {
@@ -209,9 +213,13 @@ function addCartById(itemId) {
     */
 
     if (
+
         item.type === "noodle" ||
+
         item.type === "riceNoodle" ||
+
         item.type === "oden"
+
     ) {
 
 
@@ -232,6 +240,7 @@ function addCartById(itemId) {
         item,
 
         {
+
             noodle: null,
 
             spicy: null,
@@ -293,139 +302,242 @@ function openCustomModal(item) {
         );
 
 
+    if (!modal) {
+
+        console.error(
+            "找不到 customModal"
+        );
+
+        return;
+
+    }
+
+
     /*
         商品名稱
     */
 
-    modalTitle.textContent =
+    if (modalTitle) {
 
-        item.name;
+        modalTitle.textContent =
+            item.name;
+
+    }
 
 
     /*
         數量重設
     */
 
-    document.getElementById(
-        "modalQty"
-    ).textContent = 1;
+    const modalQtyElement =
+        document.getElementById(
+            "modalQty"
+        );
+
+
+    if (modalQtyElement) {
+
+        modalQtyElement.textContent =
+            "1";
+
+    }
+
+
+    /* =====================================
+       每次開啟時重設所有選項
+    ===================================== */
 
 
     /*
-        重設客製化
+        麵條預設粗麵
     */
 
-    document.querySelectorAll(
+    document
+        .querySelectorAll(
+            '#noodleSelectBox input[name="noodle"]'
+        )
+        .forEach(input => {
 
-        'input[name="noodle"]'
+            input.checked =
+                input.value === "粗麵";
 
-    ).forEach(input => {
-
-        input.checked =
-            input.value === "粗麵";
-
-    });
-
-
-    document.querySelectorAll(
-
-        'input[name="spicy"]'
-
-    ).forEach(input => {
-
-        input.checked =
-            input.value === "不辣";
-
-    });
-
-
-    document.getElementById(
-        "noVegetable"
-    ).checked = false;
-
-
-    document.getElementById(
-        "noOnion"
-    ).checked = false;
+        });
 
 
     /*
-    關東煮醬料重設
-    預設醬油膏
-*/
-
-document.querySelectorAll(
-    '#odenOption input[name="sauce"]'
-).forEach(input => {
-
-    input.checked =
-        input.value === "醬油膏";
-
-});
-    /*
-        麵類
+        辣度預設不辣
     */
+
+    document
+        .querySelectorAll(
+            '#noodleOption input[name="spicy"]'
+        )
+        .forEach(input => {
+
+            input.checked =
+                input.value === "不辣";
+
+        });
+
+
+    /*
+        不加菜預設不勾
+    */
+
+    const noVegetable =
+        document.getElementById(
+            "noVegetable"
+        );
+
+
+    if (noVegetable) {
+
+        noVegetable.checked =
+            false;
+
+    }
+
+
+    /*
+        不加蔥預設不勾
+    */
+
+    const noOnion =
+        document.getElementById(
+            "noOnion"
+        );
+
+
+    if (noOnion) {
+
+        noOnion.checked =
+            false;
+
+    }
+
+
+    /*
+        關東煮醬料
+        預設醬油膏
+    */
+
+    document
+        .querySelectorAll(
+            '#odenOption input[name="sauce"]'
+        )
+        .forEach(input => {
+
+            input.checked =
+                input.value === "醬油膏";
+
+        });
+
+
+    /* =====================================
+       麵類
+    ===================================== */
 
     if (
         item.type === "noodle"
     ) {
 
 
-        noodleOption.style.display =
-            "block";
+        if (noodleOption) {
+
+            noodleOption.style.display =
+                "block";
+
+        }
 
 
-        noodleSelectArea.style.display =
-            "block";
+        if (noodleSelectArea) {
+
+            noodleSelectArea.style.display =
+                "block";
+
+        }
 
 
-        odenOption.style.display =
-            "none";
+        if (odenOption) {
 
+            odenOption.style.display =
+                "none";
+
+        }
 
     }
 
 
-    /*
-        米粉
-    */
+    /* =====================================
+       米粉
+    ===================================== */
 
     else if (
         item.type === "riceNoodle"
     ) {
 
 
-        noodleOption.style.display =
-            "block";
+        /*
+            米粉不顯示麵條
+        */
+
+        if (noodleOption) {
+
+            noodleOption.style.display =
+                "block";
+
+        }
 
 
-        noodleSelectArea.style.display =
-            "none";
+        if (noodleSelectArea) {
+
+            noodleSelectArea.style.display =
+                "none";
+
+        }
 
 
-        odenOption.style.display =
-            "none";
+        if (odenOption) {
 
+            odenOption.style.display =
+                "none";
+
+        }
 
     }
 
 
-    /*
-        關東煮
-    */
+    /* =====================================
+       關東煮
+    ===================================== */
 
     else if (
         item.type === "oden"
     ) {
 
 
-        noodleOption.style.display =
-            "none";
+        if (noodleOption) {
+
+            noodleOption.style.display =
+                "none";
+
+        }
 
 
-        odenOption.style.display =
-            "block";
+        if (noodleSelectArea) {
 
+            noodleSelectArea.style.display =
+                "none";
+
+        }
+
+
+        if (odenOption) {
+
+            odenOption.style.display =
+                "block";
+
+        }
 
     }
 
@@ -472,10 +584,18 @@ function changeModalQty(change) {
     }
 
 
-    document.getElementById(
-        "modalQty"
-    ).textContent =
-        modalQty;
+    const modalQtyElement =
+        document.getElementById(
+            "modalQty"
+        );
+
+
+    if (modalQtyElement) {
+
+        modalQtyElement.textContent =
+            modalQty;
+
+    }
 
 }
 
@@ -496,28 +616,22 @@ function confirmCustom() {
 
     let options = {
 
-
         noodle: null,
-
 
         spicy: null,
 
-
         vegetable: true,
-
 
         onion: true,
 
-
         sauce: null
-
 
     };
 
 
-    /*
-        麵類
-    */
+    /* =====================================
+       麵類
+    ===================================== */
 
     if (
         currentItem.type === "noodle"
@@ -526,50 +640,53 @@ function confirmCustom() {
 
         const noodle =
             document.querySelector(
-
-                'input[name="noodle"]:checked'
-
+                '#noodleSelectBox input[name="noodle"]:checked'
             );
 
 
         const spicy =
             document.querySelector(
-
-                'input[name="spicy"]:checked'
-
+                '#noodleOption input[name="spicy"]:checked'
             );
 
 
         options.noodle =
+
             noodle
+
                 ? noodle.value
+
                 : "粗麵";
 
 
         options.spicy =
+
             spicy
+
                 ? spicy.value
+
                 : "不辣";
 
 
         options.vegetable =
+
             !document.getElementById(
                 "noVegetable"
             ).checked;
 
 
         options.onion =
+
             !document.getElementById(
                 "noOnion"
             ).checked;
 
-
     }
 
 
-    /*
-        米粉
-    */
+    /* =====================================
+       米粉
+    ===================================== */
 
     else if (
         currentItem.type === "riceNoodle"
@@ -578,103 +695,126 @@ function confirmCustom() {
 
         const spicy =
             document.querySelector(
-
-                'input[name="spicy"]:checked'
-
+                '#noodleOption input[name="spicy"]:checked'
             );
 
+
+        /*
+            米粉不記錄麵條
+        */
 
         options.noodle =
             null;
 
 
         options.spicy =
+
             spicy
+
                 ? spicy.value
+
                 : "不辣";
 
 
         options.vegetable =
+
             !document.getElementById(
                 "noVegetable"
             ).checked;
 
 
         options.onion =
+
             !document.getElementById(
                 "noOnion"
             ).checked;
 
-
     }
 
 
-    /*
-        關東煮
-    */
-
-else if (
-    currentItem.type === "oden"
-) {
-
-    /*
-        關東煮醬料可複選
-    */
-
-    const sauceInputs =
-        document.querySelectorAll(
-            '#odenOption input[name="sauce"]:checked'
-        );
-
-
-    /*
-        取得所有選中的醬料
-    */
-
-    const sauces =
-        Array.from(sauceInputs)
-        .map(input => input.value);
-
-
-    /*
-        如果沒有選任何醬料
-        預設醬油膏
-    */
-
-    if (sauces.length === 0) {
-
-        options.sauce = [
-            "醬油膏"
-        ];
-
-    }
+    /* =====================================
+       關東煮
+       醬料可複選
+    ===================================== */
 
     else if (
-        sauces.includes("都不加")
+        currentItem.type === "oden"
     ) {
+
+
+        const sauceInputs =
+
+            document.querySelectorAll(
+
+                '#odenOption input[name="sauce"]:checked'
+
+            );
+
+
+        const sauces =
+
+            Array.from(
+                sauceInputs
+            )
+
+            .map(
+                input =>
+                    input.value
+            );
+
+
+        /*
+            沒有選任何醬料
+            預設醬油膏
+        */
+
+        if (
+            sauces.length === 0
+        ) {
+
+
+            options.sauce = [
+
+                "醬油膏"
+
+            ];
+
+        }
+
 
         /*
             選擇都不加
-            就只保留都不加
         */
 
-        options.sauce = [
-            "都不加"
-        ];
+        else if (
+            sauces.includes(
+                "都不加"
+            )
+        ) {
 
-    }
 
-    else {
+            options.sauce = [
+
+                "都不加"
+
+            ];
+
+        }
+
 
         /*
             複選醬料
         */
 
-        options.sauce = sauces;
+        else {
+
+
+            options.sauce =
+                sauces;
+
+        }
 
     }
-
-}
 
 
     /*
@@ -717,15 +857,27 @@ function addCartDirect(
 
 
     /*
-        建立客製化識別碼
+        客製化識別碼
 
-        同商品不同客製
-        會分開成不同購物車項目
+        同商品
+        同客製
+        自動合併
+
+        不同客製
+        分開顯示
     */
 
     const optionKey =
 
-        JSON.stringify(options);
+        JSON.stringify(
+            options
+        );
+
+
+    const productId =
+
+        item.id ||
+        item.name;
 
 
     const existingItem =
@@ -734,12 +886,20 @@ function addCartDirect(
 
             cartItem =>
 
-                cartItem.productId ===
-                item.id
+                String(
+                    cartItem.productId
+                )
+
+                ===
+
+                String(
+                    productId
+                )
 
                 &&
 
-                cartItem.optionKey ===
+                cartItem.optionKey
+                ===
                 optionKey
 
         );
@@ -754,8 +914,8 @@ function addCartDirect(
     ) {
 
 
-        existingItem.qty += qty;
-
+        existingItem.qty +=
+            qty;
 
     }
 
@@ -770,48 +930,53 @@ function addCartDirect(
         cart.push({
 
             id:
+
                 Date.now()
                 +
                 Math.random(),
 
 
             productId:
-                item.id ||
-                item.name,
+
+                productId,
 
 
             name:
+
                 item.name,
 
 
             price:
+
                 item.price,
 
 
             qty:
+
                 qty,
 
 
             type:
+
                 item.type ||
                 null,
 
 
             options:
+
                 options,
 
 
             optionKey:
+
                 optionKey
 
         });
-
 
     }
 
 
     saveCart();
-
 
     updateCart();
 
@@ -858,8 +1023,11 @@ function getOptionText(item) {
         options.noodle
     ) {
 
+
         texts.push(
+
             options.noodle
+
         );
 
     }
@@ -873,8 +1041,11 @@ function getOptionText(item) {
         options.spicy
     ) {
 
+
         texts.push(
+
             options.spicy
+
         );
 
     }
@@ -888,8 +1059,11 @@ function getOptionText(item) {
         options.vegetable === false
     ) {
 
+
         texts.push(
+
             "不加菜"
+
         );
 
     }
@@ -903,45 +1077,65 @@ function getOptionText(item) {
         options.onion === false
     ) {
 
+
         texts.push(
+
             "不加蔥"
+
         );
 
     }
 
 
     /*
-        醬料
+        關東煮醬料
     */
 
-if (
-    options.sauce
-) {
-
     if (
-        Array.isArray(options.sauce)
+        options.sauce
     ) {
 
-        texts.push(
-            options.sauce.join("＋")
-        );
+
+        if (
+            Array.isArray(
+                options.sauce
+            )
+        ) {
+
+
+            texts.push(
+
+                options.sauce.join(
+                    "＋"
+                )
+
+            );
+
+        }
+
+
+        else {
+
+
+            texts.push(
+
+                options.sauce
+
+            );
+
+        }
 
     }
 
-    else {
 
-        texts.push(
-            options.sauce
-        );
-
-    }
-
-}
-
+    /*
+        沒有客製內容
+    */
 
     if (
         texts.length === 0
     ) {
+
 
         return "";
 
@@ -1004,14 +1198,32 @@ function updateCart() {
             "尚未加入商品";
 
 
-        document.getElementById(
-            "total"
-        ).textContent = 0;
+        const totalElement =
+            document.getElementById(
+                "total"
+            );
 
 
-        document.getElementById(
-            "cart-count"
-        ).textContent = 0;
+        if (totalElement) {
+
+            totalElement.textContent =
+                "0";
+
+        }
+
+
+        const cartCountElement =
+            document.getElementById(
+                "cart-count"
+            );
+
+
+        if (cartCountElement) {
+
+            cartCountElement.textContent =
+                "0";
+
+        }
 
 
         return;
@@ -1034,7 +1246,8 @@ function updateCart() {
                 item.qty;
 
 
-            total += subtotal;
+            total +=
+                subtotal;
 
 
             totalQty +=
@@ -1043,13 +1256,9 @@ function updateCart() {
 
             html += `
 
-                <div
-                    class="cart-item">
+                <div class="cart-item">
 
-
-                    <div
-                        class="cart-item-info">
-
+                    <div class="cart-item-info">
 
                         <strong>
 
@@ -1064,21 +1273,21 @@ function updateCart() {
                         <div>
 
                             NT$${item.price}
+
                             ×
+
                             ${item.qty}
 
                             =
+
                             NT$${subtotal}
 
                         </div>
 
-
                     </div>
 
 
-                    <div
-                        class="cart-control">
-
+                    <div class="cart-control">
 
                         <button
                             type="button"
@@ -1114,9 +1323,7 @@ function updateCart() {
 
                         </button>
 
-
                     </div>
-
 
                 </div>
 
@@ -1135,16 +1342,32 @@ function updateCart() {
         html;
 
 
-    document.getElementById(
-        "total"
-    ).textContent =
-        total;
+    const totalElement =
+        document.getElementById(
+            "total"
+        );
 
 
-    document.getElementById(
-        "cart-count"
-    ).textContent =
-        totalQty;
+    if (totalElement) {
+
+        totalElement.textContent =
+            total;
+
+    }
+
+
+    const cartCountElement =
+        document.getElementById(
+            "cart-count"
+        );
+
+
+    if (cartCountElement) {
+
+        cartCountElement.textContent =
+            totalQty;
+
+    }
 
 }
 
@@ -1193,7 +1416,6 @@ function changeQty(
 
     saveCart();
 
-
     updateCart();
 
 }
@@ -1226,7 +1448,6 @@ function removeItem(index) {
 
     saveCart();
 
-
     updateCart();
 
 }
@@ -1245,8 +1466,12 @@ function closeModal() {
         );
 
 
-    modal.style.display =
-        "none";
+    if (modal) {
+
+        modal.style.display =
+            "none";
+
+    }
 
 
     document.body.style.overflow =
@@ -1327,52 +1552,250 @@ document.addEventListener(
 
 
 /* =========================================
-   分類按鈕
+   關東煮醬料複選控制
 ========================================= */
 
-document.querySelectorAll(
-
-    ".category-nav button"
-
-).forEach(
-
-    button => {
+function setupSauceControls() {
 
 
-        button.addEventListener(
+    const sauceInputs =
 
-            "click",
+        document.querySelectorAll(
 
-            function() {
-
-
-                const category =
-
-                    this.dataset.category;
-
-
-                renderMenu(
-
-                    category
-
-                );
-
-
-                window.scrollTo({
-
-                    top: 0,
-
-                    behavior: "smooth"
-
-                });
-
-            }
+            '#odenOption input[name="sauce"]'
 
         );
 
-    }
 
-);
+    sauceInputs.forEach(
+
+        input => {
+
+
+            input.addEventListener(
+
+                "change",
+
+                function() {
+
+
+                    const noSauce =
+
+                        document.getElementById(
+
+                            "noSauce"
+
+                        );
+
+
+                    /*
+                        選擇「都不加」
+                        取消其他醬料
+                    */
+
+                    if (
+
+                        this.value ===
+                        "都不加"
+
+                        &&
+
+                        this.checked
+
+                    ) {
+
+
+                        sauceInputs.forEach(
+
+                            otherInput => {
+
+
+                                if (
+
+                                    otherInput
+                                    !==
+                                    this
+
+                                ) {
+
+
+                                    otherInput.checked =
+                                        false;
+
+                                }
+
+                            }
+
+                        );
+
+                    }
+
+
+                    /*
+                        選擇其他醬料
+                        取消「都不加」
+                    */
+
+                    else if (
+
+                        this.value
+                        !==
+                        "都不加"
+
+                        &&
+
+                        this.checked
+
+                    ) {
+
+
+                        if (noSauce) {
+
+
+                            noSauce.checked =
+                                false;
+
+                        }
+
+                    }
+
+
+                    /*
+                        全部取消
+                        恢復醬油膏
+                    */
+
+                    const checkedSauces =
+
+                        document.querySelectorAll(
+
+                            '#odenOption input[name="sauce"]:checked'
+
+                        );
+
+
+                    if (
+
+                        checkedSauces.length
+                        ===
+                        0
+
+                    ) {
+
+
+                        const soySauce =
+
+                            document.querySelector(
+
+                                '#odenOption input[value="醬油膏"]'
+
+                            );
+
+
+                        if (soySauce) {
+
+
+                            soySauce.checked =
+                                true;
+
+                        }
+
+                    }
+
+                }
+
+            );
+
+        }
+
+    );
+
+}
+
+
+/* =========================================
+   分類按鈕
+========================================= */
+
+document
+    .querySelectorAll(
+        ".category-nav button"
+    )
+    .forEach(
+
+        (button, index) => {
+
+
+            /*
+                如果 HTML 沒有 data-category
+                依照順序對應 menu 分類
+            */
+
+            if (
+                !button.dataset.category
+                &&
+                menu
+            ) {
+
+
+                const categories =
+                    Object.keys(menu);
+
+
+                if (
+                    categories[index]
+                ) {
+
+
+                    button.dataset.category =
+                        categories[index];
+
+                }
+
+            }
+
+
+            button.addEventListener(
+
+                "click",
+
+                function() {
+
+
+                    const category =
+
+                        this.dataset.category;
+
+
+                    if (!category) {
+
+                        return;
+
+                    }
+
+
+                    renderMenu(
+
+                        category
+
+                    );
+
+
+                    window.scrollTo({
+
+                        top: 0,
+
+                        behavior: "smooth"
+
+                    });
+
+                }
+
+            );
+
+        }
+
+    );
 
 
 /* =========================================
@@ -1401,7 +1824,9 @@ if (checkoutBtn) {
 
 
                 alert(
+
                     "購物車目前是空的，請先加入餐點！"
+
                 );
 
 
@@ -1414,6 +1839,7 @@ if (checkoutBtn) {
 
 
             window.location.href =
+
                 "checkout.html";
 
         }
@@ -1427,6 +1853,8 @@ if (checkoutBtn) {
    初始化
 ========================================= */
 
+setupSauceControls();
+
 renderMenu();
 
 updateCart();
@@ -1437,109 +1865,3 @@ console.log(
     "🍜 初萊食麵 v2.0 order.js 已載入"
 
 );
-/* =========================================
-   關東煮醬料複選控制
-========================================= */
-
-const sauceInputs =
-    document.querySelectorAll(
-        '#odenOption input[name="sauce"]'
-    );
-
-
-sauceInputs.forEach(input => {
-
-    input.addEventListener(
-        "change",
-        function() {
-
-            const noSauce =
-                document.getElementById(
-                    "noSauce"
-                );
-
-
-            /*
-                如果選擇「都不加」
-                取消其他醬料
-            */
-
-            if (
-                this.value === "都不加"
-                &&
-                this.checked
-            ) {
-
-                sauceInputs.forEach(
-                    otherInput => {
-
-                        if (
-                            otherInput !== this
-                        ) {
-
-                            otherInput.checked =
-                                false;
-
-                        }
-
-                    }
-                );
-
-            }
-
-
-            /*
-                如果選擇其他醬料
-                自動取消「都不加」
-            */
-
-            else if (
-                this.value !== "都不加"
-                &&
-                this.checked
-            ) {
-
-                if (noSauce) {
-
-                    noSauce.checked =
-                        false;
-
-                }
-
-            }
-
-
-            /*
-                如果全部都取消
-                自動恢復醬油膏
-            */
-
-            const checkedSauces =
-                document.querySelectorAll(
-                    '#odenOption input[name="sauce"]:checked'
-                );
-
-
-            if (
-                checkedSauces.length === 0
-            ) {
-
-                const soySauce =
-                    document.querySelector(
-                        '#odenOption input[value="醬油膏"]'
-                    );
-
-
-                if (soySauce) {
-
-                    soySauce.checked =
-                        true;
-
-                }
-
-            }
-
-        }
-    );
-
-});
