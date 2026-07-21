@@ -349,18 +349,19 @@ function openCustomModal(item) {
     ).checked = false;
 
 
-    document.querySelectorAll(
+    /*
+    關東煮醬料重設
+    預設醬油膏
+*/
 
-        'input[name="sauce"]'
+document.querySelectorAll(
+    '#odenOption input[name="sauce"]'
+).forEach(input => {
 
-    ).forEach(input => {
+    input.checked =
+        input.value === "醬油膏";
 
-        input.checked =
-            input.value === "醬油膏";
-
-    });
-
-
+});
     /*
         麵類
     */
@@ -612,26 +613,68 @@ function confirmCustom() {
         關東煮
     */
 
-    else if (
-        currentItem.type === "oden"
-    ) {
+else if (
+    currentItem.type === "oden"
+) {
+
+    /*
+        關東煮醬料可複選
+    */
+
+    const sauceInputs =
+        document.querySelectorAll(
+            '#odenOption input[name="sauce"]:checked'
+        );
 
 
-        const sauce =
-            document.querySelector(
+    /*
+        取得所有選中的醬料
+    */
 
-                'input[name="sauce"]:checked'
+    const sauces =
+        Array.from(sauceInputs)
+        .map(input => input.value);
 
-            );
 
+    /*
+        如果沒有選任何醬料
+        預設醬油膏
+    */
 
-        options.sauce =
-            sauce
-                ? sauce.value
-                : "醬油膏";
+    if (sauces.length === 0) {
 
+        options.sauce = [
+            "醬油膏"
+        ];
 
     }
+
+    else if (
+        sauces.includes("都不加")
+    ) {
+
+        /*
+            選擇都不加
+            就只保留都不加
+        */
+
+        options.sauce = [
+            "都不加"
+        ];
+
+    }
+
+    else {
+
+        /*
+            複選醬料
+        */
+
+        options.sauce = sauces;
+
+    }
+
+}
 
 
     /*
