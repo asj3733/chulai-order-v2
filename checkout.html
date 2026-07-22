@@ -1,70 +1,257 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>初萊食麵｜結帳</title>
 
-    <link rel="stylesheet" href="css/style.css">
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>初萊食麵｜確認訂單</title>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/order.css">
+
 </head>
+
 
 <body>
 
+
+<!-- =========================
+     頁首
+========================= -->
+
 <header class="page-header">
+
     <h1>🍜 初萊食麵</h1>
+
     <p>確認訂單</p>
+
 </header>
+
+
 
 <main class="checkout-page">
 
-    <div class="checkout-card">
 
-        <h2>🧾 您的餐點</h2>
+<!-- =========================
+     訂單明細
+========================= -->
 
-        <div id="order-list"></div>
+<div class="checkout-card">
+
+    <h2>🛒 訂單明細</h2>
+
+    <div id="checkout-cart">
+
+        載入中...
+
+    </div>
+
+
+    <div class="checkout-total">
+
+        <strong>
+
+            訂單總金額：
+
+        </strong>
+
+        NT$
+
+        <span id="checkout-total">
+
+            0
+
+        </span>
 
     </div>
 
-    <div class="checkout-card">
+</div>
 
-        <h2>👤 取餐資訊</h2>
 
-        <label>姓名</label>
-        <input type="text" id="customer-name" placeholder="請輸入姓名">
 
-        <label>電話</label>
-        <input type="tel" id="customer-phone" placeholder="請輸入電話">
+<!-- =========================
+     顧客資料
+========================= -->
 
-        <label>用餐方式</label>
+<div class="checkout-card">
 
-        <div class="order-type">
+    <h2>👤 顧客資料</h2>
 
-            <label>
-                <input type="radio" name="type" value="外帶" checked>
-                🍱 外帶
-            </label>
 
-            <label>
-                <input type="radio" name="type" value="內用">
-                🍜 內用
-            </label>
+    <label for="customer-name">
 
-        </div>
+        姓名
 
-        <label>備註</label>
+    </label>
 
-        <textarea id="remark"
-        placeholder="例如：不要香菜、加辣、不要蔥"></textarea>
+    <input
+        type="text"
+        id="customer-name"
+        placeholder="請輸入您的姓名"
+        autocomplete="name"
+    >
 
-        <button id="submit-order">
-            確認送出訂單
-        </button>
+
+    <label for="customer-phone">
+
+        電話
+
+    </label>
+
+    <input
+        type="tel"
+        id="customer-phone"
+        placeholder="請輸入您的電話"
+        autocomplete="tel"
+    >
+
+</div>
+
+
+
+<!-- =========================
+     取餐方式
+========================= -->
+
+<div class="checkout-card">
+
+    <h2>🍽️ 取餐方式</h2>
+
+
+    <div class="order-type">
+
+
+        <label class="order-type-option">
+
+            <input
+                type="radio"
+                name="orderType"
+                value="內用"
+                checked
+            >
+
+            <span>
+
+                🏪 內用
+
+            </span>
+
+        </label>
+
+
+        <label class="order-type-option">
+
+            <input
+                type="radio"
+                name="orderType"
+                value="外帶"
+            >
+
+            <span>
+
+                🥡 外帶
+
+            </span>
+
+        </label>
+
 
     </div>
+
+
+
+    <!-- =========================
+         外帶選項
+    ========================= -->
+
+    <div
+        id="takeout-options"
+        style="display:none;"
+    >
+
+        <label class="no-utensils-option">
+
+            <input
+                type="checkbox"
+                id="no-utensils"
+            >
+
+            <span>
+
+                ♻️ 不需要餐具
+
+            </span>
+
+        </label>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================
+     備註
+========================= -->
+
+<div class="checkout-card">
+
+    <h2>📝 備註</h2>
+
+
+    <textarea
+        id="order-note"
+        placeholder="有其他需求可以寫在這裡，例如：不要香菜、餐點分開裝等"
+    ></textarea>
+
+</div>
+
+
+
+<!-- =========================
+     送出訂單
+========================= -->
+
+<button
+    type="button"
+    id="submit-order"
+>
+
+    🛒 確認送出訂單
+
+</button>
+
+
+<!-- 返回點餐 -->
+
+<button
+    type="button"
+    id="back-to-order"
+    onclick="window.location.href='order.html'"
+>
+
+    ← 返回修改訂單
+
+</button>
+
 
 </main>
 
+
+
+<!-- =========================
+     JS
+========================= -->
+
 <script src="js/checkout.js"></script>
 
+
 </body>
+
 </html>
