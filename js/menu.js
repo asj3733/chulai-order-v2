@@ -237,7 +237,8 @@ const menu = {
         {
             id: "S006",
             name: "手工大腸",
-            price: 75
+            price: 75,
+            type:"sauce"
         }
 
     ],
