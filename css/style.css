@@ -914,3 +914,20 @@ label{
     background:#eee;
 
 }
+.brand-home{
+    display:inline-block;
+    color:#D4AF37;
+    text-decoration:none;
+    font-size:32px;
+    font-weight:bold;
+    letter-spacing:3px;
+    transition:.2s;
+}
+
+.brand-home:hover{
+    transform:scale(1.03);
+}
+
+.brand-home:active{
+    transform:scale(.97);
+}
