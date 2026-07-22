@@ -261,7 +261,11 @@ function addCartById(itemId) {
         ||
 
         item.type === "oden"
+        
+        ||
 
+        item.type === "sauce"
+        
     ) {
 
 
@@ -529,6 +533,22 @@ function openCustomModal(item) {
 
     }
 
+/*
+    手工大腸
+    顯示醬料選項
+*/
+
+else if (
+    item.type === "sauce"
+) {
+
+    noodleOption.style.display =
+        "none";
+
+    odenOption.style.display =
+        "block";
+
+}
 
     /*
         顯示視窗
@@ -728,7 +748,9 @@ function confirmCustom() {
 
     else if (
         currentItem.type ===
-        "oden"
+        "oden" ||
+
+    currentItem.type === "sauce"
     ) {
 
 
