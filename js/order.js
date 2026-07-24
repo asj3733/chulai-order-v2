@@ -1792,3 +1792,913 @@ console.log(
     "🍜 初萊食麵 order.js 最終正式版已載入"
 
 );
+/* =========================================
+   初萊食麵 V3
+   歡迎回來／一鍵再點
+========================================= */
+
+
+/*
+   V3 Google Apps Script 網址
+*/
+
+const V3_SCRIPT_URL =
+    "https://script.google.com/macros/s/AKfycbz2ZAJ0QOn99o1H6vMafP6Xnf8pzzuYqWPbvFJRHrcYuvBAUUtKn6W5rZKbe4w5PZXm3g/exec";
+
+
+/* =========================================
+   查詢客人
+========================================= */
+
+const welcomePhone =
+    document.getElementById(
+        "welcome-phone"
+    );
+
+
+const welcomeSearchBtn =
+    document.getElementById(
+        "welcome-search-btn"
+    );
+
+
+const welcomeResult =
+    document.getElementById(
+        "welcome-result"
+    );
+
+
+if (
+    welcomeSearchBtn
+) {
+
+    welcomeSearchBtn.addEventListener(
+        "click",
+        searchWelcomeCustomer
+    );
+
+}
+
+
+/* =========================================
+   輸入電話時
+   只允許數字
+========================================= */
+
+if (
+    welcomePhone
+) {
+
+    welcomePhone.addEventListener(
+        "input",
+        function() {
+
+            this.value =
+                this.value
+                .replace(
+                    /\D/g,
+                    ""
+                )
+                .slice(
+                    0,
+                    10
+                );
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   按 Enter 查詢
+========================================= */
+
+if (
+    welcomePhone
+) {
+
+    welcomePhone.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key ===
+                "Enter"
+            ) {
+
+                searchWelcomeCustomer();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   查詢客人
+========================================= */
+
+async function searchWelcomeCustomer() {
+
+
+    if (
+        !welcomePhone ||
+        !welcomeResult
+    ) {
+
+        return;
+
+    }
+
+
+    const phone =
+        welcomePhone.value
+        .trim();
+
+
+    /* =========================
+       電話格式驗證
+    ========================= */
+
+    if (
+        !/^09\d{8}$/.test(
+            phone
+        )
+    ) {
+
+        welcomeResult.style.display =
+            "block";
+
+
+        welcomeResult.innerHTML = `
+
+            <div class="welcome-error">
+
+                📱 請輸入正確的手機號碼
+
+            </div>
+
+        `;
+
+
+        return;
+
+    }
+
+
+    /* =========================
+       顯示查詢中
+    ========================= */
+
+    welcomeResult.style.display =
+        "block";
+
+
+    welcomeResult.innerHTML = `
+
+        <div class="welcome-loading">
+
+            🔍 正在查詢您的訂單...
+
+        </div>
+
+    `;
+
+
+    try {
+
+
+        const url =
+
+            V3_SCRIPT_URL +
+
+            "?action=findCustomer&phone=" +
+
+            encodeURIComponent(
+                phone
+            );
+
+
+        const response =
+            await fetch(
+                url
+            );
+
+
+        const data =
+            await response.json();
+
+
+        /* =========================
+           找到客人
+        ========================= */
+
+        if (
+            data.success &&
+            data.found &&
+            data.customer
+        ) {
+
+
+            const customer =
+                data.customer;
+
+
+            /*
+               儲存客人資料
+            */
+
+            localStorage.setItem(
+                "customerName",
+                customer.name ||
+                ""
+            );
+
+
+            localStorage.setItem(
+                "customerPhone",
+                customer.phone ||
+                phone
+            );
+
+
+            /*
+               儲存歷史訂單
+            */
+
+            localStorage.setItem(
+
+                "lastCustomerOrder",
+
+                JSON.stringify(
+                    customer
+                )
+
+            );
+
+
+            /*
+               顯示歡迎訊息
+            */
+
+            welcomeResult.innerHTML = `
+
+                <div class="welcome-success">
+
+                    <h3>
+
+                        👋 歡迎回來，
+                        ${escapeWelcomeText(
+                            customer.name ||
+                            "貴賓"
+                        )}！
+
+                    </h3>
+
+
+                    <p>
+
+                        很高興再次為您服務 ❤️
+
+                    </p>
+
+
+                    <div class="last-order-box">
+
+                        <strong>
+                            📋 您上次的訂單
+                        </strong>
+
+                        <div class="last-order-text">
+
+                            ${formatLastOrderText(
+                                customer.lastOrder
+                            )}
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="repeat-order-btn"
+                        onclick="repeatLastOrder()">
+
+                        🔄 一鍵再點上次餐點
+
+                    </button>
+
+
+                </div>
+
+            `;
+
+        }
+
+
+        /* =========================
+           找不到客人
+        ========================= */
+
+        else {
+
+
+            welcomeResult.innerHTML = `
+
+                <div class="welcome-new">
+
+                    <h3>
+
+                        👋 歡迎來到初萊食麵！
+
+                    </h3>
+
+
+                    <p>
+
+                        這是您第一次使用線上點餐，
+
+                        請開始選擇您喜歡的餐點 🍜
+
+                    </p>
+
+                </div>
+
+            `;
+
+        }
+
+
+    } catch (
+        error
+    ) {
+
+
+        console.error(
+            "V3 客戶查詢失敗",
+            error
+        );
+
+
+        welcomeResult.innerHTML = `
+
+            <div class="welcome-error">
+
+                ⚠️ 目前無法連線到點餐系統
+
+                <br>
+
+                請稍後再試
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================================
+   顯示歷史訂單
+========================================= */
+
+function formatLastOrderText(
+    order
+) {
+
+
+    if (
+        !order
+    ) {
+
+        return "目前沒有歷史訂單";
+
+    }
+
+
+    if (
+        Array.isArray(
+            order
+        )
+    ) {
+
+
+        return order
+            .map(
+
+                item =>
+
+                    escapeWelcomeText(
+                        item.text ||
+                        ""
+                    )
+
+            )
+            .join(
+                "<br>"
+            );
+
+    }
+
+
+    return escapeWelcomeText(
+        String(
+            order
+        )
+    )
+    .replace(
+        /\n/g,
+        "<br>"
+    );
+
+}
+
+
+/* =========================================
+   一鍵再點
+========================================= */
+
+function repeatLastOrder() {
+
+
+    const savedOrder =
+        localStorage.getItem(
+            "lastCustomerOrder"
+        );
+
+
+    if (
+        !savedOrder
+    ) {
+
+        alert(
+            "目前沒有找到上次訂單"
+        );
+
+
+        return;
+
+    }
+
+
+    try {
+
+
+        const customer =
+            JSON.parse(
+                savedOrder
+            );
+
+
+        const lastOrder =
+            customer.lastOrder;
+
+
+        if (
+            !Array.isArray(
+                lastOrder
+            ) ||
+            lastOrder.length === 0
+        ) {
+
+            alert(
+                "目前沒有可以再次訂購的餐點"
+            );
+
+
+            return;
+
+        }
+
+
+        let addedCount =
+            0;
+
+
+        lastOrder.forEach(
+            historyItem => {
+
+
+                const parsed =
+                    parseHistoryOrder(
+                        historyItem.text
+                    );
+
+
+                if (
+                    !parsed
+                ) {
+
+                    return;
+
+                }
+
+
+                const menuItem =
+                    findMenuItem(
+                        parsed.name
+                    );
+
+
+                if (
+                    !menuItem
+                ) {
+
+                    console.warn(
+                        "找不到歷史商品：",
+                        parsed.name
+                    );
+
+
+                    return;
+
+                }
+
+
+                /*
+                   建立客製化設定
+                */
+
+                const options = {
+
+                    noodle:
+                        parsed.options.noodle,
+
+                    spicy:
+                        parsed.options.spicy,
+
+                    vegetable:
+                        parsed.options.vegetable,
+
+                    onion:
+                        parsed.options.onion,
+
+                    sauce:
+                        parsed.options.sauce
+
+                };
+
+
+                /*
+                   加入購物車
+                */
+
+                addCartDirect(
+
+                    menuItem,
+
+                    options,
+
+                    parsed.qty
+
+                );
+
+
+                addedCount +=
+                    parsed.qty;
+
+            }
+        );
+
+
+        if (
+            addedCount > 0
+        ) {
+
+
+            alert(
+
+                "🔄 已將上次訂單加入購物車！"
+
+            );
+
+
+            updateCart();
+
+
+            window.scrollTo({
+
+                top:
+                    document.body.scrollHeight,
+
+                behavior:
+                    "smooth"
+
+            });
+
+        }
+
+        else {
+
+
+            alert(
+
+                "上次訂單中的商品目前找不到，請重新選擇餐點。"
+
+            );
+
+        }
+
+
+    } catch (
+        error
+    ) {
+
+
+        console.error(
+            "一鍵再點失敗",
+            error
+        );
+
+
+        alert(
+            "無法載入上次訂單，請重新選擇餐點。"
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   解析歷史訂單文字
+========================================= */
+
+function parseHistoryOrder(
+    text
+) {
+
+
+    if (
+        !text
+    ) {
+
+        return null;
+
+    }
+
+
+    const value =
+        String(
+            text
+        )
+        .trim();
+
+
+    /*
+       例如：
+
+       肉燥乾麵（大） × 1｜粗麵・不辣・不加蔥
+    */
+
+
+    const parts =
+        value.split(
+            "｜"
+        );
+
+
+    const main =
+        parts[0]
+        .trim();
+
+
+    const optionText =
+        parts.slice(
+            1
+        ).join(
+            "｜"
+        );
+
+
+    const qtyMatch =
+        main.match(
+            /×\s*(\d+)/
+        );
+
+
+    const qty =
+        qtyMatch
+            ? Number(
+                qtyMatch[1]
+            )
+            : 1;
+
+
+    const name =
+        main
+        .replace(
+            /×\s*\d+/,
+            ""
+        )
+        .trim();
+
+
+    const options = {
+
+        noodle:
+            null,
+
+        spicy:
+            null,
+
+        vegetable:
+            true,
+
+        onion:
+            true,
+
+        sauce:
+            null
+
+    };
+
+
+    if (
+        optionText
+    ) {
+
+
+        const optionList =
+            optionText
+            .split(
+                "・"
+            )
+            .map(
+                item =>
+                    item.trim()
+            );
+
+
+        optionList.forEach(
+            option => {
+
+
+                /*
+                   麵條
+                */
+
+                if (
+                    option ===
+                    "細麵"
+                    ||
+                    option ===
+                    "粗麵"
+                ) {
+
+                    options.noodle =
+                        option;
+
+                }
+
+
+                /*
+                   辣度
+                */
+
+                else if (
+
+                    option ===
+                    "不辣"
+                    ||
+                    option ===
+                    "小辣"
+                    ||
+                    option ===
+                    "中辣"
+                    ||
+                    option ===
+                    "大辣"
+
+                ) {
+
+                    options.spicy =
+                        option;
+
+                }
+
+
+                /*
+                   不加菜
+                */
+
+                else if (
+                    option ===
+                    "不加菜"
+                ) {
+
+                    options.vegetable =
+                        false;
+
+                }
+
+
+                /*
+                   不加蔥
+                */
+
+                else if (
+                    option ===
+                    "不加蔥"
+                ) {
+
+                    options.onion =
+                        false;
+
+                }
+
+
+                /*
+                   醬料
+                */
+
+                else if (
+                    option.includes(
+                        "醬油膏"
+                    )
+                    ||
+                    option.includes(
+                        "番茄醬"
+                    )
+                    ||
+                    option.includes(
+                        "辣椒"
+                    )
+                    ||
+                    option.includes(
+                        "都不加"
+                    )
+                ) {
+
+
+                    options.sauce =
+
+                        option
+                        .split(
+                            "＋"
+                        );
+
+                }
+
+            }
+        );
+
+    }
+
+
+    return {
+
+        name:
+            name,
+
+        qty:
+            qty,
+
+        options:
+            options
+
+    };
+
+}
+
+
+/* =========================================
+   防止 HTML 注入
+========================================= */
+
+function escapeWelcomeText(
+    text
+) {
+
+
+    return String(
+        text ||
+        ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
