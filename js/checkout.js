@@ -1,8 +1,15 @@
 /* =========================================
-   初萊食麵
-   checkout.js
-   結帳頁面正式版
+   初萊食麵 V3
+   checkout.js 最終正式版
 ========================================= */
+
+
+/* =========================================
+   V3 API
+========================================= */
+
+const V3_SCRIPT_URL =
+    "https://script.google.com/macros/s/AKfycbz2ZAJ0QOn99o1H6vMafP6Xnf8pzzuYqWPbvFJRHrcYuvBAUUtKn6W5rZKbe4w5PZXm3g/exec";
 
 
 /* =========================================
@@ -15,20 +22,19 @@ const cart =
     ) || [];
 
 
-
 /* =========================================
-   取得 HTML 元素
+   DOM
 ========================================= */
 
-const checkoutCart =
+const orderList =
     document.getElementById(
-        "checkout-cart"
+        "order-list"
     );
 
 
-const checkoutTotal =
+const orderTotal =
     document.getElementById(
-        "checkout-total"
+        "order-total"
     );
 
 
@@ -44,15 +50,21 @@ const phoneInput =
     );
 
 
-const orderNote =
+const phoneError =
     document.getElementById(
-        "order-note"
+        "phone-error"
     );
 
 
-const submitOrderBtn =
+const welcomeCustomer =
     document.getElementById(
-        "submit-order"
+        "welcome-customer"
+    );
+
+
+const welcomeName =
+    document.getElementById(
+        "welcome-name"
     );
 
 
@@ -62,294 +74,64 @@ const takeoutOptions =
     );
 
 
-const noUtensils =
-    document.getElementById(
-        "no-utensils"
-    );
-
-
-const reservationTime =
-    document.getElementById(
-        "reservation-time"
-    );
-
-
-const pickupDate =
-    document.getElementById(
-        "pickup-date"
-    );
-
-
 const pickupTime =
     document.getElementById(
         "pickup-time"
     );
 
 
-
-/* =========================================
-   載入上次姓名
-========================================= */
-
-if (nameInput) {
-
-    nameInput.value =
-        localStorage.getItem(
-            "customerName"
-        ) || "";
-
-}
-
-
-
-/* =========================================
-   載入上次電話
-========================================= */
-
-if (phoneInput) {
-
-    phoneInput.value =
-        localStorage.getItem(
-            "customerPhone"
-        ) || "";
-
-}
-
-
-
-/* =========================================
-   即時儲存姓名
-========================================= */
-
-if (nameInput) {
-
-    nameInput.addEventListener(
-        "input",
-        function() {
-
-            localStorage.setItem(
-                "customerName",
-                nameInput.value
-            );
-
-        }
+const customerNote =
+    document.getElementById(
+        "customer-note"
     );
 
-}
 
-
-
-/* =========================================
-   即時儲存電話
-========================================= */
-
-if (phoneInput) {
-
-    phoneInput.addEventListener(
-        "input",
-        function() {
-
-            localStorage.setItem(
-                "customerPhone",
-                phoneInput.value
-            );
-
-        }
+const submitBtn =
+    document.getElementById(
+        "submit-order-btn"
     );
 
-}
 
-
-
-/* =========================================
-   顯示客製化內容
-========================================= */
-
-function getOptionText(item) {
-
-
-    const options =
-        item.options || {};
-
-
-    const texts = [];
-
-
-
-    /* 麵條 */
-
-    if (
-        options.noodle
-    ) {
-
-        texts.push(
-            options.noodle
-        );
-
-    }
-
-
-
-    /* 辣度 */
-
-    if (
-        options.spicy
-    ) {
-
-        texts.push(
-            options.spicy
-        );
-
-    }
-
-
-
-    /* 不加菜 */
-
-    if (
-        options.vegetable === false
-    ) {
-
-        texts.push(
-            "不加菜"
-        );
-
-    }
-
-
-
-    /* 不加蔥 */
-
-    if (
-        options.onion === false
-    ) {
-
-        texts.push(
-            "不加蔥"
-        );
-
-    }
-
-
-
-    /* 醬料 */
-
-    if (
-        options.sauce
-    ) {
-
-
-        if (
-            Array.isArray(
-                options.sauce
-            )
-        ) {
-
-            texts.push(
-
-                options.sauce.join(
-                    "＋"
-                )
-
-            );
-
-        }
-
-        else {
-
-            texts.push(
-                options.sauce
-            );
-
-        }
-
-    }
-
-
-
-    /* 沒有客製 */
-
-    if (
-        texts.length === 0
-    ) {
-
-        return "";
-
-    }
-
-
-
-    return `
-
-        <div class="checkout-options">
-
-            ${texts.join(" ・ ")}
-
-        </div>
-
-    `;
-
-}
-
+const submitResult =
+    document.getElementById(
+        "submit-result"
+    );
 
 
 /* =========================================
-   顯示購物車
+   顯示訂單
 ========================================= */
 
-function renderCheckout() {
+function renderOrder() {
 
 
-    if (!checkoutCart) {
+    if (
+        !orderList
+    ) {
 
         return;
 
     }
 
-
-
-    /* 購物車空 */
 
     if (
         cart.length === 0
     ) {
 
 
-        checkoutCart.innerHTML = `
+        orderList.innerHTML = `
 
-            <div class="empty-cart">
-
-                <p>
-                    🛒 購物車目前是空的
-                </p>
-
-
-                <button
-                    type="button"
-                    onclick="window.location.href='order.html'"
-                >
-
-                    返回點餐
-
-                </button>
-
-            </div>
+            <p>
+                購物車目前沒有商品
+            </p>
 
         `;
 
 
-        if (checkoutTotal) {
+        if (orderTotal) {
 
-            checkoutTotal.textContent =
+            orderTotal.textContent =
                 "0";
-
-        }
-
-
-        if (submitOrderBtn) {
-
-            submitOrderBtn.disabled =
-                true;
 
         }
 
@@ -357,7 +139,6 @@ function renderCheckout() {
         return;
 
     }
-
 
 
     let html = "";
@@ -365,16 +146,11 @@ function renderCheckout() {
     let total = 0;
 
 
-
-    /* 商品 */
-
     cart.forEach(
-
         item => {
 
 
             const subtotal =
-
                 item.price *
                 item.qty;
 
@@ -383,35 +159,147 @@ function renderCheckout() {
                 subtotal;
 
 
+            let optionText = "";
+
+
+            if (
+                item.options
+            ) {
+
+
+                const options =
+                    item.options;
+
+
+                const optionList =
+                    [];
+
+
+                if (
+                    options.noodle
+                ) {
+
+                    optionList.push(
+                        options.noodle
+                    );
+
+                }
+
+
+                if (
+                    options.spicy
+                ) {
+
+                    optionList.push(
+                        options.spicy
+                    );
+
+                }
+
+
+                if (
+                    options.vegetable ===
+                    false
+                ) {
+
+                    optionList.push(
+                        "不加菜"
+                    );
+
+                }
+
+
+                if (
+                    options.onion ===
+                    false
+                ) {
+
+                    optionList.push(
+                        "不加蔥"
+                    );
+
+                }
+
+
+                if (
+                    options.sauce
+                ) {
+
+
+                    if (
+                        Array.isArray(
+                            options.sauce
+                        )
+                    ) {
+
+                        optionList.push(
+
+                            options.sauce.join(
+                                "＋"
+                            )
+
+                        );
+
+                    }
+
+                    else {
+
+                        optionList.push(
+                            options.sauce
+                        );
+
+                    }
+
+                }
+
+
+                if (
+                    optionList.length > 0
+                ) {
+
+
+                    optionText = `
+
+                        <div class="order-options">
+
+                            ${optionList.join(
+                                " ・ "
+                            )}
+
+                        </div>
+
+                    `;
+
+                }
+
+            }
+
 
             html += `
 
                 <div class="checkout-item">
 
-
-                    <div class="checkout-item-info">
-
+                    <div>
 
                         <strong>
 
-                            ${item.name}
+                            ${escapeHTML(
+                                item.name
+                            )}
 
                         </strong>
 
 
-                        ${getOptionText(item)}
+                        ${optionText}
 
 
-                        <div class="checkout-price">
+                        <div>
 
                             NT$${item.price}
-
                             ×
-
                             ${item.qty}
 
                         </div>
-
 
                     </div>
 
@@ -422,25 +310,40 @@ function renderCheckout() {
 
                     </strong>
 
-
                 </div>
 
             `;
 
         }
-
     );
 
 
+    html += `
 
-    checkoutCart.innerHTML =
+        <hr>
+
+        <div class="checkout-total-row">
+
+            <strong>
+                合計
+            </strong>
+
+            <strong>
+                NT$${total}
+            </strong>
+
+        </div>
+
+    `;
+
+
+    orderList.innerHTML =
         html;
 
 
+    if (orderTotal) {
 
-    if (checkoutTotal) {
-
-        checkoutTotal.textContent =
+        orderTotal.textContent =
             total;
 
     }
@@ -448,78 +351,241 @@ function renderCheckout() {
 }
 
 
+/* =========================================
+   載入歡迎回來資料
+========================================= */
+
+function loadCustomerData() {
+
+
+    const savedName =
+        localStorage.getItem(
+            "customerName"
+        ) || "";
+
+
+    const savedPhone =
+        localStorage.getItem(
+            "customerPhone"
+        ) || "";
+
+
+    if (
+        nameInput
+    ) {
+
+        nameInput.value =
+            savedName;
+
+    }
+
+
+    if (
+        phoneInput
+    ) {
+
+        phoneInput.value =
+            savedPhone;
+
+    }
+
+
+    if (
+        savedName
+    ) {
+
+
+        welcomeCustomer.style.display =
+            "block";
+
+
+        welcomeName.textContent =
+            savedName;
+
+    }
+
+}
+
+
+/* =========================================
+   儲存顧客資料
+========================================= */
+
+function saveCustomerData() {
+
+
+    if (
+        nameInput
+    ) {
+
+        localStorage.setItem(
+
+            "customerName",
+
+            nameInput.value.trim()
+
+        );
+
+    }
+
+
+    if (
+        phoneInput
+    ) {
+
+        localStorage.setItem(
+
+            "customerPhone",
+
+            phoneInput.value.trim()
+
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   電話只允許數字
+========================================= */
+
+if (
+    phoneInput
+) {
+
+
+    phoneInput.addEventListener(
+
+        "input",
+
+        function() {
+
+
+            this.value =
+
+                this.value
+
+                .replace(
+                    /\D/g,
+                    ""
+                )
+
+                .slice(
+                    0,
+                    10
+                );
+
+
+            if (
+                phoneError
+            ) {
+
+                phoneError.style.display =
+                    "none";
+
+            }
+
+        }
+
+    );
+
+}
+
+
+/* =========================================
+   電話格式驗證
+========================================= */
+
+function validatePhone() {
+
+
+    const phone =
+        phoneInput.value.trim();
+
+
+    const valid =
+        /^09\d{8}$/.test(
+            phone
+        );
+
+
+    if (
+        !valid
+    ) {
+
+
+        phoneError.style.display =
+            "block";
+
+
+        phoneError.textContent =
+
+            "📱 請輸入正確的手機號碼，例如 0912345678";
+
+
+        phoneInput.focus();
+
+
+        return false;
+
+    }
+
+
+    phoneError.style.display =
+        "none";
+
+
+    return true;
+
+}
+
 
 /* =========================================
    內用／外帶
 ========================================= */
 
-const orderTypeInputs =
+document.querySelectorAll(
 
-    document.querySelectorAll(
+    'input[name="order-type"]'
 
-        'input[name="orderType"]'
+).forEach(
 
-    );
-
-
-orderTypeInputs.forEach(
-
-    input => {
+    radio => {
 
 
-        input.addEventListener(
+        radio.addEventListener(
 
             "change",
 
             function() {
 
-
-                /* 外帶 */
 
                 if (
                     this.value ===
                     "外帶"
+
+                    &&
+
+                    this.checked
                 ) {
 
 
-                    if (takeoutOptions) {
+                    takeoutOptions.style.display =
+                        "block";
 
-                        takeoutOptions.style.display =
-                            "block";
 
-                    }
+                    generatePickupTimes();
 
 
                 }
 
 
-                /* 內用 */
-
                 else {
 
 
-                    if (takeoutOptions) {
-
-                        takeoutOptions.style.display =
-                            "none";
-
-                    }
-
-
-                    if (reservationTime) {
-
-                        reservationTime.style.display =
-                            "none";
-
-                    }
-
-
-                    if (noUtensils) {
-
-                        noUtensils.checked =
-                            false;
-
-                    }
+                    takeoutOptions.style.display =
+                        "none";
 
                 }
 
@@ -532,610 +598,712 @@ orderTypeInputs.forEach(
 );
 
 
-
 /* =========================================
-   儘快取餐／提前預約
+   產生取餐時間
 ========================================= */
 
-const pickupTimeTypeInputs =
+function generatePickupTimes() {
 
-    document.querySelectorAll(
 
-        'input[name="pickupTimeType"]'
+    if (
+        !pickupTime
+    ) {
+
+        return;
+
+    }
+
+
+    pickupTime.innerHTML = `
+
+        <option value="">
+            請選擇取餐時間
+        </option>
+
+    `;
+
+
+    const now =
+        new Date();
+
+
+    /*
+        從現在起
+        最早 30 分鐘後
+    */
+
+    now.setMinutes(
+
+        now.getMinutes()
+        +
+        30
 
     );
 
 
-pickupTimeTypeInputs.forEach(
+    /*
+        以 10 分鐘為單位
+    */
 
-    input => {
+    now.setMinutes(
 
+        Math.ceil(
+            now.getMinutes()
+            /
+            10
+        )
+        *
+        10
 
-        input.addEventListener(
-
-            "change",
-
-            function() {
-
-
-                if (
-                    this.value ===
-                    "提前預約"
-                ) {
-
-
-                    if (reservationTime) {
-
-                        reservationTime.style.display =
-                            "block";
-
-                    }
+    );
 
 
-                    /* 設定最小日期為今天 */
+    /*
+        提供未來 3 小時
+    */
 
-                    if (pickupDate) {
-
-                        const today =
-                            new Date();
-
-
-                        const year =
-                            today.getFullYear();
-
-
-                        const month =
-                            String(
-                                today.getMonth() + 1
-                            ).padStart(
-                                2,
-                                "0"
-                            );
+    for (
+        let i = 0;
+        i < 18;
+        i++
+    ) {
 
 
-                        const day =
-                            String(
-                                today.getDate()
-                            ).padStart(
-                                2,
-                                "0"
-                            );
+        const time =
+            new Date(
+                now.getTime()
+                +
+                i *
+                10 *
+                60 *
+                1000
+            );
 
 
-                        pickupDate.min =
-
-                            `${year}-${month}-${day}`;
-
-                    }
-
-
-                }
-
-
-                else {
+        const hour =
+            String(
+                time.getHours()
+            )
+            .padStart(
+                2,
+                "0"
+            );
 
 
-                    if (reservationTime) {
-
-                        reservationTime.style.display =
-                            "none";
-
-                    }
-
-
-                    if (pickupDate) {
-
-                        pickupDate.value =
-                            "";
-
-                    }
+        const minute =
+            String(
+                time.getMinutes()
+            )
+            .padStart(
+                2,
+                "0"
+            );
 
 
-                    if (pickupTime) {
+        const value =
+            `${hour}:${minute}`;
 
-                        pickupTime.value =
-                            "";
 
-                    }
+        const option =
+            document.createElement(
+                "option"
+            );
 
-                }
 
-            }
+        option.value =
+            value;
 
+
+        option.textContent =
+            value;
+
+
+        pickupTime.appendChild(
+            option
         );
 
     }
-
-);
-
-
-
-/* =========================================
-   取得取餐方式
-========================================= */
-
-function getOrderType() {
-
-
-    const selected =
-
-        document.querySelector(
-
-            'input[name="orderType"]:checked'
-
-        );
-
-
-    return selected
-
-        ? selected.value
-
-        : "內用";
 
 }
-
-
-
-/* =========================================
-   取得取餐時間
-========================================= */
-
-function getPickupTime() {
-
-
-    const orderType =
-        getOrderType();
-
-
-
-    /* 內用 */
-
-    if (
-        orderType ===
-        "內用"
-    ) {
-
-        return "";
-
-    }
-
-
-
-    const selectedPickupType =
-
-        document.querySelector(
-
-            'input[name="pickupTimeType"]:checked'
-
-        );
-
-
-
-    if (
-        !selectedPickupType
-    ) {
-
-        return "儘快取餐";
-
-    }
-
-
-
-    /* 儘快取餐 */
-
-    if (
-        selectedPickupType.value ===
-        "儘快取餐"
-    ) {
-
-        return "儘快取餐";
-
-    }
-
-
-
-    /* 提前預約 */
-
-    if (
-        selectedPickupType.value ===
-        "提前預約"
-    ) {
-
-
-        if (
-            !pickupDate.value
-            ||
-            !pickupTime.value
-        ) {
-
-            return null;
-
-        }
-
-
-        return (
-
-            pickupDate.value
-            +
-            " "
-            +
-            pickupTime.value
-
-        );
-
-    }
-
-
-    return "儘快取餐";
-
-}
-
 
 
 /* =========================================
    送出訂單
 ========================================= */
 
-if (submitOrderBtn) {
+if (
+    submitBtn
+) {
 
 
-    submitOrderBtn.addEventListener(
+    submitBtn.addEventListener(
+
+        "click",
+
+        submitOrder
+
+    );
+
+}
+
+
+/* =========================================
+   正式送單
+========================================= */
+
+async function submitOrder() {
+
+
+    /*
+        防止重複點擊
+    */
+
+    if (
+        submitBtn.disabled
+    ) {
+
+        return;
+
+    }
+
+
+    /*
+        購物車檢查
+    */
+
+    if (
+        cart.length === 0
+    ) {
+
+
+        alert(
+            "購物車目前是空的"
+        );
+
+
+        return;
+
+    }
+
+
+    /*
+        姓名
+    */
+
+    const name =
+        nameInput.value.trim();
+
+
+    if (
+        !name
+    ) {
+
+
+        alert(
+            "請輸入姓名"
+        );
+
+
+        nameInput.focus();
+
+
+        return;
+
+    }
+
+
+    /*
+        電話
+    */
+
+    if (
+        !validatePhone()
+    ) {
+
+        return;
+
+    }
+
+
+    /*
+        取餐方式
+    */
+
+    const orderType =
+        document.querySelector(
+
+            'input[name="order-type"]:checked'
+
+        )?.value
+        ||
+        "內用";
+
+
+    /*
+        餐具
+    */
+
+    let tableware =
+        "";
+
+
+    /*
+        外帶才需要餐具
+    */
+
+    if (
+        orderType ===
+        "外帶"
+    ) {
+
+
+        if (
+            !pickupTime.value
+        ) {
+
+
+            alert(
+                "請選擇外帶取餐時間"
+            );
+
+
+            pickupTime.focus();
+
+
+            return;
+
+        }
+
+
+        tableware =
+
+            document.querySelector(
+
+                'input[name="tableware"]:checked'
+
+            )?.value
+            ||
+            "需要餐具";
+
+    }
+
+
+    /*
+        備註
+        保持客人自己輸入
+    */
+
+    const note =
+        customerNote.value.trim();
+
+
+    /*
+        計算總金額
+    */
+
+    const total =
+        cart.reduce(
+
+            (sum, item) =>
+
+                sum
+                +
+                item.price *
+                item.qty,
+
+            0
+
+        );
+
+
+    /*
+        整理訂單商品
+    */
+
+    const items =
+        cart.map(
+
+            item => {
+
+
+                const options =
+                    item.options ||
+                    {};
+
+
+                const optionText =
+                    [];
+
+
+                if (
+                    options.noodle
+                ) {
+
+                    optionText.push(
+                        options.noodle
+                    );
+
+                }
+
+
+                if (
+                    options.spicy
+                ) {
+
+                    optionText.push(
+                        options.spicy
+                    );
+
+                }
+
+
+                if (
+                    options.vegetable ===
+                    false
+                ) {
+
+                    optionText.push(
+                        "不加菜"
+                    );
+
+                }
+
+
+                if (
+                    options.onion ===
+                    false
+                ) {
+
+                    optionText.push(
+                        "不加蔥"
+                    );
+
+                }
+
+
+                if (
+                    options.sauce
+                ) {
+
+
+                    if (
+                        Array.isArray(
+                            options.sauce
+                        )
+                    ) {
+
+
+                        optionText.push(
+
+                            options.sauce.join(
+                                "＋"
+                            )
+
+                        );
+
+                    }
+
+                    else {
+
+
+                        optionText.push(
+                            options.sauce
+                        );
+
+                    }
+
+                }
+
+
+                return {
+
+                    name:
+                        item.name,
+
+                    qty:
+                        item.qty,
+
+                    price:
+                        item.price,
+
+                    subtotal:
+                        item.price *
+                        item.qty,
+
+                    options:
+                        optionText.join(
+                            " ・ "
+                        )
+
+                };
+
+            }
+
+        );
+
+
+    /*
+        建立訂單資料
+    */
+
+    const orderData = {
+
+
+        action:
+            "newOrder",
+
+
+        name:
+            name,
+
+
+        phone:
+            phoneInput.value.trim(),
+
+
+        orderType:
+            orderType,
+
+
+        pickupTime:
+            orderType ===
+            "外帶"
+
+            ?
+
+            pickupTime.value
+
+            :
+
+            "",
+
+
+        tableware:
+            tableware,
+
+
+        note:
+            note,
+
+
+        total:
+            total,
+
+
+        items:
+            items
+
+
+    };
+
+
+    /*
+        顯示送單中
+    */
+
+    submitBtn.disabled =
+        true;
+
+
+    submitBtn.textContent =
+        "📲 訂單傳送中...";
+
+
+    try {
+
+
+        const response =
+            await fetch(
+
+                V3_SCRIPT_URL,
+
+                {
+
+                    method:
+                        "POST",
+
+
+                    headers: {
+
+                        "Content-Type":
+                            "text/plain;charset=utf-8"
+
+                    },
+
+
+                    body:
+                        JSON.stringify(
+                            orderData
+                        )
+
+                }
+
+            );
+
+
+        const result =
+            await response.json();
+
+
+        /*
+            成功
+        */
+
+        if (
+            result.success
+        ) {
+
+
+            localStorage.setItem(
+
+                "customerName",
+
+                name
+
+            );
+
+
+            localStorage.setItem(
+
+                "customerPhone",
+
+                phoneInput.value.trim()
+
+            );
+
+
+            /*
+                清除購物車
+            */
+
+            localStorage.removeItem(
+                "cart"
+            );
+
+
+            submitResult.style.display =
+                "block";
+
+
+            submitResult.innerHTML = `
+
+                <div class="success-box">
+
+                    <h2>
+                        ✅ 訂單已送出！
+                    </h2>
+
+
+                    <p>
+                        感謝您選擇初萊食麵 ❤️
+                    </p>
+
+
+                    <p>
+                        店家已收到您的訂單。
+                    </p>
+
+
+                    <p>
+                        ${orderType === "外帶"
+                            ? "請依照您選擇的時間前來取餐。"
+                            : "我們會盡快為您準備餐點。"
+                        }
+                    </p>
+
+                </div>
+
+            `;
+
+
+            submitBtn.style.display =
+                "none";
+
+
+            window.scrollTo({
+
+                top:
+                    document.body.scrollHeight,
+
+                behavior:
+                    "smooth"
+
+            });
+
+
+        }
+
+
+        else {
+
+
+            throw new Error(
+
+                result.message
+                ||
+                "訂單送出失敗"
+
+            );
+
+        }
+
+
+    }
+
+    catch (
+        error
+    ) {
+
+
+        console.error(
+            "訂單送出錯誤",
+            error
+        );
+
+
+        alert(
+
+            "⚠️ 訂單送出失敗，請確認網路後再試一次。"
+
+        );
+
+
+        submitBtn.disabled =
+            false;
+
+
+        submitBtn.textContent =
+            "📲 送出訂單";
+
+    }
+
+}
+
+
+/* =========================================
+   返回修改餐點
+========================================= */
+
+const backOrderBtn =
+    document.getElementById(
+        "back-order-btn"
+    );
+
+
+if (
+    backOrderBtn
+) {
+
+
+    backOrderBtn.addEventListener(
 
         "click",
 
         function() {
 
 
-            /* 防止重複點擊 */
-
-            if (
-                submitOrderBtn.disabled
-            ) {
-
-                return;
-
-            }
-
-
-
-            /* 購物車檢查 */
-
-            if (
-                cart.length === 0
-            ) {
-
-                alert(
-
-                    "購物車目前是空的，" +
-                    "請先加入餐點！"
-
-                );
-
-                return;
-
-            }
-
-
-
-            /* 姓名 */
-
-            const customerName =
-
-                nameInput
-
-                    ? nameInput.value.trim()
-
-                    : "";
-
-
-
-            if (
-                !customerName
-            ) {
-
-                alert(
-                    "請輸入您的姓名！"
-                );
-
-
-                if (nameInput) {
-
-                    nameInput.focus();
-
-                }
-
-
-                return;
-
-            }
-
-
-
-            /* 電話 */
-
-            const customerPhone =
-
-                phoneInput
-
-                    ? phoneInput.value.trim()
-
-                    : "";
-
-
-
-            if (
-                !customerPhone
-            ) {
-
-                alert(
-                    "請輸入您的電話！"
-                );
-
-
-                if (phoneInput) {
-
-                    phoneInput.focus();
-
-                }
-
-
-                return;
-
-            }
-
-
-
-            /* 取餐方式 */
-
-            const orderType =
-                getOrderType();
-
-
-
-            /* 取餐時間 */
-
-            const pickupTimeValue =
-                getPickupTime();
-
-
-
-            /* 提前預約但沒有選時間 */
-
-            if (
-                orderType === "外帶"
-                &&
-                pickupTimeValue === null
-            ) {
-
-                alert(
-
-                    "請選擇預約的取餐日期與時間！"
-
-                );
-
-
-                return;
-
-            }
-
-
-
-            /* 餐具 */
-
-            let noUtensilsValue =
-                false;
-
-
-
-            if (
-                orderType === "外帶"
-                &&
-                noUtensils
-                &&
-                noUtensils.checked
-            ) {
-
-                noUtensilsValue =
-                    true;
-
-            }
-
-
-
-            /* 備註 */
-
-            const note =
-
-                orderNote
-
-                    ? orderNote.value.trim()
-
-                    : "";
-
-
-
-            /* 計算總金額 */
-
-            let total = 0;
-
-
-
-            cart.forEach(
-
-                item => {
-
-                    total +=
-
-                        item.price *
-                        item.qty;
-
-                }
-
-            );
-
-
-
-            /* 訂單資料 */
-
-            const orderData = {
-
-
-                customerName:
-                    customerName,
-
-
-                customerPhone:
-                    customerPhone,
-
-
-                orderType:
-                    orderType,
-
-
-                pickupTime:
-                    pickupTimeValue,
-
-
-                noUtensils:
-                    noUtensilsValue,
-
-
-                note:
-                    note,
-
-
-                items:
-                    cart,
-
-
-                total:
-                    total,
-
-
-                orderTime:
-                    new Date().toISOString()
-
-
-            };
-
-
-
-            /* 測試查看 */
-
-            console.log(
-
-                "🍜 初萊食麵訂單：",
-
-                orderData
-
-            );
-
-
-
-            /* 防止重複送出 */
-
-            submitOrderBtn.disabled =
-                true;
-
-
-            submitOrderBtn.textContent =
-                "訂單送出中...";
-
-
-
-            /*
-                目前先模擬送出成功
-
-                下一步接 LINE 通知
-            */
-
-            setTimeout(
-
-                function() {
-
-
-                    let message =
-
-                        "🎉 訂單已成功送出！\n\n";
-
-
-                    message +=
-
-                        "姓名：" +
-                        customerName +
-                        "\n";
-
-
-                    message +=
-
-                        "取餐方式：" +
-                        orderType +
-                        "\n";
-
-
-
-                    /* 外帶才顯示 */
-
-                    if (
-                        orderType ===
-                        "外帶"
-                    ) {
-
-
-                        message +=
-
-                            "取餐時間：" +
-                            pickupTimeValue +
-                            "\n";
-
-
-
-                        if (
-                            noUtensilsValue
-                        ) {
-
-                            message +=
-
-                                "餐具：不需要\n";
-
-                        }
-
-                    }
-
-
-
-                    message +=
-
-                        "總金額：NT$" +
-                        total;
-
-
-
-                    alert(
-                        message
-                    );
-
-
-
-                    /* 清空購物車 */
-
-                    localStorage.removeItem(
-                        "cart"
-                    );
-
-
-
-                    /* 回首頁 */
-
-                    window.location.href =
-                        "index.html";
-
-
-                },
-
-                500
-
-            );
+            window.location.href =
+                "order.html";
 
         }
 
@@ -1144,17 +1312,59 @@ if (submitOrderBtn) {
 }
 
 
+/* =========================================
+   防止 HTML 注入
+========================================= */
+
+function escapeHTML(
+    text
+) {
+
+
+    return String(
+        text ||
+        ""
+    )
+
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+
+    .replace(
+        /</g,
+        "&lt;"
+    )
+
+    .replace(
+        />/g,
+        "&gt;"
+    )
+
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
 
 /* =========================================
    初始化
 ========================================= */
 
-renderCheckout();
+renderOrder();
 
+loadCustomerData();
 
 
 console.log(
 
-    "🍜 初萊食麵 checkout.js 正式版已載入"
+    "🍜 初萊食麵 V3 checkout.js 已載入"
 
 );
