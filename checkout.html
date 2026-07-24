@@ -7,20 +7,17 @@
 
 <meta
     name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+    content="width=device-width, initial-scale=1.0">
 
 <title>初萊食麵｜確認訂單</title>
 
 <link
     rel="stylesheet"
-    href="css/style.css"
->
+    href="css/style.css">
 
 <link
     rel="stylesheet"
-    href="css/checkout.css"
->
+    href="css/checkout.css">
 
 </head>
 
@@ -36,12 +33,9 @@
 
     <a
         href="index.html"
-        class="brand-link"
-    >
+        class="brand-home">
 
-        <h1>
-            🍜 初萊食麵
-        </h1>
+        🍜 初萊食麵
 
     </a>
 
@@ -57,30 +51,36 @@
 
 
 <!-- =========================
+     歡迎回來
+========================= -->
+
+<section
+    id="welcome-customer"
+    class="welcome-customer"
+    style="display:none;">
+
+    👋 歡迎回來，
+
+    <strong id="welcome-name"></strong>
+
+</section>
+
+
+
+<!-- =========================
      訂單內容
 ========================= -->
 
-<section class="checkout-card">
+<section class="checkout-section">
 
     <h2>
-        🛒 我的訂單
+        🛒 您的訂單
     </h2>
 
 
-    <div id="checkout-cart">
+    <div id="order-list">
 
-        載入中...
-
-    </div>
-
-
-    <div class="checkout-total">
-
-        合計 NT$
-
-        <span id="checkout-total">
-            0
-        </span>
+        尚未加入商品
 
     </div>
 
@@ -92,40 +92,49 @@
      顧客資料
 ========================= -->
 
-<section class="checkout-card">
+<section class="checkout-section">
 
     <h2>
         👤 顧客資料
     </h2>
 
 
-    <label for="customer-name">
+    <label>
 
         姓名
 
-    </label>
-
-    <input
-        type="text"
-        id="customer-name"
-        placeholder="請輸入您的姓名"
-        autocomplete="name"
-    >
-
-
-
-    <label for="customer-phone">
-
-        電話
+        <input
+            type="text"
+            id="customer-name"
+            placeholder="請輸入姓名"
+            autocomplete="name">
 
     </label>
 
-    <input
-        type="tel"
-        id="customer-phone"
-        placeholder="請輸入您的電話"
-        autocomplete="tel"
-    >
+
+    <label>
+
+        手機號碼
+
+        <input
+            type="tel"
+            id="customer-phone"
+            placeholder="09xxxxxxxx"
+            maxlength="10"
+            inputmode="numeric"
+            autocomplete="tel">
+
+    </label>
+
+
+    <div
+        id="phone-error"
+        class="form-error"
+        style="display:none;">
+
+        請輸入正確的手機號碼
+
+    </div>
 
 </section>
 
@@ -135,156 +144,98 @@
      取餐方式
 ========================= -->
 
-<section class="checkout-card">
+<section class="checkout-section">
 
     <h2>
-        🍽️ 取餐方式
+        🍜 取餐方式
     </h2>
 
 
-    <div class="order-type">
+    <label class="choice-label">
+
+        <input
+            type="radio"
+            name="order-type"
+            value="內用"
+            checked>
+
+        內用
+
+    </label>
 
 
-        <label>
+    <label class="choice-label">
 
-            <input
-                type="radio"
-                name="orderType"
-                value="內用"
-                checked
-            >
+        <input
+            type="radio"
+            name="order-type"
+            value="外帶">
 
-            🏠 內用
+        外帶
 
-        </label>
+    </label>
 
-
-
-        <label>
-
-            <input
-                type="radio"
-                name="orderType"
-                value="外帶"
-            >
-
-            🛍️ 外帶
-
-        </label>
-
-
-    </div>
+</section>
 
 
 
-    <!-- =========================
-         外帶選項
-    ========================= -->
+<!-- =========================
+     外帶設定
+========================= -->
 
-    <div
-        id="takeout-options"
-        style="display:none;"
-    >
+<section
+    id="takeout-options"
+    class="checkout-section"
+    style="display:none;">
 
-
-        <h3>
-            🕐 取餐時間
-        </h3>
-
-
-        <div class="pickup-time-options">
+    <h2>
+        🥡 外帶設定
+    </h2>
 
 
-            <label>
+    <label>
 
-                <input
-                    type="radio"
-                    name="pickupTimeType"
-                    value="儘快取餐"
-                    checked
-                >
+        取餐時間
 
-                ⚡ 儘快取餐
+        <select id="pickup-time">
 
-            </label>
+            <option value="">
+                請選擇取餐時間
+            </option>
 
+        </select>
 
-
-            <label>
-
-                <input
-                    type="radio"
-                    name="pickupTimeType"
-                    value="提前預約"
-                >
-
-                🕐 提前預約
-
-            </label>
+    </label>
 
 
-        </div>
+    <h3>
+        🍴 餐具
+    </h3>
 
 
+    <label class="choice-label">
 
-        <!-- =========================
-             預約日期時間
-        ========================= -->
+        <input
+            type="radio"
+            name="tableware"
+            value="需要餐具"
+            checked>
 
-        <div
-            id="reservation-time"
-            style="display:none;"
-        >
+        需要餐具
 
-
-            <label for="pickup-date">
-
-                📅 取餐日期
-
-            </label>
+    </label>
 
 
-            <input
-                type="date"
-                id="pickup-date"
-            >
+    <label class="choice-label">
 
+        <input
+            type="radio"
+            name="tableware"
+            value="不需要餐具">
 
+        不需要餐具
 
-            <label for="pickup-time">
-
-                ⏰ 取餐時間
-
-            </label>
-
-
-            <input
-                type="time"
-                id="pickup-time"
-            >
-
-
-        </div>
-
-
-
-        <!-- =========================
-             不需餐具
-        ========================= -->
-
-        <label class="no-utensils-option">
-
-            <input
-                type="checkbox"
-                id="no-utensils"
-            >
-
-            ♻️ 外帶不需要餐具
-
-        </label>
-
-
-    </div>
+    </label>
 
 </section>
 
@@ -294,7 +245,7 @@
      備註
 ========================= -->
 
-<section class="checkout-card">
+<section class="checkout-section">
 
     <h2>
         📝 備註
@@ -302,10 +253,27 @@
 
 
     <textarea
-        id="order-note"
-        placeholder="有其他需要告知店家的事項再填寫即可"
-    ></textarea>
+        id="customer-note"
+        rows="4"
+        placeholder="有其他需要告知店家的事項，可以填寫在這裡"></textarea>
 
+</section>
+
+
+
+<!-- =========================
+     總金額
+========================= -->
+
+<section class="checkout-total">
+
+    <strong>
+        訂單合計
+    </strong>
+
+    <span>
+        NT$<b id="order-total">0</b>
+    </span>
 
 </section>
 
@@ -317,40 +285,42 @@
 
 <button
     type="button"
-    id="submit-order"
->
+    id="submit-order-btn"
+    class="submit-order-btn">
 
-    🍜 確認送出訂單
+    📲 送出訂單
+
+</button>
+
+
+<button
+    type="button"
+    id="back-order-btn"
+    class="back-order-btn">
+
+    ← 返回修改餐點
 
 </button>
 
 
 
 <!-- =========================
-     返回點餐
+     送單結果
 ========================= -->
 
-<button
-    type="button"
-    class="back-order-btn"
-    onclick="window.location.href='order.html'"
->
+<div
+    id="submit-result"
+    class="submit-result"
+    style="display:none;">
 
-    ← 返回修改訂單
-
-</button>
+</div>
 
 
 </main>
 
 
 
-<!-- =========================
-     JS
-========================= -->
-
 <script src="js/checkout.js"></script>
-
 
 </body>
 
