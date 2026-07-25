@@ -1,11 +1,22 @@
 /* =========================================
    初萊食麵 V3
-   checkout.js 最終正式版
+   checkout.js 最終優化版
+   功能：
+   1. 歡迎回來自動帶入姓名／電話
+   2. 電話格式驗證
+   3. 內用／外帶
+   4. 外帶取餐時間
+   5. 餐具選項
+   6. 備註可留白
+   7. 保留 V3 API + LINE 通知
+   8. 送單成功中央彈窗
+   9. 防止重複送單
 ========================================= */
 
 
 /* =========================================
    V3 API
+   ※ 使用目前已測試正常的網址
 ========================================= */
 
 const V3_SCRIPT_URL =
@@ -16,10 +27,31 @@ const V3_SCRIPT_URL =
    讀取購物車
 ========================================= */
 
-const cart =
-    JSON.parse(
-        localStorage.getItem("cart")
-    ) || [];
+let cart = [];
+
+try {
+
+    cart =
+        JSON.parse(
+            localStorage.getItem("cart")
+        ) || [];
+
+    if (!Array.isArray(cart)) {
+
+        cart = [];
+
+    }
+
+} catch (error) {
+
+    console.error(
+        "購物車讀取失敗",
+        error
+    );
+
+    cart = [];
+
+}
 
 
 /* =========================================
@@ -31,70 +63,64 @@ const orderList =
         "order-list"
     );
 
-
 const orderTotal =
     document.getElementById(
         "order-total"
     );
-
 
 const nameInput =
     document.getElementById(
         "customer-name"
     );
 
-
 const phoneInput =
     document.getElementById(
         "customer-phone"
     );
-
 
 const phoneError =
     document.getElementById(
         "phone-error"
     );
 
-
 const welcomeCustomer =
     document.getElementById(
         "welcome-customer"
     );
-
 
 const welcomeName =
     document.getElementById(
         "welcome-name"
     );
 
-
 const takeoutOptions =
     document.getElementById(
         "takeout-options"
     );
-
 
 const pickupTime =
     document.getElementById(
         "pickup-time"
     );
 
-
 const customerNote =
     document.getElementById(
         "customer-note"
     );
-
 
 const submitBtn =
     document.getElementById(
         "submit-order-btn"
     );
 
-
 const submitResult =
     document.getElementById(
         "submit-result"
+    );
+
+const backOrderBtn =
+    document.getElementById(
+        "back-order-btn"
     );
 
 
@@ -104,25 +130,21 @@ const submitResult =
 
 function renderOrder() {
 
-
-    if (
-        !orderList
-    ) {
+    if (!orderList) {
 
         return;
 
     }
 
 
-    if (
-        cart.length === 0
-    ) {
-
+    if (cart.length === 0) {
 
         orderList.innerHTML = `
 
-            <p>
+            <p class="empty-order">
+
                 購物車目前沒有商品
+
             </p>
 
         `;
@@ -135,7 +157,6 @@ function renderOrder() {
 
         }
 
-
         return;
 
     }
@@ -147,12 +168,12 @@ function renderOrder() {
 
 
     cart.forEach(
+
         item => {
 
-
             const subtotal =
-                item.price *
-                item.qty;
+                Number(item.price) *
+                Number(item.qty);
 
 
             total +=
@@ -162,22 +183,16 @@ function renderOrder() {
             let optionText = "";
 
 
-            if (
-                item.options
-            ) {
-
+            if (item.options) {
 
                 const options =
                     item.options;
-
 
                 const optionList =
                     [];
 
 
-                if (
-                    options.noodle
-                ) {
+                if (options.noodle) {
 
                     optionList.push(
                         options.noodle
@@ -186,9 +201,7 @@ function renderOrder() {
                 }
 
 
-                if (
-                    options.spicy
-                ) {
+                if (options.spicy) {
 
                     optionList.push(
                         options.spicy
@@ -221,10 +234,7 @@ function renderOrder() {
                 }
 
 
-                if (
-                    options.sauce
-                ) {
-
+                if (options.sauce) {
 
                     if (
                         Array.isArray(
@@ -257,7 +267,6 @@ function renderOrder() {
                     optionList.length > 0
                 ) {
 
-
                     optionText = `
 
                         <div class="order-options">
@@ -279,7 +288,7 @@ function renderOrder() {
 
                 <div class="checkout-item">
 
-                    <div>
+                    <div class="checkout-item-info">
 
                         <strong>
 
@@ -289,11 +298,9 @@ function renderOrder() {
 
                         </strong>
 
-
                         ${optionText}
 
-
-                        <div>
+                        <div class="item-price">
 
                             NT$${item.price}
                             ×
@@ -304,7 +311,7 @@ function renderOrder() {
                     </div>
 
 
-                    <strong>
+                    <strong class="item-subtotal">
 
                         NT$${subtotal}
 
@@ -315,6 +322,7 @@ function renderOrder() {
             `;
 
         }
+
     );
 
 
@@ -325,11 +333,15 @@ function renderOrder() {
         <div class="checkout-total-row">
 
             <strong>
+
                 合計
+
             </strong>
 
             <strong>
+
                 NT$${total}
+
             </strong>
 
         </div>
@@ -357,7 +369,6 @@ function renderOrder() {
 
 function loadCustomerData() {
 
-
     const savedName =
         localStorage.getItem(
             "customerName"
@@ -370,9 +381,7 @@ function loadCustomerData() {
         ) || "";
 
 
-    if (
-        nameInput
-    ) {
+    if (nameInput) {
 
         nameInput.value =
             savedName;
@@ -380,9 +389,7 @@ function loadCustomerData() {
     }
 
 
-    if (
-        phoneInput
-    ) {
+    if (phoneInput) {
 
         phoneInput.value =
             savedPhone;
@@ -391,9 +398,10 @@ function loadCustomerData() {
 
 
     if (
-        savedName
+        savedName &&
+        welcomeCustomer &&
+        welcomeName
     ) {
-
 
         welcomeCustomer.style.display =
             "block";
@@ -413,10 +421,7 @@ function loadCustomerData() {
 
 function saveCustomerData() {
 
-
-    if (
-        nameInput
-    ) {
+    if (nameInput) {
 
         localStorage.setItem(
 
@@ -429,9 +434,7 @@ function saveCustomerData() {
     }
 
 
-    if (
-        phoneInput
-    ) {
+    if (phoneInput) {
 
         localStorage.setItem(
 
@@ -447,20 +450,17 @@ function saveCustomerData() {
 
 
 /* =========================================
-   電話只允許數字
+   電話輸入
+   只允許數字
 ========================================= */
 
-if (
-    phoneInput
-) {
-
+if (phoneInput) {
 
     phoneInput.addEventListener(
 
         "input",
 
         function() {
-
 
             this.value =
 
@@ -477,9 +477,7 @@ if (
                 );
 
 
-            if (
-                phoneError
-            ) {
+            if (phoneError) {
 
                 phoneError.style.display =
                     "none";
@@ -499,6 +497,12 @@ if (
 
 function validatePhone() {
 
+    if (!phoneInput) {
+
+        return false;
+
+    }
+
 
     const phone =
         phoneInput.value.trim();
@@ -510,18 +514,19 @@ function validatePhone() {
         );
 
 
-    if (
-        !valid
-    ) {
+    if (!valid) {
+
+        if (phoneError) {
+
+            phoneError.style.display =
+                "block";
 
 
-        phoneError.style.display =
-            "block";
+            phoneError.textContent =
 
+                "📱 請輸入正確的手機號碼，例如 0912345678";
 
-        phoneError.textContent =
-
-            "📱 請輸入正確的手機號碼，例如 0912345678";
+        }
 
 
         phoneInput.focus();
@@ -532,8 +537,12 @@ function validatePhone() {
     }
 
 
-    phoneError.style.display =
-        "none";
+    if (phoneError) {
+
+        phoneError.style.display =
+            "none";
+
+    }
 
 
     return true;
@@ -553,13 +562,11 @@ document.querySelectorAll(
 
     radio => {
 
-
         radio.addEventListener(
 
             "change",
 
             function() {
-
 
                 if (
                     this.value ===
@@ -570,22 +577,26 @@ document.querySelectorAll(
                     this.checked
                 ) {
 
+                    if (takeoutOptions) {
 
-                    takeoutOptions.style.display =
-                        "block";
+                        takeoutOptions.style.display =
+                            "block";
+
+                    }
 
 
                     generatePickupTimes();
 
-
                 }
-
 
                 else {
 
+                    if (takeoutOptions) {
 
-                    takeoutOptions.style.display =
-                        "none";
+                        takeoutOptions.style.display =
+                            "none";
+
+                    }
 
                 }
 
@@ -599,15 +610,74 @@ document.querySelectorAll(
 
 
 /* =========================================
-   產生取餐時間
+   取得目前營業時間
+========================================= */
+
+function getBusinessHours() {
+
+    const day =
+        new Date().getDay();
+
+
+    /*
+       0 = 星期日
+       1 = 星期一
+       2 = 星期二
+       3 = 星期三
+       4 = 星期四
+       5 = 星期五
+       6 = 星期六
+
+       平日：
+       11:30 - 20:30
+
+       週末：
+       11:30 - 18:30
+    */
+
+
+    if (
+        day === 0 ||
+        day === 6
+    ) {
+
+        return {
+
+            open:
+                11 * 60 +
+                30,
+
+            close:
+                18 * 60 +
+                30
+
+        };
+
+    }
+
+
+    return {
+
+        open:
+            11 * 60 +
+            30,
+
+        close:
+            20 * 60 +
+            30
+
+    };
+
+}
+
+
+/* =========================================
+   產生外帶取餐時間
 ========================================= */
 
 function generatePickupTimes() {
 
-
-    if (
-        !pickupTime
-    ) {
+    if (!pickupTime) {
 
         return;
 
@@ -617,7 +687,9 @@ function generatePickupTimes() {
     pickupTime.innerHTML = `
 
         <option value="">
+
             請選擇取餐時間
+
         </option>
 
     `;
@@ -627,40 +699,211 @@ function generatePickupTimes() {
         new Date();
 
 
+    const businessHours =
+        getBusinessHours();
+
+
     /*
-        從現在起
-        最早 30 分鐘後
+       最早取餐：
+       現在時間 + 30 分鐘
+
+       再往上取整到
+       10 分鐘
     */
 
-    now.setMinutes(
+    let startTime =
+        new Date(
+            now.getTime()
+            +
+            30 *
+            60 *
+            1000
+        );
 
-        now.getMinutes()
-        +
-        30
 
+    const remainder =
+        startTime.getMinutes()
+        %
+        10;
+
+
+    if (remainder !== 0) {
+
+        startTime.setMinutes(
+
+            startTime.getMinutes()
+            +
+            (
+                10 -
+                remainder
+            )
+
+        );
+
+    }
+
+
+    startTime.setSeconds(
+        0
+    );
+
+
+    startTime.setMilliseconds(
+        0
     );
 
 
     /*
-        以 10 分鐘為單位
+       今天營業開始時間
     */
 
-    now.setMinutes(
+    const businessOpen =
+        new Date(
+            now
+        );
 
-        Math.ceil(
-            now.getMinutes()
+
+    businessOpen.setHours(
+        Math.floor(
+            businessHours.open
             /
-            10
-        )
-        *
-        10
-
+            60
+        ),
+        businessHours.open
+        %
+        60,
+        0,
+        0
     );
 
 
     /*
-        提供未來 3 小時
+       今天營業結束時間
     */
+
+    const businessClose =
+        new Date(
+            now
+        );
+
+
+    businessClose.setHours(
+        Math.floor(
+            businessHours.close
+            /
+            60
+        ),
+        businessHours.close
+        %
+        60,
+        0,
+        0
+    );
+
+
+    /*
+       如果目前還沒開店
+       從營業開始後
+       至少 30 分鐘開始
+    */
+
+    if (
+        now <
+        businessOpen
+    ) {
+
+        startTime =
+            new Date(
+                businessOpen.getTime()
+                +
+                30 *
+                60 *
+                1000
+            );
+
+    }
+
+
+    /*
+       如果現在已經接近打烊
+       顯示明日可預約
+    */
+
+    if (
+        startTime >
+        businessClose
+    ) {
+
+        const tomorrow =
+            new Date(
+                now
+            );
+
+
+        tomorrow.setDate(
+
+            tomorrow.getDate()
+            +
+            1
+
+        );
+
+
+        const tomorrowDay =
+            tomorrow.getDay();
+
+
+        const tomorrowIsWeekend =
+            tomorrowDay === 0 ||
+            tomorrowDay === 6;
+
+
+        const tomorrowOpenMinutes =
+            11 * 60 +
+            30;
+
+
+        tomorrow.setHours(
+
+            Math.floor(
+                tomorrowOpenMinutes
+                /
+                60
+            ),
+
+            tomorrowOpenMinutes
+            %
+            60,
+
+            0,
+
+            0
+
+        );
+
+
+        startTime =
+            new Date(
+
+                tomorrow.getTime()
+                +
+                30 *
+                60 *
+                1000
+
+            );
+
+    }
+
+
+    /*
+       最多顯示未來 3 小時
+       或營業結束前
+    */
+
+    let count =
+        0;
+
 
     for (
         let i = 0;
@@ -668,16 +911,52 @@ function generatePickupTimes() {
         i++
     ) {
 
-
         const time =
             new Date(
-                now.getTime()
+
+                startTime.getTime()
                 +
                 i *
                 10 *
                 60 *
                 1000
+
             );
+
+
+        /*
+           如果是今天
+           不能超過營業時間
+        */
+
+        if (
+            time.toDateString()
+            ===
+            now.toDateString()
+
+            &&
+
+            time >
+            businessClose
+        ) {
+
+            break;
+
+        }
+
+
+        /*
+           如果超過 3 小時
+           停止
+        */
+
+        if (
+            i >= 18
+        ) {
+
+            break;
+
+        }
 
 
         const hour =
@@ -715,7 +994,44 @@ function generatePickupTimes() {
 
 
         option.textContent =
-            value;
+            `今天 ${value}`;
+
+
+        pickupTime.appendChild(
+            option
+        );
+
+
+        count++;
+
+    }
+
+
+    /*
+       如果今天沒有時間
+       提示明天再來
+    */
+
+    if (
+        count === 0
+    ) {
+
+        const option =
+            document.createElement(
+                "option"
+            );
+
+
+        option.value =
+            "";
+
+
+        option.textContent =
+            "今日已無可預約時段";
+
+
+        option.disabled =
+            true;
 
 
         pickupTime.appendChild(
@@ -728,13 +1044,10 @@ function generatePickupTimes() {
 
 
 /* =========================================
-   送出訂單
+   送出訂單按鈕
 ========================================= */
 
-if (
-    submitBtn
-) {
-
+if (submitBtn) {
 
     submitBtn.addEventListener(
 
@@ -753,12 +1066,12 @@ if (
 
 async function submitOrder() {
 
-
     /*
-        防止重複點擊
+       防止重複點擊
     */
 
     if (
+        submitBtn &&
         submitBtn.disabled
     ) {
 
@@ -768,18 +1081,17 @@ async function submitOrder() {
 
 
     /*
-        購物車檢查
+       購物車檢查
     */
 
     if (
-        cart.length === 0
+        cart.length ===
+        0
     ) {
-
 
         alert(
             "購物車目前是空的"
         );
-
 
         return;
 
@@ -787,24 +1099,27 @@ async function submitOrder() {
 
 
     /*
-        姓名
+       姓名
     */
 
     const name =
-        nameInput.value.trim();
+        nameInput
+            ? nameInput.value.trim()
+            : "";
 
 
-    if (
-        !name
-    ) {
-
+    if (!name) {
 
         alert(
             "請輸入姓名"
         );
 
 
-        nameInput.focus();
+        if (nameInput) {
+
+            nameInput.focus();
+
+        }
 
 
         return;
@@ -813,7 +1128,7 @@ async function submitOrder() {
 
 
     /*
-        電話
+       電話
     */
 
     if (
@@ -826,7 +1141,7 @@ async function submitOrder() {
 
 
     /*
-        取餐方式
+       取餐方式
     */
 
     const orderType =
@@ -835,12 +1150,14 @@ async function submitOrder() {
             'input[name="order-type"]:checked'
 
         )?.value
+
         ||
+
         "內用";
 
 
     /*
-        餐具
+       餐具
     */
 
     let tableware =
@@ -848,31 +1165,42 @@ async function submitOrder() {
 
 
     /*
-        外帶才需要餐具
+       外帶
     */
+
+    let selectedPickupTime =
+        "";
+
 
     if (
         orderType ===
         "外帶"
     ) {
 
-
         if (
+            !pickupTime ||
             !pickupTime.value
         ) {
 
-
             alert(
-                "請選擇外帶取餐時間"
+                "⏰ 請選擇外帶取餐時間"
             );
 
 
-            pickupTime.focus();
+            if (pickupTime) {
+
+                pickupTime.focus();
+
+            }
 
 
             return;
 
         }
+
+
+        selectedPickupTime =
+            pickupTime.value;
 
 
         tableware =
@@ -882,23 +1210,27 @@ async function submitOrder() {
                 'input[name="tableware"]:checked'
 
             )?.value
+
             ||
+
             "需要餐具";
 
     }
 
 
     /*
-        備註
-        保持客人自己輸入
+       備註
+       可以留白
     */
 
     const note =
-        customerNote.value.trim();
+        customerNote
+            ? customerNote.value.trim()
+            : "";
 
 
     /*
-        計算總金額
+       計算總金額
     */
 
     const total =
@@ -907,9 +1239,18 @@ async function submitOrder() {
             (sum, item) =>
 
                 sum
+
                 +
-                item.price *
-                item.qty,
+
+                Number(
+                    item.price
+                )
+
+                *
+
+                Number(
+                    item.qty
+                ),
 
             0
 
@@ -917,14 +1258,13 @@ async function submitOrder() {
 
 
     /*
-        整理訂單商品
+       整理商品
     */
 
     const items =
         cart.map(
 
             item => {
-
 
                 const options =
                     item.options ||
@@ -985,13 +1325,11 @@ async function submitOrder() {
                     options.sauce
                 ) {
 
-
                     if (
                         Array.isArray(
                             options.sauce
                         )
                     ) {
-
 
                         optionText.push(
 
@@ -1004,7 +1342,6 @@ async function submitOrder() {
                     }
 
                     else {
-
 
                         optionText.push(
                             options.sauce
@@ -1027,8 +1364,13 @@ async function submitOrder() {
                         item.price,
 
                     subtotal:
-                        item.price *
-                        item.qty,
+                        Number(
+                            item.price
+                        )
+                        *
+                        Number(
+                            item.qty
+                        ),
 
                     options:
                         optionText.join(
@@ -1043,74 +1385,65 @@ async function submitOrder() {
 
 
     /*
-        建立訂單資料
+       訂單資料
     */
 
     const orderData = {
 
-
         action:
             "newOrder",
-
 
         name:
             name,
 
-
         phone:
             phoneInput.value.trim(),
-
 
         orderType:
             orderType,
 
-
         pickupTime:
-            orderType ===
-            "外帶"
-
-            ?
-
-            pickupTime.value
-
-            :
-
-            "",
-
+            selectedPickupTime,
 
         tableware:
             tableware,
 
-
         note:
             note,
-
 
         total:
             total,
 
-
         items:
             items
-
 
     };
 
 
     /*
-        顯示送單中
+       儲存顧客資料
     */
 
-    submitBtn.disabled =
-        true;
+    saveCustomerData();
 
 
-    submitBtn.textContent =
-        "📲 訂單傳送中...";
+    /*
+       送單按鈕鎖定
+    */
+
+    if (submitBtn) {
+
+        submitBtn.disabled =
+            true;
+
+
+        submitBtn.textContent =
+            "📲 訂單傳送中...";
+
+    }
 
 
     try {
-
 
         const response =
             await fetch(
@@ -1122,14 +1455,12 @@ async function submitOrder() {
                     method:
                         "POST",
 
-
                     headers: {
 
                         "Content-Type":
                             "text/plain;charset=utf-8"
 
                     },
-
 
                     body:
                         JSON.stringify(
@@ -1146,13 +1477,16 @@ async function submitOrder() {
 
 
         /*
-            成功
+           送單成功
         */
 
         if (
             result.success
         ) {
 
+            /*
+               儲存顧客資料
+            */
 
             localStorage.setItem(
 
@@ -1173,7 +1507,7 @@ async function submitOrder() {
 
 
             /*
-                清除購物車
+               清除購物車
             */
 
             localStorage.removeItem(
@@ -1181,72 +1515,53 @@ async function submitOrder() {
             );
 
 
-            submitResult.style.display =
-                "block";
+            /*
+               顯示成功彈窗
+            */
 
+            showSuccessModal({
 
-            submitResult.innerHTML = `
+                orderType:
+                    orderType,
 
-                <div class="success-box">
+                pickupTime:
+                    selectedPickupTime,
 
-                    <h2>
-                        ✅ 訂單已送出！
-                    </h2>
+                tableware:
+                    tableware,
 
-
-                    <p>
-                        感謝您選擇初萊食麵 ❤️
-                    </p>
-
-
-                    <p>
-                        店家已收到您的訂單。
-                    </p>
-
-
-                    <p>
-                        ${orderType === "外帶"
-                            ? "請依照您選擇的時間前來取餐。"
-                            : "我們會盡快為您準備餐點。"
-                        }
-                    </p>
-
-                </div>
-
-            `;
-
-
-            submitBtn.style.display =
-                "none";
-
-
-            window.scrollTo({
-
-                top:
-                    document.body.scrollHeight,
-
-                behavior:
-                    "smooth"
+                total:
+                    total
 
             });
 
 
+            /*
+               隱藏原本送單按鈕
+            */
+
+            if (submitBtn) {
+
+                submitBtn.style.display =
+                    "none";
+
+            }
+
         }
 
-
         else {
-
 
             throw new Error(
 
                 result.message
+
                 ||
+
                 "訂單送出失敗"
 
             );
 
         }
-
 
     }
 
@@ -1254,10 +1569,12 @@ async function submitOrder() {
         error
     ) {
 
-
         console.error(
+
             "訂單送出錯誤",
+
             error
+
         );
 
 
@@ -1268,12 +1585,236 @@ async function submitOrder() {
         );
 
 
-        submitBtn.disabled =
-            false;
+        if (submitBtn) {
+
+            submitBtn.disabled =
+                false;
 
 
-        submitBtn.textContent =
-            "📲 送出訂單";
+            submitBtn.textContent =
+                "📲 送出訂單";
+
+        }
+
+    }
+
+}
+
+
+/* =========================================
+   顯示送單成功彈窗
+========================================= */
+
+function showSuccessModal(data) {
+
+    /*
+       如果已經有舊彈窗
+       先移除
+    */
+
+    const oldModal =
+        document.getElementById(
+            "order-success-modal"
+        );
+
+
+    if (oldModal) {
+
+        oldModal.remove();
+
+    }
+
+
+    const pickupText =
+
+        data.orderType ===
+        "外帶"
+
+        ?
+
+        `
+
+            <div class="success-info-row">
+
+                <span>🥡 取餐方式</span>
+
+                <strong>
+                    外帶
+                </strong>
+
+            </div>
+
+
+            <div class="success-info-row">
+
+                <span>⏰ 取餐時間</span>
+
+                <strong>
+                    ${escapeHTML(
+                        data.pickupTime
+                    )}
+                </strong>
+
+            </div>
+
+
+            <div class="success-info-row">
+
+                <span>🍴 餐具</span>
+
+                <strong>
+                    ${escapeHTML(
+                        data.tableware
+                    )}
+                </strong>
+
+            </div>
+
+        `
+
+        :
+
+        `
+
+            <div class="success-info-row">
+
+                <span>🍜 用餐方式</span>
+
+                <strong>
+                    內用
+                </strong>
+
+            </div>
+
+        `;
+
+
+    const modal =
+        document.createElement(
+            "div"
+        );
+
+
+    modal.id =
+        "order-success-modal";
+
+
+    modal.className =
+        "order-success-modal";
+
+
+    modal.innerHTML = `
+
+        <div class="success-modal-box">
+
+            <div class="success-icon">
+
+                ✓
+
+            </div>
+
+
+            <h2>
+
+                訂單已送出！
+
+            </h2>
+
+
+            <p class="success-message">
+
+                感謝您選擇初萊食麵 ❤️
+
+            </p>
+
+
+            <div class="success-order-info">
+
+                ${pickupText}
+
+
+                <div class="success-info-row">
+
+                    <span>💰 訂單金額</span>
+
+                    <strong>
+                        NT$${data.total}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <p class="success-store-message">
+
+                店家已收到您的訂單，<br>
+
+                我們會盡快為您準備餐點。
+
+            </p>
+
+
+            <button
+                type="button"
+                class="success-close-btn">
+
+                完成
+
+            </button>
+
+        </div>
+
+    `;
+
+
+    document.body.appendChild(
+        modal
+    );
+
+
+    /*
+       防止背景滾動
+    */
+
+    document.body.style.overflow =
+        "hidden";
+
+
+    /*
+       完成按鈕
+    */
+
+    const closeBtn =
+        modal.querySelector(
+            ".success-close-btn"
+        );
+
+
+    if (closeBtn) {
+
+        closeBtn.addEventListener(
+
+            "click",
+
+            function() {
+
+                modal.remove();
+
+
+                document.body.style.overflow =
+                    "";
+
+                /*
+                   回到首頁
+                */
+
+                window.location.href =
+                    "index.html";
+
+            }
+
+        );
 
     }
 
@@ -1284,23 +1825,13 @@ async function submitOrder() {
    返回修改餐點
 ========================================= */
 
-const backOrderBtn =
-    document.getElementById(
-        "back-order-btn"
-    );
-
-
-if (
-    backOrderBtn
-) {
-
+if (backOrderBtn) {
 
     backOrderBtn.addEventListener(
 
         "click",
 
         function() {
-
 
             window.location.href =
                 "order.html";
@@ -1319,7 +1850,6 @@ if (
 function escapeHTML(
     text
 ) {
-
 
     return String(
         text ||
@@ -1363,8 +1893,41 @@ renderOrder();
 loadCustomerData();
 
 
+/*
+   如果頁面一開始
+   已經選擇外帶
+   自動產生時間
+*/
+
+const selectedOrderType =
+    document.querySelector(
+
+        'input[name="order-type"]:checked'
+
+    );
+
+
+if (
+    selectedOrderType &&
+    selectedOrderType.value ===
+    "外帶"
+) {
+
+    if (takeoutOptions) {
+
+        takeoutOptions.style.display =
+            "block";
+
+    }
+
+
+    generatePickupTimes();
+
+}
+
+
 console.log(
 
-    "🍜 初萊食麵 V3 checkout.js 已載入"
+    "🍜 初萊食麵 V3 checkout.js 最終優化版已載入"
 
 );
