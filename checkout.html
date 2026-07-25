@@ -151,29 +151,64 @@
     </h2>
 
 
-    <label class="choice-label">
-
-        <input
-            type="radio"
-            name="order-type"
-            value="內用"
-            checked>
-
-        內用
-
-    </label>
+    <div class="order-type-options">
 
 
-    <label class="choice-label">
+        <label class="choice-card">
 
-        <input
-            type="radio"
-            name="order-type"
-            value="外帶">
+            <input
+                type="radio"
+                name="order-type"
+                value="內用"
+                checked>
 
-        外帶
+            <span class="choice-card-icon">
+                🍜
+            </span>
 
-    </label>
+            <span class="choice-card-text">
+
+                <strong>
+                    內用
+                </strong>
+
+                <small>
+                    到店內用餐
+                </small>
+
+            </span>
+
+        </label>
+
+
+
+        <label class="choice-card">
+
+            <input
+                type="radio"
+                name="order-type"
+                value="外帶">
+
+            <span class="choice-card-icon">
+                🥡
+            </span>
+
+            <span class="choice-card-text">
+
+                <strong>
+                    外帶
+                </strong>
+
+                <small>
+                    到店取餐
+                </small>
+
+            </span>
+
+        </label>
+
+
+    </div>
 
 </section>
 
@@ -185,7 +220,7 @@
 
 <section
     id="takeout-options"
-    class="checkout-section"
+    class="checkout-section takeout-section"
     style="display:none;">
 
     <h2>
@@ -193,49 +228,185 @@
     </h2>
 
 
-    <label>
+    <!-- =========================
+         取餐方式
+    ========================= -->
 
-        取餐時間
+    <h3>
+        ⏰ 取餐時間
+    </h3>
 
-        <select id="pickup-time">
 
-            <option value="">
-                請選擇取餐時間
-            </option>
+    <div class="pickup-type-options">
 
-        </select>
 
-    </label>
+        <label class="pickup-card">
 
+            <input
+                type="radio"
+                name="pickup-mode"
+                value="最快取餐"
+                checked>
+
+            <span>
+
+                🏃
+
+            </span>
+
+            <strong>
+
+                最快取餐
+
+            </strong>
+
+            <small>
+
+                店家會盡快準備
+
+            </small>
+
+        </label>
+
+
+
+        <label class="pickup-card">
+
+            <input
+                type="radio"
+                name="pickup-mode"
+                value="預約取餐">
+
+            <span>
+
+                ⏰
+
+            </span>
+
+            <strong>
+
+                預約取餐
+
+            </strong>
+
+            <small>
+
+                自行選擇取餐時間
+
+            </small>
+
+        </label>
+
+
+    </div>
+
+
+
+    <!-- =========================
+         預約時間
+    ========================= -->
+
+    <div
+        id="reservation-time-area"
+        class="reservation-time-area"
+        style="display:none;">
+
+
+        <label>
+
+            📅 取餐日期
+
+            <select id="pickup-date">
+
+                <option value="">
+                    請選擇日期
+                </option>
+
+            </select>
+
+        </label>
+
+
+
+        <label>
+
+            ⏰ 取餐時間
+
+            <select id="pickup-time">
+
+                <option value="">
+                    請選擇時間
+                </option>
+
+            </select>
+
+        </label>
+
+
+    </div>
+
+
+
+    <!-- =========================
+         餐具
+    ========================= -->
 
     <h3>
         🍴 餐具
     </h3>
 
 
-    <label class="choice-label">
-
-        <input
-            type="radio"
-            name="tableware"
-            value="需要餐具"
-            checked>
-
-        需要餐具
-
-    </label>
+    <div class="tableware-options">
 
 
-    <label class="choice-label">
+        <label class="choice-card small-card">
 
-        <input
-            type="radio"
-            name="tableware"
-            value="不需要餐具">
+            <input
+                type="radio"
+                name="tableware"
+                value="需要餐具"
+                checked>
 
-        不需要餐具
+            <span>
 
-    </label>
+                🍴
+
+            </span>
+
+            <strong>
+
+                需要餐具
+
+            </strong>
+
+        </label>
+
+
+
+        <label class="choice-card small-card">
+
+            <input
+                type="radio"
+                name="tableware"
+                value="不需要餐具">
+
+            <span>
+
+                ♻️
+
+            </span>
+
+            <strong>
+
+                不需要餐具
+
+            </strong>
+
+        </label>
+
+
+    </div>
+
 
 </section>
 
@@ -293,6 +464,11 @@
 </button>
 
 
+
+<!-- =========================
+     返回修改
+========================= -->
+
 <button
     type="button"
     id="back-order-btn"
@@ -317,6 +493,79 @@
 
 
 </main>
+
+
+
+<!-- =================================================
+     訂單送出成功彈窗
+================================================= -->
+
+<div
+    id="success-modal"
+    class="success-modal"
+    style="display:none;">
+
+
+    <div class="success-modal-overlay">
+    </div>
+
+
+    <div
+        class="success-modal-box"
+        role="dialog"
+        aria-modal="true">
+
+
+        <div class="success-icon">
+
+            🎉
+
+        </div>
+
+
+        <h2>
+
+            訂單已送出成功！
+
+        </h2>
+
+
+        <p>
+
+            感謝您選擇初萊食麵 ❤️
+
+        </p>
+
+
+        <p class="success-message">
+
+            店家已收到您的訂單
+
+        </p>
+
+
+        <!-- 訂單摘要 -->
+
+        <div
+            id="success-order-summary"
+            class="success-order-summary">
+
+        </div>
+
+
+        <button
+            type="button"
+            id="success-confirm-btn"
+            class="success-confirm-btn">
+
+            知道了
+
+        </button>
+
+
+    </div>
+
+</div>
 
 
 
