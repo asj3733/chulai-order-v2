@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>初萊食麵｜外送平台</title>
+<link
+    rel="stylesheet"
+    href="css/style.css">
+<style>
+body {
+    margin: 0;
+    background: #ededed;
+    font-family: Arial, "Noto Sans TC", sans-serif;
+    color: #333;
+}
+.delivery-page {
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+}
+.delivery-header {
+    max-width: 600px;
+    margin: 0 auto 25px;
+    text-align: center;
+}
+.delivery-back {
+    display: inline-block;
+    text-decoration: none;
+    color: #555;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+.delivery-brand {
+    background: #555;
+    color: #d4af37;
+    padding: 22px 15px;
+    border-radius: 16px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.12);
+}
+.delivery-brand h1 {
+    margin: 0 0 8px;
+    font-size: 30px;
+}
+.delivery-brand p {
+    margin: 0;
+    color: #fff;
+    font-size: 16px;
+}
+.delivery-title {
+    max-width: 600px;
+    margin: 25px auto 15px;
+    text-align: center;
+}
+.delivery-title h2 {
+    margin: 0 0 8px;
+    font-size: 24px;
+}
+.delivery-title p {
+    margin: 0;
+    color: #777;
+}
+.delivery-list {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.delivery-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 75px;
+    padding: 0 24px;
+    box-sizing: border-box;
+    border-radius: 16px;
+    text-decoration: none;
+    font-size: 21px;
+    font-weight: bold;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+}
+.delivery-btn:active {
+    transform: scale(0.97);
+}
+.delivery-btn span {
+    font-size: 30px;
+}
+.delivery-btn small {
+    font-size: 14px;
+    font-weight: normal;
+    opacity: 0.8;
+}
+.uber {
+    background: #000;
+    color: #fff;
+}
+.panda {
+    background: #d70f64;
+    color: #fff;
+}
+.foodmo {
+    background: #fff;
+    color: #333;
+    border: 2px solid #ddd;
+}
+.delivery-footer {
+    max-width: 600px;
+    margin: 30px auto;
+    text-align: center;
+    color: #777;
+    font-size: 14px;
+    line-height: 1.7;
+}
+</style>
+</head>
+<body>
+<main class="delivery-page">
+<header class="delivery-header">
+    <a
+        href="index.html"
+        class="delivery-back">
+        ← 返回初萊食麵首頁
+    </a>
+    <div class="delivery-brand">
+        <h1>
+            🍜 初萊食麵
+        </h1>
+        <p>
+            🛵 選擇您方便的外送平台
+        </p>
+    </div>
+</header>
+<section class="delivery-title">
+    <h2>
+        🛵 外送平台
+    </h2>
+    <p>
+        點選下方平台即可前往訂餐
+    </p>
+</section>
+<section class="delivery-list">
+    <a
+        class="delivery-btn uber"
+        href="https://www.ubereats.com/tw/store/初萊食麵|大腸香腸、關東煮/9-pIirZHWkWxCprbnjgzBQ?diningMode=PICKUP&ps=1&sc=SEARCH_SUGGESTION"
+        target="_blank"
+        rel="noopener">
+        <span>
+            🚗
+        </span>
+        <div>
+            Uber Eats
+            <br>
+            <small>
+                前往 Uber Eats 訂餐
+            </small>
+        </div>
+        <b>
+            →
+        </b>
+    </a>
+    <a
+        class="delivery-btn panda"
+        href="https://foodpanda.com.tw/restaurant/o32y/chu-lai-shi-mian"
+        target="_blank"
+        rel="noopener">
+        <span>
+            🛵
+        </span>
+        <div>
+            foodpanda
+            <br>
+            <small>
+                前往 foodpanda 訂餐
+            </small>
+        </div>
+        <b>
+            →
+        </b>
+    </a>
+    <a
+        class="delivery-btn foodmo"
+        href="https://www.foodomo.com/store?stid=163737&number=0903392687"
+        target="_blank"
+        rel="noopener">
+        <span>
+            🥡
+        </span>
+        <div>
+            foodomo
+            <br>
+            <small>
+                前往 foodomo 訂餐
+            </small>
+        </div>
+        <b>
+            →
+        </b>
+    </a>
+</section>
+<footer class="delivery-footer">
+    <p>
+        🍜 也可以使用初萊食麵官方線上點餐
+    </p>
+    <p>
+        感謝您的支持 ❤️
+    </p>
+</footer>
+</main>
+</body>
+</html>
