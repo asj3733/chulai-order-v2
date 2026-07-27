@@ -224,6 +224,8 @@ function showCustomerResult(
     customer
 ) {
 
+    alert("✅ 已進入 showCustomerResult");
+
 
     /*
         隱藏未找到畫面
@@ -415,6 +417,8 @@ function showCustomerResult(
 ========================================= */
 
 function showCustomerNotFound() {
+
+    alert("❌ 已進入 showCustomerNotFound");
 
 
     /*
@@ -663,6 +667,16 @@ async function searchCustomer() {
             );
 
         }
+
+
+        alert(
+            "🧭 判斷前：data.found="
+            + data.found
+            + "（型別："
+            + typeof data.found
+            + "），data.customer 是否存在："
+            + (!!data.customer)
+        );
 
 
         /*
