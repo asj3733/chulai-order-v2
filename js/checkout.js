@@ -1747,7 +1747,7 @@ function showSuccessModal(
 
 
 /* =========================================
-   關閉成功彈窗
+   成功彈窗｜知道了 → 返回首頁
 ========================================= */
 
 if (successConfirmBtn) {
@@ -1756,22 +1756,25 @@ if (successConfirmBtn) {
         "click",
         function() {
 
-            if (successModal) {
-
-                successModal.style.display =
-                    "none";
-
-            }
-
+            /*
+                恢復頁面滾動
+            */
 
             document.body.style.overflow =
                 "";
+
+
+            /*
+                返回首頁
+            */
+
+            window.location.href =
+                "index.html";
 
         }
     );
 
 }
-
 
 /* =========================================
    點擊背景關閉
