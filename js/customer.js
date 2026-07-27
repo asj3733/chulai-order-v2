@@ -1,7 +1,7 @@
 /* =========================================
    初萊食麵 V4
    customer.js
-   客戶查詢正式版（除錯版：alert 版本）
+   客戶查詢正式版
 ========================================= */
 
 
@@ -224,8 +224,6 @@ function showCustomerResult(
     customer
 ) {
 
-    alert("✅ 已進入 showCustomerResult");
-
 
     /*
         隱藏未找到畫面
@@ -418,8 +416,6 @@ function showCustomerResult(
 
 function showCustomerNotFound() {
 
-    alert("❌ 已進入 showCustomerNotFound");
-
 
     /*
         隱藏成功結果
@@ -595,10 +591,12 @@ async function searchCustomer() {
             );
 
 
-        /* 🔧 除錯用：改用 alert 方便手機查看 */
+        console.log(
 
-        alert(
-            "🔍 查詢網址：" + queryURL
+            "🔍 客戶查詢：",
+
+            queryURL
+
         );
 
 
@@ -640,10 +638,12 @@ async function searchCustomer() {
             await response.json();
 
 
-        /* 🔧 除錯用：改用 alert 方便手機查看 */
+        console.log(
 
-        alert(
-            "🍜 查詢結果：" + JSON.stringify(data)
+            "🍜 查詢結果：",
+
+            data
+
         );
 
 
@@ -667,16 +667,6 @@ async function searchCustomer() {
             );
 
         }
-
-
-        alert(
-            "🧭 判斷前：data.found="
-            + data.found
-            + "（型別："
-            + typeof data.found
-            + "），data.customer 是否存在："
-            + (!!data.customer)
-        );
 
 
         /*
@@ -907,6 +897,37 @@ function escapeHTML(
 
 console.log(
 
-    "🍜 初萊食麵 V4 customer.js 已載入（除錯版）"
+    "🍜 初萊食麵 V4 customer.js 已載入"
+
+);
+
+
+/*
+    確認 HTML ID 是否正確
+*/
+
+console.log(
+
+    "📱 phoneInput：",
+
+    phoneInput
+
+);
+
+
+console.log(
+
+    "🔍 searchBtn：",
+
+    searchBtn
+
+);
+
+
+console.log(
+
+    "📋 customerResult：",
+
+    customerResult
 
 );
