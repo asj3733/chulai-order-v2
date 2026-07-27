@@ -24,7 +24,7 @@ const phoneInput =
 
 const searchBtn =
     document.getElementById(
-        "search-customer-btn"
+        "customer-search-btn"
     );
 
 
