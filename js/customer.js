@@ -1,7 +1,7 @@
 /* =========================================
    初萊食麵 V4
    customer.js
-   客戶查詢正式版
+   客戶查詢正式版（除錯版：alert 版本）
 ========================================= */
 
 
@@ -591,12 +591,10 @@ async function searchCustomer() {
             );
 
 
-        console.log(
+        /* 🔧 除錯用：改用 alert 方便手機查看 */
 
-            "🔍 客戶查詢：",
-
-            queryURL
-
+        alert(
+            "🔍 查詢網址：" + queryURL
         );
 
 
@@ -638,12 +636,10 @@ async function searchCustomer() {
             await response.json();
 
 
-        console.log(
+        /* 🔧 除錯用：改用 alert 方便手機查看 */
 
-            "🍜 查詢結果：",
-
-            data
-
+        alert(
+            "🍜 查詢結果：" + JSON.stringify(data)
         );
 
 
@@ -897,37 +893,6 @@ function escapeHTML(
 
 console.log(
 
-    "🍜 初萊食麵 V4 customer.js 已載入"
-
-);
-
-
-/*
-    確認 HTML ID 是否正確
-*/
-
-console.log(
-
-    "📱 phoneInput：",
-
-    phoneInput
-
-);
-
-
-console.log(
-
-    "🔍 searchBtn：",
-
-    searchBtn
-
-);
-
-
-console.log(
-
-    "📋 customerResult：",
-
-    customerResult
+    "🍜 初萊食麵 V4 customer.js 已載入（除錯版）"
 
 );
