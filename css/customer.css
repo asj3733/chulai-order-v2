@@ -1,0 +1,571 @@
+/* =========================================
+   🍜 初萊食麵
+   客戶查詢頁
+========================================= */
+
+
+.customer-page {
+
+    max-width: 680px;
+
+    margin: 0 auto;
+
+    padding: 30px 16px 80px;
+
+}
+
+
+/* =========================================
+   查詢卡片
+========================================= */
+
+.customer-search-card {
+
+    background:
+        linear-gradient(
+            145deg,
+            #242424,
+            #151515
+        );
+
+    border-radius: 24px;
+
+    padding: 35px 25px;
+
+    text-align: center;
+
+    box-shadow:
+        0 12px 35px
+        rgba(0,0,0,0.25);
+
+}
+
+
+.customer-icon {
+
+    width: 72px;
+
+    height: 72px;
+
+    margin:
+        0 auto 18px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    font-size: 36px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(212,175,55,0.15);
+
+}
+
+
+.customer-search-card h1 {
+
+    margin:
+        0 0 10px;
+
+    color:
+        #d4af37;
+
+    font-size:
+        25px;
+
+}
+
+
+.customer-description {
+
+    color:
+        #ccc;
+
+    line-height:
+        1.7;
+
+    margin-bottom:
+        25px;
+
+}
+
+
+.customer-search-card label {
+
+    display:
+        block;
+
+    text-align:
+        left;
+
+    color:
+        #fff;
+
+    font-weight:
+        bold;
+
+    margin-bottom:
+        8px;
+
+}
+
+
+.customer-phone-input {
+
+    width:
+        100%;
+
+    box-sizing:
+        border-box;
+
+    padding:
+        16px;
+
+    border-radius:
+        12px;
+
+    border:
+        2px solid #555;
+
+    background:
+        #fff;
+
+    color:
+        #222;
+
+    font-size:
+        20px;
+
+    text-align:
+        center;
+
+    letter-spacing:
+        2px;
+
+    outline:
+        none;
+
+}
+
+
+.customer-phone-input:focus {
+
+    border-color:
+        #d4af37;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(212,175,55,0.18);
+
+}
+
+
+.customer-error {
+
+    margin-top:
+        10px;
+
+    color:
+        #ff7676;
+
+    font-size:
+        14px;
+
+}
+
+
+/* =========================================
+   查詢按鈕
+========================================= */
+
+.customer-search-btn,
+.customer-order-btn,
+.customer-start-order {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    width:
+        100%;
+
+    min-height:
+        58px;
+
+    box-sizing:
+        border-box;
+
+    margin-top:
+        18px;
+
+    border-radius:
+        14px;
+
+    font-size:
+        18px;
+
+    font-weight:
+        bold;
+
+    text-decoration:
+        none;
+
+    cursor:
+        pointer;
+
+}
+
+
+.customer-search-btn {
+
+    border:
+        none;
+
+    background:
+        linear-gradient(
+            135deg,
+            #d4af37,
+            #f0d875
+        );
+
+    color:
+        #181818;
+
+}
+
+
+.customer-order-btn {
+
+    background:
+        transparent;
+
+    border:
+        1px solid #666;
+
+    color:
+        #ddd;
+
+}
+
+
+/* =========================================
+   查詢結果
+========================================= */
+
+.customer-result {
+
+    margin-top:
+        22px;
+
+    background:
+        #fff;
+
+    border-radius:
+        22px;
+
+    padding:
+        24px;
+
+    box-shadow:
+        0 10px 30px
+        rgba(0,0,0,0.12);
+
+}
+
+
+.result-welcome {
+
+    display:
+        flex;
+
+    gap:
+        15px;
+
+    align-items:
+        center;
+
+    padding-bottom:
+        20px;
+
+    border-bottom:
+        1px solid #eee;
+
+}
+
+
+.result-welcome > :first-child {
+
+    font-size:
+        32px;
+
+}
+
+
+.result-welcome strong {
+
+    font-size:
+        21px;
+
+    color:
+        #222;
+
+}
+
+
+.result-welcome p {
+
+    margin:
+        5px 0 0;
+
+    color:
+        #777;
+
+}
+
+
+/* =========================================
+   統計卡片
+========================================= */
+
+.customer-stat-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:
+        12px;
+
+    margin-top:
+        20px;
+
+}
+
+
+.customer-stat-card {
+
+    padding:
+        18px 10px;
+
+    text-align:
+        center;
+
+    background:
+        #f7f7f7;
+
+    border-radius:
+        15px;
+
+}
+
+
+.customer-stat-card span {
+
+    display:
+        block;
+
+    font-size:
+        25px;
+
+}
+
+
+.customer-stat-card strong {
+
+    display:
+        block;
+
+    margin-top:
+        6px;
+
+    font-size:
+        20px;
+
+    color:
+        #333;
+
+}
+
+
+.customer-stat-card small {
+
+    color:
+        #777;
+
+}
+
+
+/* =========================================
+   資訊區
+========================================= */
+
+.customer-info-box {
+
+    margin-top:
+        18px;
+
+    padding:
+        18px;
+
+    background:
+        #fafafa;
+
+    border-radius:
+        15px;
+
+}
+
+
+.customer-info-box h3 {
+
+    margin:
+        0 0 12px;
+
+    color:
+        #333;
+
+    font-size:
+        17px;
+
+}
+
+
+#last-order-content,
+#favorite-items {
+
+    color:
+        #555;
+
+    line-height:
+        1.7;
+
+}
+
+
+/* =========================================
+   查無資料
+========================================= */
+
+.customer-not-found {
+
+    margin-top:
+        22px;
+
+    padding:
+        35px 20px;
+
+    background:
+        #fff;
+
+    border-radius:
+        22px;
+
+    text-align:
+        center;
+
+}
+
+
+.not-found-icon {
+
+    font-size:
+        45px;
+
+}
+
+
+.customer-not-found h2 {
+
+    margin:
+        15px 0 10px;
+
+}
+
+
+.customer-not-found p {
+
+    color:
+        #777;
+
+    line-height:
+        1.7;
+
+}
+
+
+/* =========================================
+   開始點餐
+========================================= */
+
+.customer-start-order {
+
+    background:
+        linear-gradient(
+            135deg,
+            #d4af37,
+            #f0d875
+        );
+
+    color:
+        #181818;
+
+}
+
+
+/* =========================================
+   手機版
+========================================= */
+
+@media (
+    max-width: 480px
+) {
+
+    .customer-page {
+
+        padding:
+            20px 12px 60px;
+
+    }
+
+
+    .customer-search-card {
+
+        padding:
+            28px 18px;
+
+        border-radius:
+            20px;
+
+    }
+
+
+    .customer-search-card h1 {
+
+        font-size:
+            22px;
+
+    }
+
+
+    .customer-stat-grid {
+
+        gap:
+            8px;
+
+    }
+
+}
