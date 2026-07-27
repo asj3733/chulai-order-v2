@@ -10,7 +10,7 @@
 ========================================= */
 
 const SCRIPT_URL =
-    "請貼上你目前正常使用的GAS_EXEC網址";
+    "https://script.google.com/macros/s/AKfycbwde83nn5kmPM2zeZZ2mEZLQTBtZPFTYfvoSsqIClwkMV3voJCO4KUgvLquQQ7am1Nl_Q/exec";
 
 
 /* =========================================
