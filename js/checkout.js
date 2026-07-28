@@ -1,13 +1,12 @@
 /* =========================================
    🍜 初萊食麵 V3
    checkout.js
-   外帶最快取餐：約20分鐘
-   預約取餐：自行選擇日期＋時間
+   完整正式版
 ========================================= */
 
 
 /* =========================================
-   V3 API
+   V3 Google Apps Script API
 ========================================= */
 
 const V3_SCRIPT_URL =
@@ -18,66 +17,627 @@ const V3_SCRIPT_URL =
    讀取購物車
 ========================================= */
 
-const cart =
-    JSON.parse(
-        localStorage.getItem("cart")
-    ) || [];
+let cart = [];
+
+try {
+
+    const savedCart =
+        localStorage.getItem("cart");
+
+    if (savedCart) {
+
+        cart =
+            JSON.parse(savedCart);
+
+    }
+
+    if (!Array.isArray(cart)) {
+
+        cart = [];
+
+    }
+
+} catch (error) {
+
+    console.error(
+        "購物車讀取失敗：",
+        error
+    );
+
+    cart = [];
+
+}
 
 
 /* =========================================
-   DOM
+   DOM 元素
 ========================================= */
 
 const orderList =
-    document.getElementById("order-list");
+    document.getElementById(
+        "order-list"
+    );
+
 
 const orderTotal =
-    document.getElementById("order-total");
+    document.getElementById(
+        "order-total"
+    );
+
 
 const nameInput =
-    document.getElementById("customer-name");
+    document.getElementById(
+        "customer-name"
+    );
+
 
 const phoneInput =
-    document.getElementById("customer-phone");
+    document.getElementById(
+        "customer-phone"
+    );
+
 
 const phoneError =
-    document.getElementById("phone-error");
+    document.getElementById(
+        "phone-error"
+    );
+
 
 const welcomeCustomer =
-    document.getElementById("welcome-customer");
+    document.getElementById(
+        "welcome-customer"
+    );
+
 
 const welcomeName =
-    document.getElementById("welcome-name");
+    document.getElementById(
+        "welcome-name"
+    );
+
 
 const takeoutOptions =
-    document.getElementById("takeout-options");
+    document.getElementById(
+        "takeout-options"
+    );
+
 
 const reservationTimeArea =
-    document.getElementById("reservation-time-area");
+    document.getElementById(
+        "reservation-time-area"
+    );
+
 
 const pickupDate =
-    document.getElementById("pickup-date");
+    document.getElementById(
+        "pickup-date"
+    );
+
 
 const pickupTime =
-    document.getElementById("pickup-time");
+    document.getElementById(
+        "pickup-time"
+    );
+
 
 const customerNote =
-    document.getElementById("customer-note");
+    document.getElementById(
+        "customer-note"
+    );
+
 
 const submitBtn =
-    document.getElementById("submit-order-btn");
+    document.getElementById(
+        "submit-order-btn"
+    );
+
 
 const submitResult =
-    document.getElementById("submit-result");
+    document.getElementById(
+        "submit-result"
+    );
+
 
 const successModal =
-    document.getElementById("success-modal");
+    document.getElementById(
+        "success-modal"
+    );
+
 
 const successConfirmBtn =
-    document.getElementById("success-confirm-btn");
+    document.getElementById(
+        "success-confirm-btn"
+    );
+
 
 const successOrderSummary =
-    document.getElementById("success-order-summary");
+    document.getElementById(
+        "success-order-summary"
+    );
+
+
+const backOrderBtn =
+    document.getElementById(
+        "back-order-btn"
+    );
+
+
+/* =========================================
+   取得今天日期
+   格式：YYYY-MM-DD
+========================================= */
+
+function getTodayDate() {
+
+    const now =
+        new Date();
+
+    const year =
+        now.getFullYear();
+
+    const month =
+        String(
+            now.getMonth() + 1
+        ).padStart(
+            2,
+            "0"
+        );
+
+    const day =
+        String(
+            now.getDate()
+        ).padStart(
+            2,
+            "0"
+        );
+
+    return (
+        year +
+        "-" +
+        month +
+        "-" +
+        day
+    );
+
+}
+
+
+/* =========================================
+   格式化日期
+   避免時區問題
+========================================= */
+
+function createLocalDate(
+    dateString
+) {
+
+    const parts =
+        dateString.split("-");
+
+    return new Date(
+        Number(parts[0]),
+        Number(parts[1]) - 1,
+        Number(parts[2])
+    );
+
+}
+
+
+/* =========================================
+   判斷是否週末
+========================================= */
+
+function isWeekend(
+    dateString
+) {
+
+    const date =
+        createLocalDate(
+            dateString
+        );
+
+    const day =
+        date.getDay();
+
+    return (
+        day === 0 ||
+        day === 6
+    );
+
+}
+
+
+/* =========================================
+   取得營業結束時間
+========================================= */
+
+function getBusinessEndMinutes(
+    dateString
+) {
+
+    /*
+        星期六、日
+        11:30～18:30
+    */
+
+    if (
+        isWeekend(
+            dateString
+        )
+    ) {
+
+        return (
+            18 * 60 +
+            30
+        );
+
+    }
+
+
+    /*
+        星期一～星期五
+        11:30～20:30
+    */
+
+    return (
+        20 * 60 +
+        30
+    );
+
+}
+
+
+/* =========================================
+   取得營業開始時間
+========================================= */
+
+function getBusinessStartMinutes() {
+
+    return (
+        11 * 60 +
+        30
+    );
+
+}
+
+
+/* =========================================
+   將分鐘轉成 HH:MM
+========================================= */
+
+function minutesToTime(
+    minutes
+) {
+
+    const hour =
+        Math.floor(
+            minutes / 60
+        );
+
+    const minute =
+        minutes % 60;
+
+    return (
+        String(hour).padStart(2, "0") +
+        ":" +
+        String(minute).padStart(2, "0")
+    );
+
+}
+
+
+/* =========================================
+   產生預約日期
+   今天＋未來 6 天
+   共 7 天
+========================================= */
+
+function generatePickupDates() {
+
+    if (!pickupDate) {
+
+        return;
+
+    }
+
+
+    pickupDate.innerHTML = `
+
+        <option value="">
+            請選擇取餐日期
+        </option>
+
+    `;
+
+
+    const today =
+        new Date();
+
+
+    for (
+        let i = 0;
+        i < 7;
+        i++
+    ) {
+
+        const date =
+            new Date(
+                today.getFullYear(),
+                today.getMonth(),
+                today.getDate() + i
+            );
+
+
+        const year =
+            date.getFullYear();
+
+
+        const month =
+            String(
+                date.getMonth() + 1
+            ).padStart(
+                2,
+                "0"
+            );
+
+
+        const day =
+            String(
+                date.getDate()
+            ).padStart(
+                2,
+                "0"
+            );
+
+
+        const value =
+            year +
+            "-" +
+            month +
+            "-" +
+            day;
+
+
+        let label = "";
+
+
+        if (i === 0) {
+
+            label =
+                "今天 " +
+                month +
+                "/" +
+                day;
+
+        }
+
+        else if (i === 1) {
+
+            label =
+                "明天 " +
+                month +
+                "/" +
+                day;
+
+        }
+
+        else {
+
+            label =
+                month +
+                "/" +
+                day;
+
+        }
+
+
+        const option =
+            document.createElement(
+                "option"
+            );
+
+
+        option.value =
+            value;
+
+
+        option.textContent =
+            label;
+
+
+        pickupDate.appendChild(
+            option
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   產生預約時間
+========================================= */
+
+function generatePickupTimes() {
+
+    if (!pickupTime) {
+
+        return;
+
+    }
+
+
+    pickupTime.innerHTML = `
+
+        <option value="">
+            請選擇取餐時間
+        </option>
+
+    `;
+
+
+    if (
+        !pickupDate ||
+        !pickupDate.value
+    ) {
+
+        return;
+
+    }
+
+
+    const selectedDate =
+        pickupDate.value;
+
+
+    const today =
+        getTodayDate();
+
+
+    const businessStart =
+        getBusinessStartMinutes();
+
+
+    const businessEnd =
+        getBusinessEndMinutes(
+            selectedDate
+        );
+
+
+    /*
+        預設最早時間
+        營業開始 11:30
+    */
+
+    let minimumMinutes =
+        businessStart;
+
+
+    /*
+        如果選擇今天
+        至少保留 30 分鐘
+    */
+
+    if (
+        selectedDate ===
+        today
+    ) {
+
+        const now =
+            new Date();
+
+
+        const currentMinutes =
+            now.getHours() * 60 +
+            now.getMinutes();
+
+
+        minimumMinutes =
+            currentMinutes +
+            30;
+
+
+        /*
+            對齊到下一個 10 分鐘
+        */
+
+        minimumMinutes =
+            Math.ceil(
+                minimumMinutes / 10
+            ) * 10;
+
+
+        /*
+            不早於營業時間
+        */
+
+        minimumMinutes =
+            Math.max(
+                minimumMinutes,
+                businessStart
+            );
+
+    }
+
+
+    /*
+        如果今天已經超過營業時間
+        顯示提示
+    */
+
+    if (
+        minimumMinutes >
+        businessEnd
+    ) {
+
+        const option =
+            document.createElement(
+                "option"
+            );
+
+
+        option.value =
+            "";
+
+
+        option.textContent =
+            "今日已無可預約時段";
+
+
+        option.disabled =
+            true;
+
+
+        pickupTime.appendChild(
+            option
+        );
+
+
+        return;
+
+    }
+
+
+    /*
+        每 10 分鐘產生一個時間
+    */
+
+    for (
+        let minutes =
+            minimumMinutes;
+
+        minutes <=
+            businessEnd;
+
+        minutes += 10
+    ) {
+
+        const time =
+            minutesToTime(
+                minutes
+            );
+
+
+        const option =
+            document.createElement(
+                "option"
+            );
+
+
+        option.value =
+            time;
+
+
+        option.textContent =
+            time;
+
+
+        pickupTime.appendChild(
+            option
+        );
+
+    }
+
+}
 
 
 /* =========================================
@@ -87,173 +647,246 @@ const successOrderSummary =
 function renderOrder() {
 
     if (!orderList) {
+
         return;
+
     }
 
-    if (cart.length === 0) {
+
+    if (
+        cart.length === 0
+    ) {
 
         orderList.innerHTML = `
+
             <p>
                 購物車目前沒有商品
             </p>
+
         `;
 
+
         if (orderTotal) {
-            orderTotal.textContent = "0";
+
+            orderTotal.textContent =
+                "0";
+
         }
 
+
         return;
+
     }
 
 
-    let html = "";
-    let total = 0;
+    let html =
+        "";
 
 
-    cart.forEach(item => {
-
-        const subtotal =
-            Number(item.price) *
-            Number(item.qty);
+    let total =
+        0;
 
 
-        total += subtotal;
+    cart.forEach(
+        item => {
 
-
-        let optionText = "";
-
-
-        if (item.options) {
-
-            const options =
-                item.options;
-
-            const optionList = [];
-
-
-            if (options.noodle) {
-
-                optionList.push(
-                    options.noodle
+            const price =
+                Number(
+                    item.price
                 );
 
-            }
 
-
-            if (options.spicy) {
-
-                optionList.push(
-                    options.spicy
+            const qty =
+                Number(
+                    item.qty
                 );
 
-            }
+
+            const subtotal =
+                price *
+                qty;
+
+
+            total +=
+                subtotal;
+
+
+            let optionText =
+                "";
 
 
             if (
-                options.vegetable === false
+                item.options
             ) {
 
-                optionList.push(
-                    "不加菜"
-                );
-
-            }
+                const options =
+                    item.options;
 
 
-            if (
-                options.onion === false
-            ) {
+                const optionList =
+                    [];
 
-                optionList.push(
-                    "不加蔥"
-                );
-
-            }
-
-
-            if (options.sauce) {
 
                 if (
-                    Array.isArray(
-                        options.sauce
-                    )
+                    options.noodle
                 ) {
 
                     optionList.push(
-                        options.sauce.join("＋")
+                        options.noodle
                     );
 
-                } else {
+                }
+
+
+                if (
+                    options.spicy
+                ) {
 
                     optionList.push(
-                        options.sauce
+                        options.spicy
                     );
+
+                }
+
+
+                if (
+                    options.vegetable ===
+                    false
+                ) {
+
+                    optionList.push(
+                        "不加菜"
+                    );
+
+                }
+
+
+                if (
+                    options.onion ===
+                    false
+                ) {
+
+                    optionList.push(
+                        "不加蔥"
+                    );
+
+                }
+
+
+                if (
+                    options.sauce
+                ) {
+
+                    if (
+                        Array.isArray(
+                            options.sauce
+                        )
+                    ) {
+
+                        optionList.push(
+                            options.sauce.join(
+                                "＋"
+                            )
+                        );
+
+                    }
+
+                    else {
+
+                        optionList.push(
+                            options.sauce
+                        );
+
+                    }
+
+                }
+
+
+                if (
+                    optionList.length >
+                    0
+                ) {
+
+                    optionText = `
+
+                        <div class="order-options">
+
+                            ${escapeHTML(
+                                optionList.join(
+                                    " ・ "
+                                )
+                            )}
+
+                        </div>
+
+                    `;
 
                 }
 
             }
 
 
-            if (
-                optionList.length > 0
-            ) {
+            html += `
 
-                optionText = `
-                    <div class="order-options">
-                        ${escapeHTML(
-                            optionList.join(" ・ ")
-                        )}
-                    </div>
-                `;
-
-            }
-
-        }
-
-
-        html += `
-
-            <div class="checkout-item">
-
-                <div>
-
-                    <strong>
-                        ${escapeHTML(item.name)}
-                    </strong>
-
-                    ${optionText}
+                <div class="checkout-item">
 
                     <div>
-                        NT$${item.price}
-                        ×
-                        ${item.qty}
+
+                        <strong>
+
+                            ${escapeHTML(
+                                item.name
+                            )}
+
+                        </strong>
+
+                        ${optionText}
+
+                        <div>
+
+                            NT$${price}
+
+                            ×
+
+                            ${qty}
+
+                        </div>
+
                     </div>
+
+
+                    <strong>
+
+                        NT$${subtotal}
+
+                    </strong>
 
                 </div>
 
-                <strong>
-                    NT$${subtotal}
-                </strong>
+            `;
 
-            </div>
-
-        `;
-
-    });
+        }
+    );
 
 
     html += `
 
         <hr>
 
+
         <div class="checkout-total-row">
 
             <strong>
+
                 合計
+
             </strong>
 
+
             <strong>
+
                 NT$${total}
+
             </strong>
 
         </div>
@@ -284,13 +917,15 @@ function loadCustomerData() {
     const savedName =
         localStorage.getItem(
             "customerName"
-        ) || "";
+        ) ||
+        "";
 
 
     const savedPhone =
         localStorage.getItem(
             "customerPhone"
-        ) || "";
+        ) ||
+        "";
 
 
     if (nameInput) {
@@ -317,6 +952,7 @@ function loadCustomerData() {
 
         welcomeCustomer.style.display =
             "block";
+
 
         welcomeName.textContent =
             savedName;
@@ -355,7 +991,7 @@ function saveCustomerData() {
 
 
 /* =========================================
-   電話只允許數字
+   電話輸入限制
 ========================================= */
 
 if (phoneInput) {
@@ -366,8 +1002,14 @@ if (phoneInput) {
 
             this.value =
                 this.value
-                .replace(/\D/g, "")
-                .slice(0, 10);
+                .replace(
+                    /\D/g,
+                    ""
+                )
+                .slice(
+                    0,
+                    10
+                );
 
 
             if (phoneError) {
@@ -384,13 +1026,15 @@ if (phoneInput) {
 
 
 /* =========================================
-   電話格式驗證
+   電話驗證
 ========================================= */
 
 function validatePhone() {
 
     if (!phoneInput) {
+
         return false;
+
     }
 
 
@@ -399,7 +1043,9 @@ function validatePhone() {
 
 
     const valid =
-        /^09\d{8}$/.test(phone);
+        /^09\d{8}$/.test(
+            phone
+        );
 
 
     if (!valid) {
@@ -408,6 +1054,7 @@ function validatePhone() {
 
             phoneError.style.display =
                 "block";
+
 
             phoneError.textContent =
                 "📱 請輸入正確的手機號碼，例如 0912345678";
@@ -437,395 +1084,7 @@ function validatePhone() {
 
 
 /* =========================================
-   取得今天日期 YYYY-MM-DD
-========================================= */
-
-function getTodayDate() {
-
-    const now =
-        new Date();
-
-
-    const year =
-        now.getFullYear();
-
-
-    const month =
-        String(
-            now.getMonth() + 1
-        ).padStart(
-            2,
-            "0"
-        );
-
-
-    const day =
-        String(
-            now.getDate()
-        ).padStart(
-            2,
-            "0"
-        );
-
-
-    return `${year}-${month}-${day}`;
-
-}
-
-
-/* =========================================
-   取得最快取餐時間
-   現在時間＋20分鐘
-========================================= */
-
-function getFastestPickupTime() {
-
-    const now =
-        new Date();
-
-
-    now.setMinutes(
-        now.getMinutes() + 20
-    );
-
-
-    const hour =
-        String(
-            now.getHours()
-        ).padStart(
-            2,
-            "0"
-        );
-
-
-    const minute =
-        String(
-            now.getMinutes()
-        ).padStart(
-            2,
-            "0"
-        );
-
-
-    return `${hour}:${minute}`;
-
-}
-
-
-/* =========================================
-   產生預約日期
-   顯示今天起未來 7 天
-========================================= */
-
-function generatePickupDates() {
-
-    if (!pickupDate) {
-        return;
-    }
-
-
-    pickupDate.innerHTML = `
-
-        <option value="">
-            請選擇取餐日期
-        </option>
-
-    `;
-
-
-    const today =
-        new Date();
-
-
-    for (
-        let i = 0;
-        i < 7;
-        i++
-    ) {
-
-        const date =
-            new Date(
-                today.getTime()
-                +
-                i *
-                24 *
-                60 *
-                60 *
-                1000
-            );
-
-
-        const year =
-            date.getFullYear();
-
-
-        const month =
-            String(
-                date.getMonth() + 1
-            ).padStart(
-                2,
-                "0"
-            );
-
-
-        const day =
-            String(
-                date.getDate()
-            ).padStart(
-                2,
-                "0"
-            );
-
-
-        const value =
-            `${year}-${month}-${day}`;
-
-
-        const text =
-            i === 0
-                ? `今天 ${month}/${day}`
-                : `${month}/${day}`;
-
-
-        const option =
-            document.createElement(
-                "option"
-            );
-
-
-        option.value =
-            value;
-
-
-        option.textContent =
-            text;
-
-
-        pickupDate.appendChild(
-            option
-        );
-
-    }
-
-}
-
-
-/* =========================================
-   產生預約時間
-   從現在起未來 7 天
-   每 10 分鐘一個選項
-========================================= */
-
-function generatePickupTimes() {
-
-    if (!pickupTime) {
-        return;
-    }
-
-
-    pickupTime.innerHTML = `
-
-        <option value="">
-            請選擇取餐時間
-        </option>
-
-    `;
-
-
-    const now =
-        new Date();
-
-
-    /*
-        最早預約時間：
-        現在＋30分鐘
-    */
-
-    now.setMinutes(
-        now.getMinutes() + 30
-    );
-
-
-    /*
-        整點對齊到10分鐘
-    */
-
-    now.setMinutes(
-
-        Math.ceil(
-            now.getMinutes() / 10
-        ) * 10
-
-    );
-
-
-    /*
-        從 11:30 開始
-        到 20:30
-        依照營業時間顯示
-
-        如果日期是星期六、日
-        則到 18:30
-    */
-
-    const selectedDate =
-        pickupDate
-            ? pickupDate.value
-            : "";
-
-
-    let startHour = 11;
-    let startMinute = 30;
-
-    let endHour = 20;
-    let endMinute = 30;
-
-
-    if (selectedDate) {
-
-        const date =
-            new Date(
-                selectedDate + "T00:00:00"
-            );
-
-
-        const day =
-            date.getDay();
-
-
-        /*
-            星期六、日
-            營業至18:30
-        */
-
-        if (
-            day === 0 ||
-            day === 6
-        ) {
-
-            endHour = 18;
-            endMinute = 30;
-
-        }
-
-    }
-
-
-    for (
-        let hour = startHour;
-        hour <= endHour;
-        hour++
-    ) {
-
-        for (
-            let minute = 0;
-            minute < 60;
-            minute += 10
-        ) {
-
-
-            if (
-                hour === startHour &&
-                minute < startMinute
-            ) {
-
-                continue;
-
-            }
-
-
-            if (
-                hour === endHour &&
-                minute > endMinute
-            ) {
-
-                continue;
-
-            }
-
-
-            /*
-                如果選今天
-                過濾已經過去的時間
-            */
-
-            if (
-                selectedDate ===
-                getTodayDate()
-            ) {
-
-                const current =
-                    new Date();
-
-
-                const optionTime =
-                    new Date();
-
-
-                optionTime.setHours(
-                    hour,
-                    minute,
-                    0,
-                    0
-                );
-
-
-                /*
-                    至少保留30分鐘
-                */
-
-                const minimum =
-                    new Date(
-                        current.getTime()
-                        +
-                        30 *
-                        60 *
-                        1000
-                    );
-
-
-                if (
-                    optionTime < minimum
-                ) {
-
-                    continue;
-
-                }
-
-            }
-
-
-            const value =
-                `${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}`;
-
-
-            const option =
-                document.createElement(
-                    "option"
-                );
-
-
-            option.value =
-                value;
-
-
-            option.textContent =
-                value;
-
-
-            pickupTime.appendChild(
-                option
-            );
-
-        }
-
-    }
-
-}
-
-
-/* =========================================
-   顯示／隱藏外帶設定
+   取餐方式切換
 ========================================= */
 
 document
@@ -840,11 +1099,13 @@ document
                 function() {
 
                     if (
-                        this.value === "外帶" &&
-                        this.checked
+                        this.value ===
+                        "外帶"
                     ) {
 
-                        if (takeoutOptions) {
+                        if (
+                            takeoutOptions
+                        ) {
 
                             takeoutOptions.style.display =
                                 "block";
@@ -853,7 +1114,7 @@ document
 
 
                         /*
-                            預設選擇最快取餐
+                            預設最快取餐
                         */
 
                         const fastestRadio =
@@ -862,7 +1123,9 @@ document
                             );
 
 
-                        if (fastestRadio) {
+                        if (
+                            fastestRadio
+                        ) {
 
                             fastestRadio.checked =
                                 true;
@@ -870,11 +1133,9 @@ document
                         }
 
 
-                        /*
-                            隱藏預約日期時間
-                        */
-
-                        if (reservationTimeArea) {
+                        if (
+                            reservationTimeArea
+                        ) {
 
                             reservationTimeArea.style.display =
                                 "none";
@@ -885,9 +1146,21 @@ document
 
                     else {
 
-                        if (takeoutOptions) {
+                        if (
+                            takeoutOptions
+                        ) {
 
                             takeoutOptions.style.display =
+                                "none";
+
+                        }
+
+
+                        if (
+                            reservationTimeArea
+                        ) {
+
+                            reservationTimeArea.style.display =
                                 "none";
 
                         }
@@ -902,7 +1175,7 @@ document
 
 
 /* =========================================
-   最快／預約取餐切換
+   最快取餐／預約取餐切換
 ========================================= */
 
 document
@@ -916,17 +1189,19 @@ document
                 "change",
                 function() {
 
-
                     /*
                         最快取餐
                     */
 
                     if (
-                        this.value === "最快取餐" &&
+                        this.value ===
+                        "最快取餐" &&
                         this.checked
                     ) {
 
-                        if (reservationTimeArea) {
+                        if (
+                            reservationTimeArea
+                        ) {
 
                             reservationTimeArea.style.display =
                                 "none";
@@ -941,26 +1216,25 @@ document
                     */
 
                     if (
-                        this.value === "預約取餐" &&
+                        this.value ===
+                        "預約取餐" &&
                         this.checked
                     ) {
 
-                        if (reservationTimeArea) {
-
-                            reservationTimeArea.style.display =
-                                "block";
-
-                        }
-
+                        /*
+                            先產生日期
+                        */
 
                         generatePickupDates();
 
 
                         /*
-                            預設日期為今天
+                            預設今天
                         */
 
-                        if (pickupDate) {
+                        if (
+                            pickupDate
+                        ) {
 
                             pickupDate.value =
                                 getTodayDate();
@@ -968,7 +1242,25 @@ document
                         }
 
 
+                        /*
+                            再產生時間
+                        */
+
                         generatePickupTimes();
+
+
+                        /*
+                            最後顯示區域
+                        */
+
+                        if (
+                            reservationTimeArea
+                        ) {
+
+                            reservationTimeArea.style.display =
+                                "block";
+
+                        }
 
                     }
 
@@ -998,7 +1290,28 @@ if (pickupDate) {
 
 
 /* =========================================
-   送出訂單
+   備註輸入
+========================================= */
+
+if (customerNote) {
+
+    customerNote.addEventListener(
+        "input",
+        function() {
+
+            /*
+                不做特殊處理
+                只保留目前內容
+            */
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   送出訂單按鈕
 ========================================= */
 
 if (submitBtn) {
@@ -1012,14 +1325,13 @@ if (submitBtn) {
 
 
 /* =========================================
-   正式送單
+   正式送出訂單
 ========================================= */
 
 async function submitOrder() {
 
-
     /*
-        防止重複點擊
+        防止重複送出
     */
 
     if (
@@ -1041,7 +1353,7 @@ async function submitOrder() {
     ) {
 
         alert(
-            "購物車目前是空的"
+            "購物車目前是空的，請先加入餐點！"
         );
 
         return;
@@ -1092,27 +1404,18 @@ async function submitOrder() {
 
 
     /*
-        取餐方式
+        取得訂單類型
     */
 
     const orderType =
         document.querySelector(
             'input[name="order-type"]:checked'
-        )?.value
-        ||
+        )?.value ||
         "內用";
 
 
     /*
-        餐具
-    */
-
-    let tableware =
-        "";
-
-
-    /*
-        取餐模式
+        預設資料
     */
 
     let pickupMode =
@@ -1127,31 +1430,33 @@ async function submitOrder() {
         "";
 
 
+    let tableware =
+        "";
+
+
     /*
-        外帶
+        外帶處理
     */
 
     if (
-        orderType === "外帶"
+        orderType ===
+        "外帶"
     ) {
-
 
         pickupMode =
             document.querySelector(
                 'input[name="pickup-mode"]:checked'
-            )?.value
-            ||
+            )?.value ||
             "最快取餐";
 
 
         /*
-            ================================
             最快取餐
-            ================================
         */
 
         if (
-            pickupMode === "最快取餐"
+            pickupMode ===
+            "最快取餐"
         ) {
 
             finalPickupDate =
@@ -1159,21 +1464,19 @@ async function submitOrder() {
 
 
             finalPickupTime =
-                `最快取餐（約20分鐘）`;
+                "最快取餐（約20分鐘）";
 
         }
 
 
         /*
-            ================================
             預約取餐
-            ================================
         */
 
         else if (
-            pickupMode === "預約取餐"
+            pickupMode ===
+            "預約取餐"
         ) {
-
 
             if (
                 !pickupDate ||
@@ -1236,8 +1539,7 @@ async function submitOrder() {
         tableware =
             document.querySelector(
                 'input[name="tableware"]:checked'
-            )?.value
-            ||
+            )?.value ||
             "需要餐具";
 
     }
@@ -1260,13 +1562,22 @@ async function submitOrder() {
     const total =
         cart.reduce(
 
-            (sum, item) =>
+            (
+                sum,
+                item
+            ) => {
 
-                sum
-                +
-                Number(item.price)
-                *
-                Number(item.qty),
+                return (
+                    sum +
+                    Number(
+                        item.price
+                    ) *
+                    Number(
+                        item.qty
+                    )
+                );
+
+            },
 
             0
 
@@ -1313,7 +1624,8 @@ async function submitOrder() {
 
 
                 if (
-                    options.vegetable === false
+                    options.vegetable ===
+                    false
                 ) {
 
                     optionText.push(
@@ -1324,7 +1636,8 @@ async function submitOrder() {
 
 
                 if (
-                    options.onion === false
+                    options.onion ===
+                    false
                 ) {
 
                     optionText.push(
@@ -1345,10 +1658,14 @@ async function submitOrder() {
                     ) {
 
                         optionText.push(
-                            options.sauce.join("＋")
+                            options.sauce.join(
+                                "＋"
+                            )
                         );
 
-                    } else {
+                    }
+
+                    else {
 
                         optionText.push(
                             options.sauce
@@ -1365,15 +1682,22 @@ async function submitOrder() {
                         item.name,
 
                     qty:
-                        Number(item.qty),
+                        Number(
+                            item.qty
+                        ),
 
                     price:
-                        Number(item.price),
+                        Number(
+                            item.price
+                        ),
 
                     subtotal:
-                        Number(item.price)
-                        *
-                        Number(item.qty),
+                        Number(
+                            item.price
+                        ) *
+                        Number(
+                            item.qty
+                        ),
 
                     options:
                         optionText.join(
@@ -1399,7 +1723,9 @@ async function submitOrder() {
             name,
 
         phone:
-            phoneInput.value.trim(),
+            phoneInput
+                ? phoneInput.value.trim()
+                : "",
 
         orderType:
             orderType,
@@ -1429,19 +1755,20 @@ async function submitOrder() {
 
 
     console.log(
-        "送出訂單資料：",
+        "📦 送出訂單資料：",
         orderData
     );
 
 
     /*
-        防止重複送單
+        鎖定送單按鈕
     */
 
     if (submitBtn) {
 
         submitBtn.disabled =
             true;
+
 
         submitBtn.textContent =
             "📲 訂單傳送中...";
@@ -1450,7 +1777,6 @@ async function submitOrder() {
 
 
     try {
-
 
         const response =
             await fetch(
@@ -1480,7 +1806,23 @@ async function submitOrder() {
 
 
         /*
-            取得後端回應
+            檢查 HTTP 狀態
+        */
+
+        if (
+            !response.ok
+        ) {
+
+            throw new Error(
+                "HTTP " +
+                response.status
+            );
+
+        }
+
+
+        /*
+            讀取後端回應
         */
 
         const result =
@@ -1488,22 +1830,21 @@ async function submitOrder() {
 
 
         console.log(
-            "後端回應：",
+            "📥 後端回應：",
             result
         );
 
 
         /*
-            送單成功
+            成功
         */
 
         if (
             result.success
         ) {
 
-
             /*
-                儲存客戶資料
+                儲存顧客資料
             */
 
             saveCustomerData();
@@ -1540,20 +1881,16 @@ async function submitOrder() {
 
         }
 
-
         else {
-
 
             throw new Error(
 
-                result.message
-                ||
+                result.message ||
                 "訂單送出失敗"
 
             );
 
         }
-
 
     }
 
@@ -1561,9 +1898,8 @@ async function submitOrder() {
         error
     ) {
 
-
         console.error(
-            "訂單送出錯誤：",
+            "❌ 訂單送出錯誤：",
             error
         );
 
@@ -1573,10 +1909,15 @@ async function submitOrder() {
         );
 
 
+        /*
+            恢復按鈕
+        */
+
         if (submitBtn) {
 
             submitBtn.disabled =
                 false;
+
 
             submitBtn.textContent =
                 "📲 送出訂單";
@@ -1596,7 +1937,6 @@ function showSuccessModal(
     orderData
 ) {
 
-
     if (
         !successModal
     ) {
@@ -1606,13 +1946,13 @@ function showSuccessModal(
     }
 
 
-    /*
-        訂單內容摘要
-    */
-
     let itemsHTML =
         "";
 
+
+    /*
+        訂單商品
+    */
 
     if (
         Array.isArray(
@@ -1620,26 +1960,55 @@ function showSuccessModal(
         )
     ) {
 
-
         itemsHTML =
             orderData.items
             .map(
                 item => {
 
+                    let optionHTML =
+                        "";
+
+
+                    if (
+                        item.options
+                    ) {
+
+                        optionHTML = `
+
+                            <div class="success-item-options">
+
+                                ${escapeHTML(
+                                    item.options
+                                )}
+
+                            </div>
+
+                        `;
+
+                    }
+
+
                     return `
 
                         <div class="success-item">
 
-                            <span>
+                            <div>
 
-                                ${escapeHTML(
-                                    item.name
-                                )}
+                                <span>
 
-                                ×
-                                ${item.qty}
+                                    ${escapeHTML(
+                                        item.name
+                                    )}
 
-                            </span>
+                                    ×
+                                    ${item.qty}
+
+                                </span>
+
+                                ${optionHTML}
+
+                            </div>
+
 
                             <strong>
 
@@ -1653,7 +2022,9 @@ function showSuccessModal(
 
                 }
             )
-            .join("");
+            .join(
+                ""
+            );
 
     }
 
@@ -1671,25 +2042,32 @@ function showSuccessModal(
         "外帶"
     ) {
 
-
         pickupHTML = `
 
             <div class="success-pickup">
 
                 <div>
+
                     🥡 外帶
+
                 </div>
 
+
                 <div>
+
                     📅 ${escapeHTML(
                         orderData.pickupDate
                     )}
+
                 </div>
 
+
                 <div>
+
                     ⏰ ${escapeHTML(
                         orderData.pickupTime
                     )}
+
                 </div>
 
             </div>
@@ -1699,29 +2077,41 @@ function showSuccessModal(
     }
 
 
-    if (successOrderSummary) {
+    if (
+        successOrderSummary
+    ) {
 
         successOrderSummary.innerHTML = `
 
             <div class="success-order-info">
 
                 <strong>
-                    訂單摘要
+
+                    📋 訂單摘要
+
                 </strong>
 
+
                 ${itemsHTML}
+
 
                 <div class="success-total">
 
                     <span>
+
                         訂單金額
+
                     </span>
 
+
                     <strong>
+
                         NT$${orderData.total}
+
                     </strong>
 
                 </div>
+
 
                 ${pickupHTML}
 
@@ -1736,10 +2126,6 @@ function showSuccessModal(
         "flex";
 
 
-    /*
-        防止背景滾動
-    */
-
     document.body.style.overflow =
         "hidden";
 
@@ -1747,26 +2133,21 @@ function showSuccessModal(
 
 
 /* =========================================
-   成功彈窗｜知道了 → 返回首頁
+   成功彈窗
+   知道了 → 回首頁
 ========================================= */
 
-if (successConfirmBtn) {
+if (
+    successConfirmBtn
+) {
 
     successConfirmBtn.addEventListener(
         "click",
         function() {
 
-            /*
-                恢復頁面滾動
-            */
-
             document.body.style.overflow =
                 "";
 
-
-            /*
-                返回首頁
-            */
 
             window.location.href =
                 "index.html";
@@ -1776,11 +2157,14 @@ if (successConfirmBtn) {
 
 }
 
+
 /* =========================================
-   點擊背景關閉
+   成功彈窗背景關閉
 ========================================= */
 
-if (successModal) {
+if (
+    successModal
+) {
 
     successModal.addEventListener(
         "click",
@@ -1793,6 +2177,7 @@ if (successModal) {
 
                 successModal.style.display =
                     "none";
+
 
                 document.body.style.overflow =
                     "";
@@ -1809,13 +2194,9 @@ if (successModal) {
    返回修改餐點
 ========================================= */
 
-const backOrderBtn =
-    document.getElementById(
-        "back-order-btn"
-    );
-
-
-if (backOrderBtn) {
+if (
+    backOrderBtn
+) {
 
     backOrderBtn.addEventListener(
         "click",
@@ -1839,7 +2220,8 @@ function escapeHTML(
 ) {
 
     return String(
-        text || ""
+        text ||
+        ""
     )
 
     .replace(
@@ -1880,5 +2262,5 @@ loadCustomerData();
 
 
 console.log(
-    "🍜 初萊食麵 V3 checkout.js 已載入"
+    "🍜 初萊食麵 V3 checkout.js 完整版已載入"
 );
