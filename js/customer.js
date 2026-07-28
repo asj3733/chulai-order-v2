@@ -1,5 +1,5 @@
 /* =========================================
-   初萊食麵 V4
+   初萊食麵
    customer.js
    客戶查詢正式版
 ========================================= */
@@ -22,10 +22,6 @@ const phoneInput =
         "customer-phone"
     );
 
-
-/*
-    ⚠️ 這裡一定要跟 customer.html 一樣
-*/
 
 const searchBtn =
     document.getElementById(
@@ -88,7 +84,7 @@ const favoriteItems =
 
 
 /* =========================================
-   電話格式整理
+   手機號碼格式整理
 ========================================= */
 
 function normalizePhone(
@@ -167,30 +163,6 @@ function normalizePhone(
 
 
 /* =========================================
-   清除錯誤
-========================================= */
-
-function clearError() {
-
-
-    if (
-        phoneError
-    ) {
-
-
-        phoneError.style.display =
-            "none";
-
-
-        phoneError.textContent =
-            "";
-
-    }
-
-}
-
-
-/* =========================================
    顯示錯誤
 ========================================= */
 
@@ -217,6 +189,30 @@ function showError(
 
 
 /* =========================================
+   清除錯誤
+========================================= */
+
+function clearError() {
+
+
+    if (
+        phoneError
+    ) {
+
+
+        phoneError.textContent =
+            "";
+
+
+        phoneError.style.display =
+            "none";
+
+    }
+
+}
+
+
+/* =========================================
    顯示客戶資料
 ========================================= */
 
@@ -226,7 +222,7 @@ function showCustomerResult(
 
 
     /*
-        隱藏未找到畫面
+        隱藏查無資料
     */
 
     if (
@@ -241,7 +237,7 @@ function showCustomerResult(
 
 
     /*
-        顯示查詢結果
+        顯示結果
     */
 
     if (
@@ -256,7 +252,7 @@ function showCustomerResult(
 
 
     /*
-        客戶姓名
+        姓名
     */
 
     if (
@@ -271,16 +267,20 @@ function showCustomerResult(
             +
 
             (
+
                 customer.name
+
                 ||
+
                 "熟客"
+
             );
 
     }
 
 
     /*
-        歡迎文字
+        歡迎訊息
     */
 
     if (
@@ -316,7 +316,7 @@ function showCustomerResult(
 
 
     /*
-        最近訂單時間
+        最後訂單時間
     */
 
     if (
@@ -336,7 +336,7 @@ function showCustomerResult(
 
 
     /*
-        最近訂單內容
+        最後訂單內容
     */
 
     if (
@@ -376,7 +376,7 @@ function showCustomerResult(
 
 
     /*
-        自動滑到結果
+        滾動到結果
     */
 
     setTimeout(
@@ -411,7 +411,7 @@ function showCustomerResult(
 
 
 /* =========================================
-   顯示沒有訂單
+   顯示查無資料
 ========================================= */
 
 function showCustomerNotFound() {
@@ -433,7 +433,7 @@ function showCustomerNotFound() {
 
 
     /*
-        顯示未找到
+        顯示查無資料
     */
 
     if (
@@ -471,7 +471,7 @@ async function searchCustomer() {
 
 
     /*
-        先隱藏舊結果
+        隱藏舊結果
     */
 
     if (
@@ -497,7 +497,7 @@ async function searchCustomer() {
 
 
     /*
-        取得手機
+        取得電話
     */
 
     const phone =
@@ -518,7 +518,7 @@ async function searchCustomer() {
 
 
     /*
-        驗證手機
+        電話驗證
     */
 
     if (
@@ -591,15 +591,6 @@ async function searchCustomer() {
             );
 
 
-        console.log(
-
-            "🔍 客戶查詢：",
-
-            queryURL
-
-        );
-
-
         /*
             呼叫 GAS
         */
@@ -638,17 +629,8 @@ async function searchCustomer() {
             await response.json();
 
 
-        console.log(
-
-            "🍜 查詢結果：",
-
-            data
-
-        );
-
-
         /*
-            API 回傳失敗
+            API 回傳錯誤
         */
 
         if (
@@ -675,7 +657,7 @@ async function searchCustomer() {
 
         if (
 
-            data.found
+            data.found === true
 
             &&
 
@@ -694,7 +676,7 @@ async function searchCustomer() {
 
 
         /*
-            找不到客戶
+            查無客戶
         */
 
         else {
@@ -850,84 +832,11 @@ if (
 
 
 /* =========================================
-   防止 HTML 注入
-========================================= */
-
-function escapeHTML(
-    text
-) {
-
-
-    return String(
-        text ||
-        ""
-    )
-
-    .replace(
-        /&/g,
-        "&amp;"
-    )
-
-    .replace(
-        /</g,
-        "&lt;"
-    )
-
-    .replace(
-        />/g,
-        "&gt;"
-    )
-
-    .replace(
-        /"/g,
-        "&quot;"
-    )
-
-    .replace(
-        /'/g,
-        "&#039;"
-    );
-
-}
-
-
-/* =========================================
    初始化
 ========================================= */
 
 console.log(
 
-    "🍜 初萊食麵 V4 customer.js 已載入"
-
-);
-
-
-/*
-    確認 HTML ID 是否正確
-*/
-
-console.log(
-
-    "📱 phoneInput：",
-
-    phoneInput
-
-);
-
-
-console.log(
-
-    "🔍 searchBtn：",
-
-    searchBtn
-
-);
-
-
-console.log(
-
-    "📋 customerResult：",
-
-    customerResult
+    "🍜 初萊食麵 customer.js 正式版已載入"
 
 );
