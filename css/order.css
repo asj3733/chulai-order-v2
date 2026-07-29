@@ -1,760 +1,1213 @@
-/* =========================================
-初萊食麵｜點餐頁
-order.css 完整版
-========================================= */
-
-/* =========================================
-分類按鈕
-========================================= */
-
-.category-nav{
-
-display:flex;
-gap:10px;
-overflow-x:auto;
-padding:10px 0 20px;
-margin-bottom:20px;
--webkit-overflow-scrolling:touch;
-
-}
-
-.category-nav button{
-
-flex:0 0 auto;
-border:none;
-background:#ffffff;
-color:#333;
-padding:12px 18px;
-border-radius:20px;
-font-size:15px;
-font-weight:bold;
-cursor:pointer;
-box-shadow:0 3px 10px rgba(0,0,0,.08);
-
-}
-
-.category-nav button:active{
-
-transform:scale(.96);
-
-}
-
-.category-nav button:hover{
-
-background:#D4AF37;
-color:#222;
-
-}
-
-/* =========================================
-商品分類
-========================================= */
-
-.menu-category{
-
-margin-bottom:35px;
-
-}
-
-.menu-category h2{
-
-color:#D4AF37;
-margin-bottom:18px;
-font-size:24px;
-
-}
-
-/* =========================================
-商品
-========================================= */
-
-.menu-item{
-
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:15px;
-background:#fff;
-padding:18px;
-border-radius:15px;
-margin-bottom:12px;
-box-shadow:0 4px 12px rgba(0,0,0,.08);
-
-}
-
-.menu-info{
-
-flex:1;
-min-width:0;
-
-}
-
-.menu-info h3{
-
-margin:0 0 8px;
-font-size:18px;
-color:#333;
-
-}
-
-.menu-info p{
-
-margin:0;
-color:#D4AF37;
-font-size:17px;
-font-weight:bold;
-
-}
-
-.menu-item button{
-
-flex-shrink:0;
-background:#D4AF37;
-color:#222;
-border:none;
-padding:11px 18px;
-border-radius:10px;
-font-weight:bold;
-cursor:pointer;
-
-}
-
-/* =========================================
-購物車
-========================================= */
-
-.cart-item{
-
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:15px;
-background:#fff;
-padding:15px;
-margin-bottom:12px;
-border-radius:14px;
-box-shadow:0 3px 10px rgba(0,0,0,.08);
-
-}
-
-.cart-item-info{
-
-flex:1;
-min-width:0;
-
-}
-
-.cart-item-info strong{
-
-display:block;
-font-size:17px;
-margin-bottom:5px;
-
-}
-
-.cart-options{
-
-color:#777;
-font-size:14px;
-line-height:1.6;
-margin-bottom:5px;
-
-}
-
-.cart-control{
-
-display:flex;
-align-items:center;
-gap:8px;
-flex-shrink:0;
-
-}
-
-.cart-control button{
-
-width:34px;
-height:34px;
-border:none;
-border-radius:8px;
-background:#f0f0f0;
-font-size:18px;
-cursor:pointer;
-
-}
-
-.cart-control .delete-btn{
-
-background:#f5d5d5;
-color:#c00;
-
-}
-
-.cart-control span{
-
-min-width:20px;
-text-align:center;
-font-weight:bold;
-
-}
-
-/* =========================================
-浮動購物車
-========================================= */
-
-.floating-cart{
-
-position:fixed;
-left:15px;
-right:15px;
-bottom:15px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:15px;
-background:#2F2F2F;
-color:#fff;
-padding:12px 15px;
-border-radius:18px;
-box-shadow:0 8px 25px rgba(0,0,0,.3);
-z-index:5000;
-
-}
-
-.cart-left{
-
-display:flex;
-align-items:center;
-gap:15px;
-
-}
-
-.cart-count{
-
-font-size:15px;
-
-}
-
-.cart-total{
-
-color:#D4AF37;
-font-size:18px;
-font-weight:bold;
-
-}
-
-#checkout-btn{
-
-border:none;
-background:#D4AF37;
-color:#222;
-padding:12px 18px;
-border-radius:12px;
-font-size:15px;
-font-weight:bold;
-cursor:pointer;
-
-}
-
-/* =========================================
-客製化視窗
-========================================= */
-
-/*
-這裡是這次主要修正
-*/
-
-.modal{
-
-display:none;
-position:fixed;
-inset:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,.55);
-z-index:99999;
-overflow:hidden;
-
-}
-
-/* =========================================
-客製化白色視窗
-========================================= */
-
-.modal-box{
-
-position:absolute;
-left:50%;
-bottom:0;
-transform:translateX(-50%);
-width:100%;
-max-width:600px;
-max-height:90vh;
-overflow-y:auto;
-overflow-x:hidden;
-background:#fff;
-border-radius:25px 25px 0 0;
-padding:25px 20px 30px;
-box-sizing:border-box;
-box-shadow:0 -5px 30px rgba(0,0,0,.25);
-animation:slideUp .25s ease;
-
-}
-
-/* =========================================
-動畫
-========================================= */
-
-@keyframes slideUp{
-
-from{
-    transform:
-        translateX(-50%)
-        translateY(100%);
-}
-to{
-    transform:
-        translateX(-50%)
-        translateY(0);
-}
-
-}
-
-/* =========================================
-客製化標題
-========================================= */
-
-.modal-box h2{
-
-display:block;
-width:100%;
-margin:0 0 25px;
-padding:0;
-text-align:center;
-color:#D4AF37;
-font-size:23px;
-line-height:1.4;
-box-sizing:border-box;
-
-}
-
-.modal-box h3{
-
-display:block;
-width:100%;
-margin:20px 0 10px;
-color:#333;
-font-size:17px;
-line-height:1.4;
-box-sizing:border-box;
-
-}
-
-/* =========================================
-客製化選項
-========================================= */
-
-.modal-box label{
-
-display:flex;
-align-items:center;
-width:100%;
-min-height:48px;
-margin:8px 0;
-padding:12px 14px;
-border:1px solid #ddd;
-border-radius:12px;
-background:#fff;
-color:#333;
-font-size:16px;
-line-height:1.5;
-box-sizing:border-box;
-cursor:pointer;
-
-}
-
-/* =========================================
-Radio / Checkbox
-========================================= */
-
-.modal-box input[type=“radio”],
-.modal-box input[type=“checkbox”]{
-
-width:20px;
-height:20px;
-flex-shrink:0;
-margin:0 10px 0 0;
-padding:0;
-box-sizing:border-box;
-
-}
-
-/* =========================================
-選取狀態
-========================================= */
-
-.modal-box label:has(
-input:checked
-){
-
-border-color:#D4AF37;
-background:#fffaf0;
-
-}
-
-/* =========================================
-數量區
-========================================= */
-
-.modal-qty{
-
-display:flex;
-justify-content:center;
-align-items:center;
-gap:25px;
-width:100%;
-margin:15px 0 20px;
-
-}
-
-.modal-qty button{
-
-width:45px;
-height:45px;
-border:none;
-border-radius:12px;
-background:#eee;
-color:#333;
-font-size:22px;
-cursor:pointer;
-
-}
-
-.modal-qty span{
-
-min-width:40px;
-text-align:center;
-font-size:20px;
-font-weight:bold;
-
-}
-
-/* =========================================
-加入購物車按鈕
-========================================= */
-
-.modal-box .add-cart-btn{
-
-display:block;
-width:100%;
-min-height:52px;
-margin:15px 0 10px;
-padding:14px;
-border:none;
-border-radius:14px;
-background:#D4AF37;
-color:#222;
-font-size:18px;
-font-weight:bold;
-box-sizing:border-box;
-cursor:pointer;
-
-}
-
-/* =========================================
-取消按鈕
-========================================= */
-
-.modal-box .cancel-btn{
-
-display:block;
-width:100%;
-min-height:48px;
-margin:0;
-padding:13px;
-border:none;
-border-radius:14px;
-background:#eee;
-color:#333;
-font-size:17px;
-box-sizing:border-box;
-cursor:pointer;
-
-}
-
-/* =========================================
-手機版
-========================================= */
-
-@media (max-width:600px){
-
-.modal-box{
-    left:0;
-    transform:none;
-    width:100%;
-    max-width:none;
-    max-height:92vh;
-    padding:
-        22px
-        16px
-        25px;
-    border-radius:
-        22px
-        22px
-        0
-        0;
-}
-@keyframes slideUp{
-    from{
-        transform:
-            translateY(100%);
-    }
-    to{
-        transform:
-            translateY(0);
-    }
-}
-.modal-box h2{
-    font-size:21px;
-    margin-bottom:20px;
-}
-.modal-box h3{
-    font-size:16px;
-    margin-top:18px;
-}
-.modal-box label{
-    min-height:46px;
-    padding:11px 12px;
-    font-size:16px;
-}
-.floating-cart{
-    left:10px;
-    right:10px;
-    bottom:10px;
-}
-.cart-left{
-    gap:8px;
-}
-#checkout-btn{
-    padding:
-        11px
-        13px;
-    font-size:14px;
-}
-
-}
-/* =========================================
-   🔧 客製化視窗最終修正版
-   修正手機版文字跑到最右側
-========================================= */
-
-/* 客製化視窗內所有元素 */
-#customModal,
-#customModal * {
+/* =========================================================
+   🍜 初萊食麵｜order.css
+   線上點餐頁面完整美化版
+
+   配合：
+   order.html
+   order.js
+   menu.js
+
+   功能：
+   1. 商品分類
+   2. 商品卡片
+   3. 加入購物車按鈕
+   4. 購物車
+   5. 數量 +/- 按鈕
+   6. 刪除按鈕
+   7. 浮動購物車
+   8. 客製化 Modal
+   9. 手機版優化
+========================================================= */
+
+
+/* =========================================================
+   基本設定
+========================================================= */
+
+* {
     box-sizing: border-box;
 }
 
-/* 白色視窗 */
-#customModal .modal-box {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 25px 20px 30px;
-    background: #fff;
-    border-radius: 25px 25px 0 0;
-    overflow-x: hidden;
+html {
+    scroll-behavior: smooth;
 }
 
-/* 標題 */
-#customModal .modal-box h2,
-#customModal .modal-box h3 {
-    width: 100%;
-    display: block;
-    text-align: left;
-    white-space: normal;
-    word-break: normal;
+body {
+    margin: 0;
+    padding: 0 0 110px;
+    background: #f3f3f3;
+    color: #333;
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Noto Sans TC",
+        "Microsoft JhengHei",
+        Arial,
+        sans-serif;
 }
 
-/* 選項 Label */
-#customModal .modal-box label {
-    width: 100% !important;
-    max-width: 100% !important;
 
-    display: flex !important;
+/* =========================================================
+   頁首
+========================================================= */
 
-    flex-direction: row !important;
-
-    justify-content: flex-start !important;
-
-    align-items: center !important;
-
+.page-header {
     position: relative;
+    padding: 18px 20px;
+    background: linear-gradient(
+        135deg,
+        #242424,
+        #111
+    );
+    color: #fff;
+    text-align: center;
+    box-shadow:
+        0 3px 12px rgba(0,0,0,.18);
+}
 
-    padding: 14px 16px !important;
+.page-header p {
+    margin: 5px 0 0;
+    color: #d4af37;
+    font-size: 15px;
+    font-weight: 700;
+}
 
-    margin: 8px 0 !important;
+.brand-home {
+    display: inline-block;
+    color: #d4af37;
+    text-decoration: none;
+    font-size: 22px;
+    font-weight: 900;
+}
 
-    min-height: 52px;
+
+/* =========================================================
+   歡迎回來
+========================================================= */
+
+.welcome-section {
+    max-width: 900px;
+    margin: 18px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow:
+        0 5px 18px rgba(0,0,0,.08);
+}
+
+.welcome-section h2 {
+    margin: 0 0 8px;
+    font-size: 20px;
+}
+
+.welcome-section p {
+    margin: 0 0 15px;
+    color: #777;
+    font-size: 14px;
+}
+
+.welcome-search {
+    display: flex;
+    gap: 10px;
+}
+
+.welcome-search input {
+    flex: 1;
+    min-width: 0;
+    height: 48px;
+    padding: 0 15px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    outline: none;
+    font-size: 16px;
+    background: #fafafa;
+}
+
+.welcome-search input:focus {
+    border-color: #d4af37;
+    box-shadow:
+        0 0 0 3px rgba(212,175,55,.15);
+}
+
+.welcome-search button {
+    min-width: 90px;
+    padding: 0 18px;
+    border: 0;
+    border-radius: 12px;
+    background: #222;
+    color: #d4af37;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.welcome-search button:hover {
+    transform: translateY(-1px);
+}
+
+.welcome-search button:active {
+    transform: scale(.96);
+}
+
+.welcome-result {
+    margin-top: 15px;
+    padding: 15px;
+    border-radius: 12px;
+    background: #faf7ed;
+    border: 1px solid #ead9a2;
+    line-height: 1.8;
+    font-size: 14px;
+}
+
+#use-last-order-btn {
+    width: 100%;
+    min-height: 48px;
+    margin-top: 12px;
+    border: 0;
+    border-radius: 12px;
+    background: #d4af37;
+    color: #222;
+    font-size: 16px;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   主內容
+========================================================= */
+
+.order-page {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+
+/* =========================================================
+   商品分類
+========================================================= */
+
+.category-nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+
+    display: flex;
+    gap: 8px;
+
+    padding: 10px 0;
+
+    background: rgba(243,243,243,.96);
+
+    overflow-x: auto;
+
+    scrollbar-width: none;
+}
+
+.category-nav::-webkit-scrollbar {
+    display: none;
+}
+
+.category-nav button {
+    flex: 0 0 auto;
+
+    min-height: 44px;
+
+    padding: 0 17px;
+
+    border: 1px solid #ddd;
+
+    border-radius: 999px;
+
+    background: #fff;
+
+    color: #555;
+
+    font-size: 15px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        background .2s,
+        color .2s,
+        transform .2s,
+        border .2s;
+}
+
+.category-nav button:hover {
+    transform: translateY(-1px);
+}
+
+.category-nav button:active {
+    transform: scale(.95);
+}
+
+.category-nav button.active {
+    background: #222;
+    color: #d4af37;
+    border-color: #222;
+    box-shadow:
+        0 4px 10px rgba(0,0,0,.18);
+}
+
+
+/* =========================================================
+   商品區
+========================================================= */
+
+#menu {
+    display: grid;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+
+    padding: 16px;
+
+    background: #fff;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 4px 14px rgba(0,0,0,.06);
+
+    transition:
+        transform .2s,
+        box-shadow .2s;
+}
+
+.menu-item:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 7px 20px rgba(0,0,0,.1);
+}
+
+.menu-item-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.menu-item-info h3 {
+    margin: 0 0 8px;
+
+    color: #222;
+
+    font-size: 17px;
+
+    line-height: 1.4;
+}
+
+.menu-item-info strong {
+    color: #b08c16;
+    font-size: 16px;
+}
+
+
+/* =========================================================
+   ⭐ 商品加入按鈕
+========================================================= */
+
+.add-product-btn {
+    flex-shrink: 0;
+
+    min-width: 105px;
+    min-height: 48px;
+
+    padding: 0 15px;
+
+    border: 0;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #d4af37,
+            #b99522
+        );
+
+    color: #222;
+
+    font-size: 15px;
+
+    font-weight: 900;
+
+    box-shadow:
+        0 4px 10px rgba(180,145,30,.25);
+
+    cursor: pointer;
+
+    transition:
+        transform .15s,
+        box-shadow .15s;
+}
+
+.add-product-btn:hover {
+    box-shadow:
+        0 6px 15px rgba(180,145,30,.35);
+}
+
+.add-product-btn:active {
+    transform: scale(.94);
+}
+
+
+/* =========================================================
+   購物車標題
+========================================================= */
+
+.order-page > h2 {
+    margin:
+        28px 0
+        15px;
+
+    font-size: 22px;
+}
+
+
+/* =========================================================
+   購物車
+========================================================= */
+
+#cart {
+    display: grid;
+    gap: 12px;
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    padding: 16px;
+
+    background: #fff;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 4px 14px rgba(0,0,0,.06);
+}
+
+.cart-item-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.cart-item-info h3 {
+    margin: 0 0 6px;
+
+    font-size: 16px;
+
+    color: #222;
+}
+
+.cart-options {
+    margin-bottom: 6px;
+
+    color: #888;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+}
+
+.cart-item-price {
+    color: #a27f12;
+
+    font-size: 14px;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   購物車右側
+========================================================= */
+
+.cart-item-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+/* =========================================================
+   購物車數量控制
+========================================================= */
+
+.cart-qty {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.cart-qty button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    padding: 0;
 
     border: 1px solid #ddd;
 
     border-radius: 12px;
 
-    background: #fff;
+    background: #f8f8f8;
 
     color: #333;
 
+    font-size: 22px;
+
+    font-weight: 900;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        background .15s,
+        transform .15s;
+}
+
+.cart-qty button:hover {
+    background: #eee;
+}
+
+.cart-qty button:active {
+    transform: scale(.88);
+}
+
+.cart-qty span {
+    min-width: 30px;
+
+    text-align: center;
+
+    font-size: 17px;
+
+    font-weight: 900;
+}
+
+
+/* =========================================================
+   小計
+========================================================= */
+
+.cart-subtotal {
+    min-width: 75px;
+
+    text-align: right;
+
+    color: #b08c16;
+
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   刪除按鈕
+========================================================= */
+
+.cart-delete {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    padding: 0;
+
+    border: 0;
+
+    border-radius: 12px;
+
+    background: #f5f5f5;
+
+    color: #777;
+
     font-size: 18px;
 
-    line-height: 1.5;
+    cursor: pointer;
 
-    text-align: left !important;
-
-    white-space: nowrap;
-
-    overflow: hidden;
-
-    word-break: normal;
-
+    transition:
+        background .15s,
+        color .15s,
+        transform .15s;
 }
 
-/* Radio / Checkbox */
-#customModal .modal-box label input[type="radio"],
-#customModal .modal-box label input[type="checkbox"] {
-
-    display: inline-block !important;
-
-    width: 22px !important;
-
-    min-width: 22px !important;
-
-    max-width: 22px !important;
-
-    height: 22px !important;
-
-    min-height: 22px !important;
-
-    margin: 0 12px 0 0 !important;
-
-    padding: 0 !important;
-
-    flex: 0 0 22px !important;
-
+.cart-delete:hover {
+    background: #ffe9e9;
+    color: #d33;
 }
 
-/* 讓文字正常顯示 */
-#customModal .modal-box label {
-
-    text-indent: 0 !important;
-
+.cart-delete:active {
+    transform: scale(.88);
 }
 
-/* 選取狀態 */
-#customModal .modal-box label:has(input:checked) {
 
-    border: 2px solid #D4AF37;
+/* =========================================================
+   購物車總計
+========================================================= */
 
-    background: #fffaf0;
+.cart-total-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
+    margin-top: 8px;
+
+    padding: 18px;
+
+    border-radius: 16px;
+
+    background: #222;
+
+    color: #fff;
 }
 
-/* 數量 */
-#customModal .modal-qty {
+.cart-total-box span {
+    font-size: 16px;
+}
 
-    width: 100%;
+.cart-total-box strong {
+    color: #d4af37;
+
+    font-size: 22px;
+}
+
+
+/* =========================================================
+   空購物車
+========================================================= */
+
+.empty-cart {
+    padding: 35px 20px;
+
+    border-radius: 16px;
+
+    background: #fff;
+
+    color: #888;
+
+    text-align: center;
+
+    box-shadow:
+        0 4px 14px rgba(0,0,0,.05);
+}
+
+
+/* =========================================================
+   浮動購物車
+========================================================= */
+
+.floating-cart {
+    position: fixed;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    z-index: 999;
 
     display: flex;
 
-    flex-direction: row;
+    align-items: center;
 
+    justify-content: space-between;
+
+    gap: 12px;
+
+    padding:
+        10px
+        max(
+            15px,
+            env(safe-area-inset-right)
+        )
+        calc(
+            10px +
+            env(safe-area-inset-bottom)
+        )
+        max(
+            15px,
+            env(safe-area-inset-left)
+        );
+
+    background:
+        rgba(25,25,25,.97);
+
+    box-shadow:
+        0 -4px 18px rgba(0,0,0,.2);
+}
+
+.cart-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    min-width: 0;
+}
+
+.cart-count {
+    color: #fff;
+
+    font-size: 14px;
+
+    font-weight: 700;
+}
+
+.cart-count span {
+    display: inline-flex;
+
+    align-items: center;
     justify-content: center;
+
+    min-width: 25px;
+    height: 25px;
+
+    margin: 0 3px;
+
+    border-radius: 50%;
+
+    background: #d4af37;
+
+    color: #222;
+
+    font-weight: 900;
+}
+
+.cart-total {
+    color: #d4af37;
+
+    font-size: 17px;
+
+    font-weight: 900;
+}
+
+#checkout-btn {
+    flex-shrink: 0;
+
+    min-width: 135px;
+    min-height: 50px;
+
+    padding: 0 18px;
+
+    border: 0;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #d4af37,
+            #b99522
+        );
+
+    color: #222;
+
+    font-size: 16px;
+
+    font-weight: 900;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 4px 12px rgba(212,175,55,.25);
+
+    transition:
+        transform .15s,
+        opacity .15s;
+}
+
+#checkout-btn:active {
+    transform: scale(.95);
+}
+
+#checkout-btn:disabled {
+    background: #555;
+
+    color: #aaa;
+
+    cursor: not-allowed;
+
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   客製化 Modal
+========================================================= */
+
+.modal {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 2000;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        rgba(0,0,0,.65);
+}
+
+.modal-box {
+    width: 100%;
+    max-width: 500px;
+
+    max-height:
+        calc(
+            100vh - 40px
+        );
+
+    overflow-y: auto;
+
+    padding: 24px;
+
+    border-radius: 22px;
+
+    background: #fff;
+
+    box-shadow:
+        0 15px 50px rgba(0,0,0,.3);
+}
+
+.modal-box h2 {
+    margin:
+        0 0 20px;
+
+    color: #222;
+
+    font-size: 22px;
+}
+
+.modal-box h3 {
+    margin:
+        20px 0
+        10px;
+
+    font-size: 16px;
+
+    color: #444;
+}
+
+.modal-box label {
+    display: inline-flex;
 
     align-items: center;
 
-    gap: 25px;
+    gap: 8px;
 
+    min-height: 42px;
+
+    margin:
+        4px
+        4px
+        4px
+        0;
+
+    padding:
+        8px
+        12px;
+
+    border:
+        1px solid #ddd;
+
+    border-radius: 10px;
+
+    background: #fafafa;
+
+    cursor: pointer;
 }
 
-/* 數量按鈕 */
-#customModal .modal-qty button {
-
-    width: 45px !important;
-
-    min-width: 45px !important;
-
-    height: 45px !important;
-
-    padding: 0 !important;
-
-    flex: 0 0 45px !important;
-
-}
-
-/* 加入購物車 */
-#customModal .add-cart-btn {
-
-    width: 100% !important;
-
-    max-width: 100% !important;
-
-}
-
-/* 取消 */
-#customModal .cancel-btn {
-
-    width: 100% !important;
-
-    max-width: 100% !important;
-
+.modal-box input {
+    accent-color: #b08c16;
 }
 
 
-/* =========================================
-   📱 iPhone 手機版
-========================================= */
+/* =========================================================
+   Modal 數量
+========================================================= */
 
-@media screen and (max-width: 600px) {
+.modal-qty {
+    display: flex;
 
-    #customModal .modal-box {
+    align-items: center;
+    justify-content: center;
 
+    gap: 18px;
+
+    margin:
+        15px
+        0
+        20px;
+}
+
+.modal-qty button {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 52px;
+    height: 52px;
+
+    border: 0;
+
+    border-radius: 15px;
+
+    background: #222;
+
+    color: #d4af37;
+
+    font-size: 26px;
+
+    font-weight: 900;
+
+    cursor: pointer;
+
+    transition:
+        transform .15s,
+        background .15s;
+}
+
+.modal-qty button:active {
+    transform: scale(.88);
+}
+
+.modal-qty span {
+    min-width: 40px;
+
+    text-align: center;
+
+    font-size: 24px;
+
+    font-weight: 900;
+}
+
+
+/* =========================================================
+   Modal 加入購物車
+========================================================= */
+
+.add-cart-btn {
+    width: 100%;
+
+    min-height: 52px;
+
+    margin-top: 10px;
+
+    border: 0;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #d4af37,
+            #b99522
+        );
+
+    color: #222;
+
+    font-size: 17px;
+
+    font-weight: 900;
+
+    cursor: pointer;
+
+    transition:
+        transform .15s;
+}
+
+.add-cart-btn:active {
+    transform: scale(.96);
+}
+
+
+/* =========================================================
+   Modal 取消
+========================================================= */
+
+.cancel-btn {
+    width: 100%;
+
+    min-height: 48px;
+
+    margin-top: 10px;
+
+    border: 1px solid #ddd;
+
+    border-radius: 14px;
+
+    background: #f5f5f5;
+
+    color: #666;
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   加入購物車提示
+========================================================= */
+
+#cart-message {
+    max-width:
+        calc(
+            100vw - 30px
+        );
+
+    text-align: center;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   商品錯誤
+========================================================= */
+
+.menu-error,
+.menu-empty {
+    padding: 30px;
+
+    border-radius: 16px;
+
+    background: #fff;
+
+    color: #888;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   平板
+========================================================= */
+
+@media (min-width: 600px) {
+
+    #menu {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+    }
+
+}
+
+
+/* =========================================================
+   手機版
+========================================================= */
+
+@media (max-width: 599px) {
+
+    body {
+        padding-bottom: 100px;
+    }
+
+    .page-header {
+        padding: 15px;
+    }
+
+    .brand-home {
+        font-size: 20px;
+    }
+
+    .welcome-section {
+        margin:
+            12px
+            12px
+            15px;
+
+        padding: 16px;
+    }
+
+    .welcome-search {
+        gap: 7px;
+    }
+
+    .welcome-search button {
+        min-width: 78px;
+        padding: 0 12px;
+    }
+
+    .order-page {
+        padding:
+            0
+            12px;
+    }
+
+    .category-nav {
+        margin:
+            0
+            -12px;
+
+        padding:
+            10px
+            12px;
+    }
+
+    .category-nav button {
+        min-height: 46px;
+
+        padding:
+            0
+            15px;
+    }
+
+    .menu-item {
+        padding: 14px;
+    }
+
+    .menu-item-info h3 {
+        font-size: 16px;
+    }
+
+    .add-product-btn {
+        min-width: 92px;
+
+        min-height: 48px;
+
+        padding:
+            0
+            10px;
+    }
+
+    .cart-item {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        padding: 15px;
+    }
+
+    .cart-item-actions {
         width: 100%;
 
-        max-width: 100%;
-
-        padding: 22px 16px 25px;
-
+        justify-content:
+            space-between;
     }
 
-    #customModal .modal-box label {
-
-        width: 100% !important;
-
-        display: flex !important;
-
-        flex-direction: row !important;
-
-        align-items: center !important;
-
-        justify-content: flex-start !important;
-
-        font-size: 18px;
-
-        white-space: nowrap;
-
+    .cart-subtotal {
+        margin-left: auto;
     }
 
-    #customModal .modal-box label input[type="radio"],
-    #customModal .modal-box label input[type="checkbox"] {
+    .cart-qty button,
+    .cart-delete {
+        width: 44px;
+        height: 44px;
+    }
 
-        width: 22px !important;
+    .floating-cart {
+        gap: 8px;
 
-        min-width: 22px !important;
+        padding:
+            8px
+            10px
+            calc(
+                8px +
+                env(safe-area-inset-bottom)
+            );
+    }
 
-        max-width: 22px !important;
+    .cart-left {
+        gap: 8px;
+    }
 
-        height: 22px !important;
+    .cart-count {
+        font-size: 12px;
+    }
 
-        flex: 0 0 22px !important;
+    .cart-total {
+        font-size: 15px;
+    }
 
+    #checkout-btn {
+        min-width: 120px;
+
+        min-height: 48px;
+
+        padding:
+            0
+            12px;
+
+        font-size: 15px;
+    }
+
+    .modal {
+        align-items: flex-end;
+
+        padding: 0;
+    }
+
+    .modal-box {
+        max-width: none;
+
+        max-height:
+            calc(
+                100vh - 20px
+            );
+
+        padding:
+            22px
+            18px;
+
+        border-radius:
+            22px
+            22px
+            0
+            0;
+    }
+
+}
+
+
+/* =========================================================
+   超小手機
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .add-product-btn {
+        min-width: 82px;
+
+        font-size: 14px;
+    }
+
+    .cart-total {
+        display: none;
+    }
+
+    #checkout-btn {
+        min-width: 125px;
     }
 
 }
