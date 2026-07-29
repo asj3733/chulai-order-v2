@@ -1,7 +1,6 @@
-/* =========================================
-   🍜 初萊食麵 V3
+/* =========================================================
+   🍜 初萊食麵 V4
    order.js
-   線上點餐／購物車完整版本
 
    配合：
    - order.html
@@ -9,49 +8,73 @@
    - checkout.js
 
    功能：
-   1. 顯示商品
-   2. 商品分類切換
+   1. 商品分類
+   2. 商品顯示
    3. 麵類客製化
    4. 米粉客製化
    5. 關東煮醬料
-   6. 數量調整
+   6. 客製化數量
    7. 加入購物車
    8. 購物車增加數量
    9. 購物車減少數量
-   10. 購物車刪除
-   11. localStorage 儲存
+   10. 刪除購物車商品
+   11. localStorage 保存
    12. 前往結帳
    13. 手機號碼查詢上次訂單
-========================================= */
+   14. 一鍵再次訂購
+   15. 自動記住姓名與電話
+   16. 手機版按鈕優化
+========================================================= */
 
 
-/* =========================================
-   購物車
-========================================= */
+/* =========================================================
+   ① 購物車資料
+========================================================= */
 
-let cart =
-    JSON.parse(
-        localStorage.getItem("cart")
-    ) || [];
+let cart = [];
+
+try {
+
+    cart =
+        JSON.parse(
+            localStorage.getItem("cart")
+        ) || [];
+
+    if (!Array.isArray(cart)) {
+
+        cart = [];
+
+    }
+
+} catch (error) {
+
+    console.error(
+        "購物車資料讀取失敗",
+        error
+    );
+
+    cart = [];
+
+}
 
 
-/* =========================================
-   客製化目前商品
-========================================= */
+/* =========================================================
+   ② 目前客製化商品
+========================================================= */
 
 let currentProduct = null;
 
 
-/* =========================================
-   客製化目前數量
-========================================= */
+/* =========================================================
+   ③ 客製化數量
+========================================================= */
 
 let modalQuantity = 1;
 
 
-/* =========================================
-   DOM
-========================================= */
+/* =========================================================
+   ④ DOM
+========================================================= */
 
 const menuContainer =
     document.getElementById("menu");
@@ -105,9 +128,9 @@ const welcomeResult =
     document.getElementById("welcome-result");
 
 
-/* =========================================
-   儲存購物車
-========================================= */
+/* =========================================================
+   ⑤ 儲存購物車
+========================================================= */
 
 function saveCart() {
 
@@ -119,45 +142,30 @@ function saveCart() {
 }
 
 
-/* =========================================
-   HTML 防注入
-========================================= */
+/* =========================================================
+   ⑥ HTML 安全處理
+========================================================= */
 
 function escapeHTML(text) {
 
-    return String(text || "")
+    return String(text ?? "")
 
-        .replace(
-            /&/g,
-            "&amp;"
-        )
+        .replace(/&/g, "&amp;")
 
-        .replace(
-            /</g,
-            "&lt;"
-        )
+        .replace(/</g, "&lt;")
 
-        .replace(
-            />/g,
-            "&gt;"
-        )
+        .replace(/>/g, "&gt;")
 
-        .replace(
-            /"/g,
-            "&quot;"
-        )
+        .replace(/"/g, "&quot;")
 
-        .replace(
-            /'/g,
-            "&#039;"
-        );
+        .replace(/'/g, "&#039;");
 
 }
 
 
-/* =========================================
-   取得購物車總數量
-========================================= */
+/* =========================================================
+   ⑦ 取得購物車總數量
+========================================================= */
 
 function getCartCount() {
 
@@ -177,9 +185,9 @@ function getCartCount() {
 }
 
 
-/* =========================================
-   取得購物車總金額
-========================================= */
+/* =========================================================
+   ⑧ 取得購物車總金額
+========================================================= */
 
 function getCartTotal() {
 
@@ -202,9 +210,9 @@ function getCartTotal() {
 }
 
 
-/* =========================================
-   更新浮動購物車
-========================================= */
+/* =========================================================
+   ⑨ 更新浮動購物車
+========================================================= */
 
 function updateCartSummary() {
 
@@ -231,44 +239,49 @@ function updateCartSummary() {
     }
 
 
-    /*
-        購物車沒有商品
-    */
+    if (!checkoutBtn) {
 
-    if (checkoutBtn) {
+        return;
 
-        if (cart.length === 0) {
+    }
 
-            checkoutBtn.disabled =
-                true;
 
-            checkoutBtn.textContent =
-                "購物車是空的";
+    if (cart.length === 0) {
 
-        }
+        checkoutBtn.disabled =
+            true;
 
-        else {
+        checkoutBtn.textContent =
+            "🛒 購物車是空的";
 
-            checkoutBtn.disabled =
-                false;
+        checkoutBtn.classList.add(
+            "disabled"
+        );
 
-            checkoutBtn.textContent =
-                "前往結帳 →";
+    }
 
-        }
+    else {
+
+        checkoutBtn.disabled =
+            false;
+
+        checkoutBtn.textContent =
+            "🛒 前往結帳 →";
+
+        checkoutBtn.classList.remove(
+            "disabled"
+        );
 
     }
 
 }
 
 
-/* =========================================
-   顯示商品
-========================================= */
+/* =========================================================
+   ⑩ 顯示商品
+========================================================= */
 
-function renderMenu(
-    category
-) {
+function renderMenu(category) {
 
     if (!menuContainer) {
 
@@ -277,23 +290,19 @@ function renderMenu(
     }
 
 
-    /*
-        確認 menu 是否存在
-    */
-
     if (
         typeof menu === "undefined"
     ) {
-
-        console.error(
-            "找不到 menu 商品資料，請確認 menu.js 是否正確載入"
-        );
 
         menuContainer.innerHTML = `
 
             <div class="menu-error">
 
                 ⚠️ 商品資料載入失敗
+
+                <br>
+
+                請確認 menu.js 是否正確載入
 
             </div>
 
@@ -341,6 +350,7 @@ function renderMenu(
                     class="menu-item"
                     data-id="${escapeHTML(product.id)}">
 
+
                     <div class="menu-item-info">
 
                         <h3>
@@ -350,6 +360,7 @@ function renderMenu(
                             )}
 
                         </h3>
+
 
                         <strong>
 
@@ -372,6 +383,7 @@ function renderMenu(
 
                     </button>
 
+
                 </div>
 
             `;
@@ -384,10 +396,6 @@ function renderMenu(
     menuContainer.innerHTML =
         html;
 
-
-    /*
-        綁定加入按鈕
-    */
 
     menuContainer
         .querySelectorAll(
@@ -406,7 +414,7 @@ function renderMenu(
                         const productId =
                             this.dataset.productId;
 
-                        const productCategory =
+                        const category =
                             this.dataset.category;
 
 
@@ -414,7 +422,7 @@ function renderMenu(
 
                             productId,
 
-                            productCategory
+                            category
 
                         );
 
@@ -429,9 +437,9 @@ function renderMenu(
 }
 
 
-/* =========================================
-   找商品
-========================================= */
+/* =========================================================
+   ⑪ 找商品
+========================================================= */
 
 function findProduct(
     productId,
@@ -460,8 +468,8 @@ function findProduct(
 
         function(product) {
 
-            return product.id ===
-                productId;
+            return String(product.id) ===
+                String(productId);
 
         }
 
@@ -470,13 +478,11 @@ function findProduct(
 }
 
 
-/* =========================================
-   判斷是否需要客製化
-========================================= */
+/* =========================================================
+   ⑫ 判斷是否需要客製化
+========================================================= */
 
-function needsCustomization(
-    product
-) {
+function needsCustomization(product) {
 
     if (!product) {
 
@@ -485,66 +491,22 @@ function needsCustomization(
     }
 
 
-    /*
-        麵類
-    */
+    return (
 
-    if (
-        product.type === "noodle"
-    ) {
+        product.type === "noodle" ||
 
-        return true;
+        product.type === "riceNoodle" ||
 
-    }
-
-
-    /*
-        米粉
-    */
-
-    if (
-        product.type === "riceNoodle"
-    ) {
-
-        return true;
-
-    }
-
-
-    /*
-        關東煮
-    */
-
-    if (
         product.type === "oden"
-    ) {
 
-        return true;
-
-    }
-
-
-    /*
-        其他商品如果有指定 type
-    */
-
-    if (
-        product.type === "sauce"
-    ) {
-
-        return true;
-
-    }
-
-
-    return false;
+    );
 
 }
 
 
-/* =========================================
-   開啟客製化視窗
-========================================= */
+/* =========================================================
+   ⑬ 開啟商品客製化視窗
+========================================================= */
 
 function openProductModal(
     productId,
@@ -580,7 +542,7 @@ function openProductModal(
     if (modalQty) {
 
         modalQty.textContent =
-            modalQuantity;
+            "1";
 
     }
 
@@ -593,16 +555,10 @@ function openProductModal(
     }
 
 
-    /*
-        先重置所有選項
-    */
-
     resetModalOptions();
 
 
-    /*
-        麵類
-    */
+    /* 麵類 */
 
     if (
         product.type === "noodle"
@@ -634,9 +590,7 @@ function openProductModal(
     }
 
 
-    /*
-        米粉
-    */
+    /* 米粉 */
 
     else if (
         product.type === "riceNoodle"
@@ -668,9 +622,7 @@ function openProductModal(
     }
 
 
-    /*
-        關東煮
-    */
+    /* 關東煮 */
 
     else if (
         product.type === "oden"
@@ -694,9 +646,7 @@ function openProductModal(
     }
 
 
-    /*
-        其他客製化商品
-    */
+    /* 不需要客製化 */
 
     else {
 
@@ -718,11 +668,6 @@ function openProductModal(
     }
 
 
-    /*
-        不需要客製化
-        直接加入
-    */
-
     if (
         !needsCustomization(product)
     ) {
@@ -742,10 +687,6 @@ function openProductModal(
     }
 
 
-    /*
-        顯示視窗
-    */
-
     if (customModal) {
 
         customModal.style.display =
@@ -759,16 +700,11 @@ function openProductModal(
 }
 
 
-/* =========================================
-   重置客製化
-========================================= */
+/* =========================================================
+   ⑭ 重置客製化選項
+========================================================= */
 
 function resetModalOptions() {
-
-
-    /*
-        麵條
-    */
 
     document
         .querySelectorAll(
@@ -786,10 +722,6 @@ function resetModalOptions() {
         );
 
 
-    /*
-        辣度
-    */
-
     document
         .querySelectorAll(
             'input[name="spicy"]'
@@ -806,10 +738,6 @@ function resetModalOptions() {
         );
 
 
-    /*
-        預設不辣
-    */
-
     const noSpicy =
         document.querySelector(
             'input[name="spicy"][value="不辣"]'
@@ -824,10 +752,6 @@ function resetModalOptions() {
     }
 
 
-    /*
-        不加菜
-    */
-
     if (noVegetable) {
 
         noVegetable.checked =
@@ -836,10 +760,6 @@ function resetModalOptions() {
     }
 
 
-    /*
-        不加蔥
-    */
-
     if (noOnion) {
 
         noOnion.checked =
@@ -847,10 +767,6 @@ function resetModalOptions() {
 
     }
 
-
-    /*
-        醬料
-    */
 
     document
         .querySelectorAll(
@@ -870,13 +786,11 @@ function resetModalOptions() {
 }
 
 
-/* =========================================
-   修改客製化數量
-========================================= */
+/* =========================================================
+   ⑮ 客製化數量
+========================================================= */
 
-function changeModalQty(
-    change
-) {
+function changeModalQty(change) {
 
     modalQuantity +=
         Number(change);
@@ -912,9 +826,9 @@ function changeModalQty(
 }
 
 
-/* =========================================
-   取得客製化選項
-========================================= */
+/* =========================================================
+   ⑯ 取得客製化選項
+========================================================= */
 
 function getProductOptions() {
 
@@ -928,9 +842,7 @@ function getProductOptions() {
     const options = {};
 
 
-    /*
-        麵類
-    */
+    /* 麵類 */
 
     if (
         currentProduct.type ===
@@ -979,9 +891,7 @@ function getProductOptions() {
     }
 
 
-    /*
-        米粉
-    */
+    /* 米粉 */
 
     else if (
         currentProduct.type ===
@@ -1016,9 +926,7 @@ function getProductOptions() {
     }
 
 
-    /*
-        關東煮
-    */
+    /* 關東煮 */
 
     else if (
         currentProduct.type ===
@@ -1079,9 +987,9 @@ function getProductOptions() {
 }
 
 
-/* =========================================
-   客製化確認
-========================================= */
+/* =========================================================
+   ⑰ 確認加入購物車
+========================================================= */
 
 function confirmCustom() {
 
@@ -1112,9 +1020,9 @@ function confirmCustom() {
 }
 
 
-/* =========================================
-   關閉客製化視窗
-========================================= */
+/* =========================================================
+   ⑱ 關閉客製化視窗
+========================================================= */
 
 function closeModal() {
 
@@ -1148,13 +1056,11 @@ function closeModal() {
 }
 
 
-/* =========================================
-   建立選項唯一識別
-========================================= */
+/* =========================================================
+   ⑲ 客製化唯一識別
+========================================================= */
 
-function getOptionsKey(
-    options
-) {
+function getOptionsKey(options) {
 
     if (!options) {
 
@@ -1170,9 +1076,9 @@ function getOptionsKey(
 }
 
 
-/* =========================================
-   加入購物車
-========================================= */
+/* =========================================================
+   ⑳ 加入購物車
+========================================================= */
 
 function addToCart(
     product,
@@ -1181,18 +1087,21 @@ function addToCart(
 ) {
 
     const qty =
-        Number(quantity) || 1;
+        Math.max(
+            1,
+            Number(quantity) || 1
+        );
+
+
+    const safeOptions =
+        options || {};
 
 
     const optionsKey =
         getOptionsKey(
-            options
+            safeOptions
         );
 
-
-    /*
-        找相同商品＋相同客製化
-    */
 
     const existingItem =
         cart.find(
@@ -1201,13 +1110,13 @@ function addToCart(
 
                 return (
 
-                    item.id ===
-                    product.id
+                    String(item.id) ===
+                    String(product.id)
 
                 ) && (
 
                     getOptionsKey(
-                        item.options
+                        item.options || {}
                     ) ===
                     optionsKey
 
@@ -1220,8 +1129,16 @@ function addToCart(
 
     if (existingItem) {
 
-        existingItem.qty +=
-            qty;
+        existingItem.qty =
+            Math.min(
+
+                99,
+
+                Number(
+                    existingItem.qty || 0
+                ) + qty
+
+            );
 
     }
 
@@ -1236,17 +1153,16 @@ function addToCart(
                 product.name,
 
             price:
-                Number(product.price),
+                Number(product.price) || 0,
 
             qty:
                 qty,
 
             type:
-                product.type ||
-                "",
+                product.type || "",
 
             options:
-                options || {}
+                safeOptions
 
         });
 
@@ -1260,10 +1176,6 @@ function addToCart(
     updateCartSummary();
 
 
-    /*
-        顯示加入成功
-    */
-
     showCartMessage(
 
         `✅ ${product.name} 已加入購物車`
@@ -1273,13 +1185,11 @@ function addToCart(
 }
 
 
-/* =========================================
-   顯示加入購物車提示
-========================================= */
+/* =========================================================
+   ㉑ 購物車提示
+========================================================= */
 
-function showCartMessage(
-    message
-) {
+function showCartMessage(message) {
 
     let messageBox =
         document.getElementById(
@@ -1294,41 +1204,14 @@ function showCartMessage(
                 "div"
             );
 
+
         messageBox.id =
             "cart-message";
 
-        messageBox.style.position =
-            "fixed";
 
-        messageBox.style.left =
-            "50%";
+        messageBox.className =
+            "cart-message";
 
-        messageBox.style.bottom =
-            "90px";
-
-        messageBox.style.transform =
-            "translateX(-50%)";
-
-        messageBox.style.zIndex =
-            "9999";
-
-        messageBox.style.padding =
-            "12px 20px";
-
-        messageBox.style.borderRadius =
-            "999px";
-
-        messageBox.style.background =
-            "#333";
-
-        messageBox.style.color =
-            "#fff";
-
-        messageBox.style.fontSize =
-            "15px";
-
-        messageBox.style.boxShadow =
-            "0 4px 15px rgba(0,0,0,.25)";
 
         document.body.appendChild(
             messageBox
@@ -1341,8 +1224,9 @@ function showCartMessage(
         message;
 
 
-    messageBox.style.display =
-        "block";
+    messageBox.classList.add(
+        "show"
+    );
 
 
     clearTimeout(
@@ -1355,8 +1239,9 @@ function showCartMessage(
 
             function() {
 
-                messageBox.style.display =
-                    "none";
+                messageBox.classList.remove(
+                    "show"
+                );
 
             },
 
@@ -1367,9 +1252,107 @@ function showCartMessage(
 }
 
 
-/* =========================================
-   顯示購物車
-========================================= */
+/* =========================================================
+   ㉒ 購物車選項文字
+========================================================= */
+
+function getOptionsText(options) {
+
+    if (
+        !options
+    ) {
+
+        return "";
+
+    }
+
+
+    const list = [];
+
+
+    if (
+        options.noodle
+    ) {
+
+        list.push(
+            options.noodle
+        );
+
+    }
+
+
+    if (
+        options.spicy
+    ) {
+
+        list.push(
+            options.spicy
+        );
+
+    }
+
+
+    if (
+        options.vegetable === false
+    ) {
+
+        list.push(
+            "不加菜"
+        );
+
+    }
+
+
+    if (
+        options.onion === false
+    ) {
+
+        list.push(
+            "不加蔥"
+        );
+
+    }
+
+
+    if (
+        options.sauce
+    ) {
+
+        if (
+            Array.isArray(
+                options.sauce
+            )
+        ) {
+
+            list.push(
+                options.sauce.join(
+                    "＋"
+                )
+            );
+
+        }
+
+        else {
+
+            list.push(
+                options.sauce
+            );
+
+        }
+
+    }
+
+
+    return list.join(
+        " ・ "
+    );
+
+}
+
+
+/* =========================================================
+   ㉓ 顯示購物車
+========================================================= */
 
 function renderCart() {
 
@@ -1380,10 +1363,6 @@ function renderCart() {
     }
 
 
-    /*
-        空購物車
-    */
-
     if (
         cart.length === 0
     ) {
@@ -1392,7 +1371,23 @@ function renderCart() {
 
             <div class="empty-cart">
 
-                🛒 購物車目前沒有商品
+                <div class="empty-cart-icon">
+
+                    🛒
+
+                </div>
+
+                <strong>
+
+                    購物車目前沒有商品
+
+                </strong>
+
+                <small>
+
+                    選擇喜歡的餐點加入購物車吧！
+
+                </small>
 
             </div>
 
@@ -1412,121 +1407,22 @@ function renderCart() {
 
         function(item, index) {
 
+            const qty =
+                Number(item.qty) || 1;
+
+
+            const price =
+                Number(item.price) || 0;
+
+
             const subtotal =
-                Number(item.price) *
-                Number(item.qty);
+                price * qty;
 
 
-            let optionsText =
-                "";
-
-
-            if (
-                item.options
-            ) {
-
-                const optionList =
-                    [];
-
-
-                if (
-                    item.options.noodle
-                ) {
-
-                    optionList.push(
-                        item.options.noodle
-                    );
-
-                }
-
-
-                if (
-                    item.options.spicy
-                ) {
-
-                    optionList.push(
-                        item.options.spicy
-                    );
-
-                }
-
-
-                if (
-                    item.options.vegetable ===
-                    false
-                ) {
-
-                    optionList.push(
-                        "不加菜"
-                    );
-
-                }
-
-
-                if (
-                    item.options.onion ===
-                    false
-                ) {
-
-                    optionList.push(
-                        "不加蔥"
-                    );
-
-                }
-
-
-                if (
-                    item.options.sauce
-                ) {
-
-                    if (
-                        Array.isArray(
-                            item.options.sauce
-                        )
-                    ) {
-
-                        optionList.push(
-
-                            item.options.sauce.join(
-                                "＋"
-                            )
-
-                        );
-
-                    }
-
-                    else {
-
-                        optionList.push(
-                            item.options.sauce
-                        );
-
-                    }
-
-                }
-
-
-                if (
-                    optionList.length > 0
-                ) {
-
-                    optionsText = `
-
-                        <div class="cart-options">
-
-                            ${escapeHTML(
-                                optionList.join(
-                                    " ・ "
-                                )
-                            )}
-
-                        </div>
-
-                    `;
-
-                }
-
-            }
+            const optionsText =
+                getOptionsText(
+                    item.options
+                );
 
 
             html += `
@@ -1547,14 +1443,27 @@ function renderCart() {
                         </h3>
 
 
-                        ${optionsText}
+                        ${
+                            optionsText
+                                ? `
+
+                                <div class="cart-options">
+
+                                    ${escapeHTML(
+                                        optionsText
+                                    )}
+
+                                </div>
+
+                                `
+                                : ""
+
+                        }
 
 
                         <div class="cart-item-price">
 
-                            NT$${Number(
-                                item.price
-                            )}
+                            NT$${price}
 
                         </div>
 
@@ -1570,16 +1479,17 @@ function renderCart() {
                             <button
                                 type="button"
                                 class="cart-minus"
-                                data-index="${index}">
+                                data-index="${index}"
+                                aria-label="減少數量">
 
                                 −
 
                             </button>
 
 
-                            <span>
+                            <span class="cart-qty-number">
 
-                                ${item.qty}
+                                ${qty}
 
                             </span>
 
@@ -1587,7 +1497,8 @@ function renderCart() {
                             <button
                                 type="button"
                                 class="cart-plus"
-                                data-index="${index}">
+                                data-index="${index}"
+                                aria-label="增加數量">
 
                                 ＋
 
@@ -1607,7 +1518,8 @@ function renderCart() {
                         <button
                             type="button"
                             class="cart-delete"
-                            data-index="${index}">
+                            data-index="${index}"
+                            aria-label="刪除商品">
 
                             🗑️
 
@@ -1650,9 +1562,7 @@ function renderCart() {
         html;
 
 
-    /*
-        減少數量
-    */
+    /* 減少 */
 
     cartContainer
         .querySelectorAll(
@@ -1691,9 +1601,7 @@ function renderCart() {
         );
 
 
-    /*
-        增加數量
-    */
+    /* 增加 */
 
     cartContainer
         .querySelectorAll(
@@ -1732,9 +1640,7 @@ function renderCart() {
         );
 
 
-    /*
-        刪除商品
-    */
+    /* 刪除 */
 
     cartContainer
         .querySelectorAll(
@@ -1774,9 +1680,9 @@ function renderCart() {
 }
 
 
-/* =========================================
-   修改購物車數量
-========================================= */
+/* =========================================================
+   ㉔ 修改購物車數量
+========================================================= */
 
 function changeCartQty(
     index,
@@ -1792,39 +1698,39 @@ function changeCartQty(
     }
 
 
-    cart[index].qty +=
+    const oldQty =
+        Number(
+            cart[index].qty || 1
+        );
+
+
+    const newQty =
+        oldQty +
         Number(change);
 
 
-    /*
-        數量最低為1
-    */
+    /* 最低 1 */
 
     if (
-        cart[index].qty <= 0
+        newQty <= 0
     ) {
 
-        cart.splice(
-            index,
-            1
+        removeCartItem(
+            index
         );
 
-    }
-
-
-    /*
-        數量最高99
-    */
-
-    if (
-        cart[index] &&
-        cart[index].qty > 99
-    ) {
-
-        cart[index].qty =
-            99;
+        return;
 
     }
+
+
+    /* 最高 99 */
+
+    cart[index].qty =
+        Math.min(
+            99,
+            newQty
+        );
 
 
     saveCart();
@@ -1836,13 +1742,11 @@ function changeCartQty(
 }
 
 
-/* =========================================
-   刪除購物車商品
-========================================= */
+/* =========================================================
+   ㉕ 刪除購物車商品
+========================================================= */
 
-function removeCartItem(
-    index
-) {
+function removeCartItem(index) {
 
     if (
         !cart[index]
@@ -1879,9 +1783,9 @@ function removeCartItem(
 }
 
 
-/* =========================================
-   點擊購物車浮動按鈕
-========================================= */
+/* =========================================================
+   ㉖ 前往結帳
+========================================================= */
 
 if (checkoutBtn) {
 
@@ -1895,8 +1799,8 @@ if (checkoutBtn) {
                 cart.length === 0
             ) {
 
-                alert(
-                    "購物車目前沒有商品"
+                showCartMessage(
+                    "🛒 購物車目前沒有商品"
                 );
 
                 return;
@@ -1914,9 +1818,9 @@ if (checkoutBtn) {
 }
 
 
-/* =========================================
-   點擊分類
-========================================= */
+/* =========================================================
+   ㉗ 商品分類
+========================================================= */
 
 document
     .querySelectorAll(
@@ -1936,10 +1840,6 @@ document
                         this.dataset.category;
 
 
-                    /*
-                        移除目前分類
-                    */
-
                     document
                         .querySelectorAll(
                             ".category-nav button"
@@ -1957,18 +1857,10 @@ document
                         );
 
 
-                    /*
-                        設定目前分類
-                    */
-
                     this.classList.add(
                         "active"
                     );
 
-
-                    /*
-                        顯示商品
-                    */
 
                     renderMenu(
                         category
@@ -1983,9 +1875,9 @@ document
     );
 
 
-/* =========================================
-   預設顯示麵類
-========================================= */
+/* =========================================================
+   ㉘ 預設顯示麵類
+========================================================= */
 
 const firstCategoryButton =
     document.querySelector(
@@ -2007,9 +1899,9 @@ renderMenu(
 );
 
 
-/* =========================================
-   點擊 Modal 背景關閉
-========================================= */
+/* =========================================================
+   ㉙ 點擊 Modal 背景關閉
+========================================================= */
 
 if (customModal) {
 
@@ -2035,9 +1927,9 @@ if (customModal) {
 }
 
 
-/* =========================================
-   ESC 關閉客製化視窗
-========================================= */
+/* =========================================================
+   ㉚ ESC 關閉 Modal
+========================================================= */
 
 document.addEventListener(
 
@@ -2046,19 +1938,22 @@ document.addEventListener(
     function(event) {
 
         if (
-            event.key ===
+            event.key !==
             "Escape"
         ) {
 
-            if (
-                customModal &&
-                customModal.style.display !==
-                "none"
-            ) {
+            return;
 
-                closeModal();
+        }
 
-            }
+
+        if (
+            customModal &&
+            customModal.style.display !==
+            "none"
+        ) {
+
+            closeModal();
 
         }
 
@@ -2067,10 +1962,9 @@ document.addEventListener(
 );
 
 
-/* =========================================
-   關東煮「都不加」
-   與其他醬料互斥
-========================================= */
+/* =========================================================
+   ㉛ 關東煮「都不加」
+========================================================= */
 
 if (noSauce) {
 
@@ -2081,32 +1975,35 @@ if (noSauce) {
         function() {
 
             if (
-                this.checked
+                !this.checked
             ) {
 
-                document
-                    .querySelectorAll(
-                        'input[name="sauce"]'
-                    )
-                    .forEach(
+                return;
 
-                        function(input) {
+            }
 
-                            if (
-                                input !==
-                                noSauce
-                            ) {
 
-                                input.checked =
-                                    false;
+            document
+                .querySelectorAll(
+                    'input[name="sauce"]'
+                )
+                .forEach(
 
-                            }
+                    function(input) {
+
+                        if (
+                            input !==
+                            noSauce
+                        ) {
+
+                            input.checked =
+                                false;
 
                         }
 
-                    );
+                    }
 
-            }
+                );
 
         }
 
@@ -2115,10 +2012,9 @@ if (noSauce) {
 }
 
 
-/* =========================================
-   關東煮其他醬料
-   選擇後取消「都不加」
-========================================= */
+/* =========================================================
+   ㉜ 選擇其他醬料時取消「都不加」
+========================================================= */
 
 document
     .querySelectorAll(
@@ -2163,18 +2059,11 @@ document
     );
 
 
-/* =========================================
-   歡迎回來
-   自動帶入之前資料
-========================================= */
+/* =========================================================
+   ㉝ 自動載入之前顧客資料
+========================================================= */
 
 function loadSavedCustomer() {
-
-    const savedName =
-        localStorage.getItem(
-            "customerName"
-        );
-
 
     const savedPhone =
         localStorage.getItem(
@@ -2192,22 +2081,15 @@ function loadSavedCustomer() {
 
     }
 
-
-    console.log(
-        "已載入顧客資料：",
-        savedName,
-        savedPhone
-    );
-
 }
 
 
 loadSavedCustomer();
 
 
-/* =========================================
-   手機號碼只允許數字
-========================================= */
+/* =========================================================
+   ㉞ 手機號碼限制
+========================================================= */
 
 if (welcomePhone) {
 
@@ -2238,10 +2120,9 @@ if (welcomePhone) {
 }
 
 
-/* =========================================
-   回頭客查詢
-   查詢最後一次訂單
-========================================= */
+/* =========================================================
+   ㉟ 回頭客查詢
+========================================================= */
 
 if (welcomeSearchBtn) {
 
@@ -2256,9 +2137,9 @@ if (welcomeSearchBtn) {
 }
 
 
-/* =========================================
-   查詢上一筆訂單
-========================================= */
+/* =========================================================
+   ㊱ 查詢最後一筆訂單
+========================================================= */
 
 async function searchPreviousOrder() {
 
@@ -2277,9 +2158,19 @@ async function searchPreviousOrder() {
         !/^09\d{8}$/.test(phone)
     ) {
 
-        alert(
-            "請輸入正確的手機號碼"
-        );
+        if (welcomeResult) {
+
+            welcomeResult.style.display =
+                "block";
+
+            welcomeResult.innerHTML = `
+
+                ⚠️ 請輸入正確的手機號碼
+
+            `;
+
+        }
+
 
         welcomePhone.focus();
 
@@ -2287,10 +2178,6 @@ async function searchPreviousOrder() {
 
     }
 
-
-    /*
-        這裡使用你的 V3 GAS
-    */
 
     const SCRIPT_URL =
 
@@ -2304,9 +2191,20 @@ async function searchPreviousOrder() {
 
         welcomeResult.innerHTML = `
 
-            🔍 正在查詢您的訂單...
+            🔍 正在查詢您的上次訂單...
 
         `;
+
+    }
+
+
+    if (welcomeSearchBtn) {
+
+        welcomeSearchBtn.disabled =
+            true;
+
+        welcomeSearchBtn.textContent =
+            "查詢中...";
 
     }
 
@@ -2314,7 +2212,6 @@ async function searchPreviousOrder() {
     try {
 
         const response =
-
             await fetch(
 
                 SCRIPT_URL,
@@ -2332,7 +2229,6 @@ async function searchPreviousOrder() {
                     },
 
                     body:
-
                         JSON.stringify({
 
                             action:
@@ -2348,12 +2244,21 @@ async function searchPreviousOrder() {
             );
 
 
+        if (!response.ok) {
+
+            throw new Error(
+                "伺服器回應錯誤"
+            );
+
+        }
+
+
         const result =
             await response.json();
 
 
         console.log(
-            "查詢結果：",
+            "回頭客查詢結果：",
             result
         );
 
@@ -2367,11 +2272,15 @@ async function searchPreviousOrder() {
 
                 welcomeResult.innerHTML = `
 
-                    😌 找不到之前的訂單
+                    <div class="welcome-not-found">
 
-                    <br>
+                        😌 找不到之前的訂單
 
-                    歡迎第一次來到初萊食麵！
+                        <br><br>
+
+                        歡迎第一次來到初萊食麵！
+
+                    </div>
 
                 `;
 
@@ -2386,9 +2295,7 @@ async function searchPreviousOrder() {
             result.order;
 
 
-        /*
-            儲存顧客資料
-        */
+        /* 儲存姓名 */
 
         if (
             order.name
@@ -2405,6 +2312,8 @@ async function searchPreviousOrder() {
         }
 
 
+        /* 儲存電話 */
+
         localStorage.setItem(
 
             "customerPhone",
@@ -2413,10 +2322,6 @@ async function searchPreviousOrder() {
 
         );
 
-
-        /*
-            顯示查詢結果
-        */
 
         let itemsHTML =
             "";
@@ -2438,15 +2343,25 @@ async function searchPreviousOrder() {
 
                             return `
 
-                                <div>
+                                <div class="previous-order-item">
 
-                                    ${escapeHTML(
-                                        item.name
-                                    )}
+                                    <span>
 
-                                    ×
+                                        ${escapeHTML(
+                                            item.name ||
+                                            "商品"
+                                        )}
 
-                                    ${item.qty}
+                                    </span>
+
+                                    <strong>
+
+                                        ×${Number(
+                                            item.qty ||
+                                            1
+                                        )}
+
+                                    </strong>
 
                                 </div>
 
@@ -2465,60 +2380,69 @@ async function searchPreviousOrder() {
 
             welcomeResult.innerHTML = `
 
-                <div>
+                <div class="welcome-success">
 
-                    👋 歡迎回來，
+                    <div class="welcome-customer-name">
 
-                    <strong>
+                        👋 歡迎回來，
 
-                        ${escapeHTML(
-                            order.name ||
-                            ""
-                        )}
+                        <strong>
 
-                    </strong>
+                            ${escapeHTML(
+                                order.name ||
+                                "熟客"
+                            )}
+
+                        </strong>
+
+                    </div>
+
+
+                    <div class="previous-order-title">
+
+                        🍜 您上次點了：
+
+                    </div>
+
+
+                    <div class="previous-order-list">
+
+                        ${itemsHTML}
+
+                    </div>
+
+
+                    <div class="previous-order-total">
+
+                        上次訂單金額：
+
+                        <strong>
+
+                            NT$${Number(
+                                order.total ||
+                                0
+                            )}
+
+                        </strong>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        id="use-last-order-btn"
+                        class="use-last-order-btn">
+
+                        🛒 一鍵使用上次訂單
+
+                    </button>
 
                 </div>
-
-
-                <div>
-
-                    您上次點了：
-
-                </div>
-
-
-                <div>
-
-                    ${itemsHTML}
-
-                </div>
-
-
-                <div>
-
-                    上次訂單：
-
-                    NT$${Number(
-                        order.total || 0
-                    )}
-
-                </div>
-
-
-                <button
-                    type="button"
-                    id="use-last-order-btn">
-
-                    🛒 使用上次訂單
-
-                </button>
 
             `;
 
 
             const useLastOrderBtn =
-
                 document.getElementById(
                     "use-last-order-btn"
                 );
@@ -2533,68 +2457,115 @@ async function searchPreviousOrder() {
                     function() {
 
                         if (
-                            Array.isArray(
+                            !Array.isArray(
                                 order.items
                             )
                         ) {
 
-                            order.items.forEach(
+                            return;
 
-                                function(item) {
-
-                                    const product = {
-
-                                        id:
-                                            item.id ||
-                                            "OLD-" +
-                                            Date.now() +
-                                            Math.random(),
-
-                                        name:
-                                            item.name,
-
-                                        price:
-                                            Number(
-                                                item.price ||
-                                                0
-                                            ),
-
-                                        type:
-                                            item.type ||
-                                            "",
-
-                                    };
+                        }
 
 
-                                    addToCart(
+                        let addedCount =
+                            0;
 
-                                        product,
 
-                                        item.options ||
-                                        {},
+                        order.items.forEach(
 
+                            function(item) {
+
+                                const product = {
+
+                                    id:
+                                        item.id ||
+                                        "OLD-" +
+                                        Date.now() +
+                                        "-" +
+                                        Math.random(),
+
+                                    name:
+                                        item.name ||
+                                        "商品",
+
+                                    price:
                                         Number(
-                                            item.qty ||
-                                            1
-                                        )
+                                            item.price ||
+                                            0
+                                        ),
 
-                                    );
+                                    type:
+                                        item.type ||
+                                        ""
 
-                                }
+                                };
+
+
+                                addToCart(
+
+                                    product,
+
+                                    item.options ||
+                                    {},
+
+                                    Number(
+                                        item.qty ||
+                                        1
+                                    )
+
+                                );
+
+
+                                addedCount++;
+
+                            }
+
+                        );
+
+
+                        if (
+                            addedCount > 0
+                        ) {
+
+                            showCartMessage(
+
+                                "✅ 上次訂單已加入購物車"
 
                             );
 
                         }
 
 
-                        alert(
-                            "✅ 已將上次訂單加入購物車"
-                        );
-
-
                         renderCart();
 
                         updateCartSummary();
+
+
+                        /* 自動移動到購物車 */
+
+                        setTimeout(
+
+                            function() {
+
+                                if (cartContainer) {
+
+                                    cartContainer.scrollIntoView({
+
+                                        behavior:
+                                            "smooth",
+
+                                        block:
+                                            "center"
+
+                                    });
+
+                                }
+
+                            },
+
+                            300
+
+                        );
 
                     }
 
@@ -2623,7 +2594,7 @@ async function searchPreviousOrder() {
 
                 ⚠️ 查詢失敗
 
-                <br>
+                <br><br>
 
                 請稍後再試一次
 
@@ -2633,24 +2604,38 @@ async function searchPreviousOrder() {
 
     }
 
+    finally {
+
+        if (welcomeSearchBtn) {
+
+            welcomeSearchBtn.disabled =
+                false;
+
+            welcomeSearchBtn.textContent =
+                "🔍 查詢";
+
+        }
+
+    }
+
 }
 
 
-/* =========================================
-   初始化購物車
-========================================= */
+/* =========================================================
+   ㊲ 初始化
+========================================================= */
 
 renderCart();
 
 updateCartSummary();
 
 
-/* =========================================
-   Console
-========================================= */
+/* =========================================================
+   ㊳ Console
+========================================================= */
 
 console.log(
-    "🍜 初萊食麵 V3 order.js 已載入"
+    "🍜 初萊食麵 V4 order.js 已載入"
 );
 
 console.log(
