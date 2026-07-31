@@ -1,36 +1,24 @@
 /* ==================================================
-   🍜 初萊食麵｜客戶查詢系統
-================================================== */
-
-* {
-    box-sizing: border-box;
-}
-
-
-body {
-    margin: 0;
-}
-
-
-/* ==================================================
-   主要頁面
+   🍜 初萊食麵｜客戶查詢頁
 ================================================== */
 
 .customer-page {
 
     width: 100%;
 
-    max-width: 680px;
+    max-width: 700px;
 
     margin: 0 auto;
 
     padding: 30px 16px 80px;
 
+    box-sizing: border-box;
+
 }
 
 
 /* ==================================================
-   查詢卡片
+   🔍 查詢卡片
 ================================================== */
 
 .customer-search-card {
@@ -41,20 +29,20 @@ body {
 
     padding: 30px 22px;
 
-    text-align: center;
+    margin-bottom: 25px;
 
     box-shadow:
-        0 8px 30px
+        0 8px 25px
         rgba(0,0,0,0.08);
 
-    margin-bottom: 24px;
+    text-align: center;
 
 }
 
 
 .customer-icon {
 
-    font-size: 48px;
+    font-size: 50px;
 
     margin-bottom: 10px;
 
@@ -65,8 +53,6 @@ body {
 
     margin: 0 0 10px;
 
-    font-size: 28px;
-
 }
 
 
@@ -74,9 +60,9 @@ body {
 
     line-height: 1.8;
 
-    color: #777;
+    opacity: 0.75;
 
-    margin-bottom: 24px;
+    margin-bottom: 25px;
 
 }
 
@@ -98,15 +84,17 @@ body {
 
     width: 100%;
 
-    height: 54px;
+    height: 52px;
 
-    padding: 0 16px;
+    padding: 0 15px;
 
-    border: 2px solid #ddd;
+    border: 1px solid #ddd;
 
     border-radius: 12px;
 
     font-size: 18px;
+
+    box-sizing: border-box;
 
     outline: none;
 
@@ -117,6 +105,36 @@ body {
 
     border-color: #d4af37;
 
+    box-shadow:
+        0 0 0 3px
+        rgba(212,175,55,0.15);
+
+}
+
+
+.customer-error {
+
+    color: #d32f2f;
+
+    font-size: 14px;
+
+    text-align: left;
+
+    margin-top: 8px;
+
+}
+
+
+.customer-loading {
+
+    margin-top: 15px;
+
+    padding: 12px;
+
+    border-radius: 10px;
+
+    background: #f5f5f5;
+
 }
 
 
@@ -124,11 +142,11 @@ body {
 
     width: 100%;
 
-    min-height: 54px;
+    min-height: 52px;
 
-    margin-top: 16px;
+    margin-top: 18px;
 
-    border: none;
+    border: 0;
 
     border-radius: 12px;
 
@@ -136,7 +154,7 @@ body {
 
     color: #222;
 
-    font-size: 18px;
+    font-size: 17px;
 
     font-weight: bold;
 
@@ -149,28 +167,24 @@ body {
 
     opacity: 0.6;
 
-    cursor: not-allowed;
+    cursor: wait;
 
 }
 
 
 .customer-order-btn {
 
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    min-height: 50px;
+    display: block;
 
     margin-top: 12px;
 
+    padding: 15px;
+
     border-radius: 12px;
 
-    border: 1px solid #ddd;
+    background: #333;
 
-    color: #333;
+    color: #fff;
 
     text-decoration: none;
 
@@ -179,52 +193,27 @@ body {
 }
 
 
-.customer-loading {
-
-    margin-top: 18px;
-
-    color: #777;
-
-}
-
-
 /* ==================================================
-   錯誤
-================================================== */
-
-.customer-error {
-
-    margin-top: 10px;
-
-    padding: 10px;
-
-    background: #fff0f0;
-
-    color: #c62828;
-
-    border-radius: 8px;
-
-}
-
-
-/* ==================================================
-   查詢結果
+   🎉 查詢結果
 ================================================== */
 
 .customer-result {
 
-    animation: fadeIn 0.3s ease;
+    animation:
+        customerFadeIn
+        0.3s ease;
 
 }
 
 
-@keyframes fadeIn {
+@keyframes customerFadeIn {
 
     from {
 
         opacity: 0;
 
-        transform: translateY(10px);
+        transform:
+            translateY(10px);
 
     }
 
@@ -232,7 +221,8 @@ body {
 
         opacity: 1;
 
-        transform: translateY(0);
+        transform:
+            translateY(0);
 
     }
 
@@ -249,42 +239,38 @@ body {
 
     align-items: center;
 
-    gap: 16px;
+    gap: 15px;
 
     background: #fff;
 
-    padding: 20px;
-
     border-radius: 18px;
 
-    margin-bottom: 16px;
+    padding: 20px;
 
-    box-shadow:
-        0 5px 20px
-        rgba(0,0,0,0.06);
+    margin-bottom: 18px;
 
 }
 
 
 .customer-result-icon {
 
-    font-size: 42px;
+    font-size: 38px;
 
 }
 
 
-.result-welcome strong {
+#result-name {
 
-    font-size: 22px;
+    font-size: 20px;
 
 }
 
 
-.result-welcome p {
+#result-message {
 
     margin: 5px 0 0;
 
-    color: #777;
+    opacity: 0.7;
 
 }
 
@@ -302,7 +288,7 @@ body {
 
     gap: 12px;
 
-    margin-bottom: 16px;
+    margin-bottom: 18px;
 
 }
 
@@ -313,12 +299,12 @@ body {
 
     border-radius: 16px;
 
-    padding: 18px 8px;
+    padding: 18px 10px;
 
     text-align: center;
 
     box-shadow:
-        0 5px 20px
+        0 5px 15px
         rgba(0,0,0,0.06);
 
 }
@@ -328,7 +314,7 @@ body {
 
     display: block;
 
-    font-size: 26px;
+    font-size: 25px;
 
     margin-bottom: 6px;
 
@@ -339,11 +325,7 @@ body {
 
     display: block;
 
-    font-size: 20px;
-
-    color: #333;
-
-    word-break: break-word;
+    font-size: 18px;
 
 }
 
@@ -354,13 +336,13 @@ body {
 
     margin-top: 5px;
 
-    color: #888;
+    opacity: 0.65;
 
 }
 
 
 /* ==================================================
-   資訊區
+   📋 資訊區
 ================================================== */
 
 .customer-info-box {
@@ -371,22 +353,20 @@ body {
 
     padding: 20px;
 
-    margin-bottom: 16px;
+    margin-bottom: 18px;
 
     box-shadow:
-        0 5px 20px
-        rgba(0,0,0,0.06);
+        0 5px 15px
+        rgba(0,0,0,0.05);
 
 }
 
 
 .customer-info-box h3 {
 
-    margin: 0 0 16px;
+    margin-top: 0;
 
-    padding-bottom: 12px;
-
-    border-bottom: 1px solid #eee;
+    margin-bottom: 15px;
 
 }
 
@@ -399,7 +379,7 @@ body {
 
     background: #fafafa;
 
-    border-radius: 12px;
+    border-radius: 14px;
 
     padding: 15px;
 
@@ -410,16 +390,14 @@ body {
 
     font-weight: bold;
 
-    color: #9a7915;
-
-    margin-bottom: 8px;
+    margin-bottom: 12px;
 
 }
 
 
 .order-detail-line {
 
-    margin: 6px 0;
+    margin-top: 9px;
 
     line-height: 1.6;
 
@@ -428,36 +406,39 @@ body {
 
 .order-items-text {
 
-    white-space: pre-line;
-
-    background: #fff;
+    margin-top: 15px;
 
     padding: 12px;
 
+    background: #fff;
+
     border-radius: 10px;
 
-    margin-top: 10px;
-
     line-height: 1.7;
+
+    white-space: pre-line;
 
 }
 
 
 .order-total {
 
-    margin-top: 12px;
+    margin-top: 15px;
 
-    font-size: 20px;
+    padding-top: 15px;
 
-    font-weight: bold;
+    border-top:
+        1px solid #ddd;
 
     text-align: right;
+
+    font-size: 18px;
 
 }
 
 
 /* ==================================================
-   常點餐點
+   ⭐ 常點餐點
 ================================================== */
 
 .favorite-list {
@@ -466,7 +447,7 @@ body {
 
     flex-direction: column;
 
-    gap: 10px;
+    gap: 8px;
 
 }
 
@@ -475,11 +456,11 @@ body {
 
     display: flex;
 
-    align-items: center;
-
     justify-content: space-between;
 
-    padding: 12px 14px;
+    align-items: center;
+
+    padding: 12px;
 
     background: #fafafa;
 
@@ -488,24 +469,17 @@ body {
 }
 
 
-.favorite-name {
-
-    font-weight: bold;
-
-}
-
-
 .favorite-count {
 
-    color: #9a7915;
-
     font-weight: bold;
+
+    color: #a27b00;
 
 }
 
 
 /* ==================================================
-   歷史訂單
+   📚 歷史訂單
 ================================================== */
 
 .order-history-list {
@@ -521,13 +495,11 @@ body {
 
 .history-order {
 
-    border: 1px solid #eee;
+    background: #fafafa;
 
     border-radius: 14px;
 
-    padding: 16px;
-
-    background: #fafafa;
+    padding: 15px;
 
 }
 
@@ -547,26 +519,18 @@ body {
 
 .history-date {
 
-    color: #777;
+    font-size: 13px;
 
-    font-size: 14px;
+    opacity: 0.7;
 
 }
 
 
 .history-status {
 
-    padding: 4px 9px;
-
-    border-radius: 20px;
-
-    background: #fff0c7;
-
-    color: #806000;
-
     font-size: 13px;
 
-    white-space: nowrap;
+    font-weight: bold;
 
 }
 
@@ -575,9 +539,7 @@ body {
 
     font-weight: bold;
 
-    color: #9a7915;
-
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 
 }
 
@@ -588,11 +550,18 @@ body {
 
     line-height: 1.7;
 
-    padding: 10px;
+}
+
+
+.history-pickup {
+
+    margin-top: 10px;
+
+    padding: 9px;
+
+    border-radius: 8px;
 
     background: #fff;
-
-    border-radius: 10px;
 
 }
 
@@ -605,76 +574,66 @@ body {
 
     align-items: center;
 
-    margin-top: 12px;
+    margin-top: 15px;
+
+    padding-top: 12px;
+
+    border-top:
+        1px solid #ddd;
 
 }
 
 
 .history-total {
 
-    font-weight: bold;
-
     font-size: 18px;
 
 }
 
 
-.history-pickup {
-
-    color: #666;
-
-    font-size: 14px;
-
-}
-
-
 /* ==================================================
-   再次點餐
+   🍜 再次點餐
 ================================================== */
 
 .customer-start-order {
 
-    display: flex;
+    display: block;
 
-    align-items: center;
+    text-align: center;
 
-    justify-content: center;
+    padding: 16px;
 
-    min-height: 56px;
+    border-radius: 14px;
 
     background: #d4af37;
 
     color: #222;
 
-    border-radius: 14px;
-
     text-decoration: none;
 
-    font-size: 18px;
+    font-size: 17px;
 
     font-weight: bold;
-
-    margin-top: 10px;
 
 }
 
 
 /* ==================================================
-   查無資料
+   🔍 查無資料
 ================================================== */
 
 .customer-not-found {
 
     background: #fff;
 
-    border-radius: 20px;
+    border-radius: 22px;
 
     padding: 35px 20px;
 
     text-align: center;
 
     box-shadow:
-        0 8px 30px
+        0 8px 25px
         rgba(0,0,0,0.08);
 
 }
@@ -682,43 +641,34 @@ body {
 
 .not-found-icon {
 
-    font-size: 48px;
+    font-size: 50px;
 
-    margin-bottom: 12px;
-
-}
-
-
-.customer-not-found h2 {
-
-    margin: 0 0 12px;
+    margin-bottom: 15px;
 
 }
 
 
 .customer-not-found p {
 
-    color: #777;
-
     line-height: 1.8;
+
+    opacity: 0.7;
 
 }
 
 
 /* ==================================================
-   手機版
+   📱 手機版
 ================================================== */
 
 @media (
-    max-width: 520px
+    max-width: 600px
 ) {
 
     .customer-page {
 
         padding:
-            20px
-            12px
-            60px;
+            20px 12px 60px;
 
     }
 
@@ -726,8 +676,7 @@ body {
     .customer-search-card {
 
         padding:
-            25px
-            18px;
+            25px 18px;
 
     }
 
@@ -735,7 +684,7 @@ body {
     .customer-stat-grid {
 
         grid-template-columns:
-            repeat(2, 1fr);
+            1fr 1fr;
 
     }
 
@@ -743,21 +692,23 @@ body {
     .customer-stat-card:last-child {
 
         grid-column:
-            span 2;
+            1 / -1;
 
     }
 
 
-    .customer-stat-card strong {
+    .customer-stat-card:last-child
+    strong {
 
-        font-size: 18px;
+        font-size: 16px;
 
     }
 
 
     .history-header {
 
-        flex-direction: column;
+        flex-direction:
+            column;
 
     }
 
