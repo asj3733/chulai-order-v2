@@ -1,21 +1,19 @@
-/* =========================================
-   初萊食麵
-   customer.js
-   客戶查詢正式版
-========================================= */
+/* ==================================================
+   🍜 初萊食麵｜客戶查詢系統 V2
+================================================== */
 
 
-/* =========================================
-   GAS API
-========================================= */
+/* ==================================================
+   🔗 GAS API
+================================================== */
 
 const SCRIPT_URL =
     "https://script.google.com/macros/s/AKfycbwFD8XzZCmF7AKly_L0LDqA5JoERcg0eex2PzQFU4n_aBWqw9GJsRV-4XcMM_GLET8MLw/exec";
 
 
-/* =========================================
+/* ==================================================
    DOM
-========================================= */
+================================================== */
 
 const phoneInput =
     document.getElementById(
@@ -35,13 +33,19 @@ const phoneError =
     );
 
 
-const customerResult =
+const loadingBox =
+    document.getElementById(
+        "customer-loading"
+    );
+
+
+const resultBox =
     document.getElementById(
         "customer-result"
     );
 
 
-const customerNotFound =
+const notFoundBox =
     document.getElementById(
         "customer-not-found"
     );
@@ -83,443 +87,993 @@ const favoriteItems =
     );
 
 
-/* =========================================
-   手機號碼格式整理
-========================================= */
+const orderHistory =
+    document.getElementById(
+        "order-history"
+    );
 
-function normalizePhone(
+
+/* ==================================================
+   🧹 HTML 防注入
+================================================== */
+
+function escapeHTML(
+    text
+) {
+
+    return String(
+        text || ""
+    )
+
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+
+    .replace(
+        /</g,
+        "&lt;"
+    )
+
+    .replace(
+        />/g,
+        "&gt;"
+    )
+
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+/* ==================================================
+   📱 清理手機號碼
+================================================== */
+
+function cleanPhone(
     phone
 ) {
 
+    return String(
+        phone || ""
+    )
 
-    let value =
+    .replace(
+        /\D/g,
+        ""
+    )
 
-        String(
-            phone ||
-            ""
-        )
-
-        .replace(
-            /\D/g,
-            ""
-        );
-
-
-    /*
-        886912345678
-        →
-        0912345678
-    */
-
-    if (
-        value.startsWith(
-            "886"
-        )
-    ) {
-
-
-        value =
-
-            "0" +
-
-            value.substring(
-                3
-            );
-
-    }
-
-
-    /*
-        912345678
-        →
-        0912345678
-    */
-
-    if (
-
-        value.length === 9
-
-        &&
-
-        value.startsWith(
-            "9"
-        )
-
-    ) {
-
-
-        value =
-
-            "0" +
-
-            value;
-
-    }
-
-
-    return value;
+    .slice(
+        0,
+        10
+    );
 
 }
 
 
-/* =========================================
-   顯示錯誤
-========================================= */
+/* ==================================================
+   📱 手機輸入限制
+================================================== */
 
-function showError(
-    message
+if (
+    phoneInput
 ) {
 
+    phoneInput.addEventListener(
 
-    if (
-        phoneError
-    ) {
-
-
-        phoneError.textContent =
-            message;
-
-
-        phoneError.style.display =
-            "block";
-
-    }
-
-}
-
-
-/* =========================================
-   清除錯誤
-========================================= */
-
-function clearError() {
-
-
-    if (
-        phoneError
-    ) {
-
-
-        phoneError.textContent =
-            "";
-
-
-        phoneError.style.display =
-            "none";
-
-    }
-
-}
-
-
-/* =========================================
-   顯示客戶資料
-========================================= */
-
-function showCustomerResult(
-    customer
-) {
-
-
-    /*
-        隱藏查無資料
-    */
-
-    if (
-        customerNotFound
-    ) {
-
-
-        customerNotFound.style.display =
-            "none";
-
-    }
-
-
-    /*
-        顯示結果
-    */
-
-    if (
-        customerResult
-    ) {
-
-
-        customerResult.style.display =
-            "block";
-
-    }
-
-
-    /*
-        姓名
-    */
-
-    if (
-        resultName
-    ) {
-
-
-        resultName.textContent =
-
-            "👋 歡迎回來，"
-
-            +
-
-            (
-
-                customer.name
-
-                ||
-
-                "熟客"
-
-            );
-
-    }
-
-
-    /*
-        歡迎訊息
-    */
-
-    if (
-        resultMessage
-    ) {
-
-
-        resultMessage.textContent =
-
-            "很高興再次見到您 ❤️";
-
-    }
-
-
-    /*
-        訂單次數
-    */
-
-    if (
-        orderCount
-    ) {
-
-
-        orderCount.textContent =
-
-            customer.orderCount
-
-            ||
-
-            "0";
-
-    }
-
-
-    /*
-        最後訂單時間
-    */
-
-    if (
-        lastOrderTime
-    ) {
-
-
-        lastOrderTime.textContent =
-
-            customer.lastOrderTime
-
-            ||
-
-            "尚無資料";
-
-    }
-
-
-    /*
-        最後訂單內容
-    */
-
-    if (
-        lastOrderContent
-    ) {
-
-
-        lastOrderContent.textContent =
-
-            customer.lastOrderContent
-
-            ||
-
-            "尚無資料";
-
-    }
-
-
-    /*
-        常點餐點
-    */
-
-    if (
-        favoriteItems
-    ) {
-
-
-        favoriteItems.textContent =
-
-            customer.favoriteItems
-
-            ||
-
-            "尚無資料";
-
-    }
-
-
-    /*
-        滾動到結果
-    */
-
-    setTimeout(
+        "input",
 
         function() {
 
+            this.value =
+
+                this.value
+
+                    .replace(
+                        /\D/g,
+                        ""
+                    )
+
+                    .slice(
+                        0,
+                        10
+                    );
+
 
             if (
-                customerResult
+                phoneError
             ) {
 
+                phoneError.style.display =
+                    "none";
 
-                customerResult.scrollIntoView({
-
-                    behavior:
-                        "smooth",
-
-                    block:
-                        "center"
-
-                });
+                phoneError.textContent =
+                    "";
 
             }
 
-        },
-
-        200
+        }
 
     );
 
 }
 
 
-/* =========================================
-   顯示查無資料
-========================================= */
+/* ==================================================
+   📅 日期格式
+================================================== */
 
-function showCustomerNotFound() {
-
-
-    /*
-        隱藏成功結果
-    */
+function formatDate(
+    value
+) {
 
     if (
-        customerResult
+        !value
     ) {
 
+        return "-";
 
-        customerResult.style.display =
+    }
+
+
+    const date =
+        new Date(
+            value
+        );
+
+
+    if (
+        isNaN(
+            date.getTime()
+        )
+    ) {
+
+        return String(
+            value
+        );
+
+    }
+
+
+    return (
+
+        date.getFullYear() +
+
+        "/" +
+
+        String(
+            date.getMonth() + 1
+        ).padStart(
+            2,
+            "0"
+        ) +
+
+        "/" +
+
+        String(
+            date.getDate()
+        ).padStart(
+            2,
+            "0"
+        ) +
+
+        " " +
+
+        String(
+            date.getHours()
+        ).padStart(
+            2,
+            "0"
+        ) +
+
+        ":" +
+
+        String(
+            date.getMinutes()
+        ).padStart(
+            2,
+            "0"
+        )
+
+    );
+
+}
+
+
+/* ==================================================
+   🍜 商品顯示
+================================================== */
+
+function renderItems(
+    items
+) {
+
+    if (
+        !Array.isArray(
+            items
+        ) ||
+        items.length === 0
+    ) {
+
+        return "目前沒有商品資料";
+
+    }
+
+
+    return items
+
+        .map(
+
+            function(
+                item
+            ) {
+
+                const name =
+                    escapeHTML(
+                        item.name ||
+                        "商品"
+                    );
+
+
+                const qty =
+                    Number(
+                        item.qty ||
+                        1
+                    );
+
+
+                let options = "";
+
+
+                if (
+                    item.options
+                ) {
+
+                    const list = [];
+
+
+                    if (
+                        item.options.noodle
+                    ) {
+
+                        list.push(
+
+                            item.options.noodle
+
+                        );
+
+                    }
+
+
+                    if (
+                        item.options.spicy
+                    ) {
+
+                        list.push(
+
+                            item.options.spicy
+
+                        );
+
+                    }
+
+
+                    if (
+                        item.options.vegetable ===
+                        false
+                    ) {
+
+                        list.push(
+                            "不加菜"
+                        );
+
+                    }
+
+
+                    if (
+                        item.options.onion ===
+                        false
+                    ) {
+
+                        list.push(
+                            "不加蔥"
+                        );
+
+                    }
+
+
+                    if (
+                        item.options.sauce
+                    ) {
+
+                        if (
+                            Array.isArray(
+                                item.options.sauce
+                            )
+                        ) {
+
+                            list.push(
+
+                                item.options.sauce.join(
+                                    "＋"
+                                )
+
+                            );
+
+                        }
+
+                        else {
+
+                            list.push(
+
+                                item.options.sauce
+
+                            );
+
+                        }
+
+                    }
+
+
+                    if (
+                        list.length > 0
+                    ) {
+
+                        options =
+
+                            "<div>" +
+
+                            escapeHTML(
+
+                                list.join(
+                                    "・"
+                                )
+
+                            ) +
+
+                            "</div>";
+
+                    }
+
+                }
+
+
+                return `
+
+                    <div class="customer-order-item">
+
+                        <strong>
+
+                            ${name}
+
+                            ×
+
+                            ${qty}
+
+                        </strong>
+
+                        ${options}
+
+                    </div>
+
+                `;
+
+            }
+
+        )
+
+        .join("");
+
+}
+
+
+/* ==================================================
+   📋 顯示單筆訂單
+================================================== */
+
+function renderOrder(
+    order
+) {
+
+    if (
+        !order
+    ) {
+
+        return "";
+
+    }
+
+
+    return `
+
+        <div class="customer-order-detail">
+
+            <p>
+
+                🆔 訂單編號：
+
+                <strong>
+
+                    ${escapeHTML(
+                        order.orderId
+                    )}
+
+                </strong>
+
+            </p>
+
+
+            <p>
+
+                📅 下單時間：
+
+                ${escapeHTML(
+
+                    formatDate(
+                        order.date
+                    )
+
+                )}
+
+            </p>
+
+
+            <p>
+
+                🍽 取餐方式：
+
+                ${escapeHTML(
+
+                    order.orderType ||
+                    "-"
+
+                )}
+
+            </p>
+
+
+            ${
+                order.pickupMode
+
+                ? `
+
+                    <p>
+
+                        ⏰ 取餐模式：
+
+                        ${escapeHTML(
+                            order.pickupMode
+                        )}
+
+                    </p>
+
+                `
+
+                : ""
+
+            }
+
+
+            ${
+                order.pickupDate
+
+                ? `
+
+                    <p>
+
+                        📅 預約日期：
+
+                        ${escapeHTML(
+                            order.pickupDate
+                        )}
+
+                    </p>
+
+                `
+
+                : ""
+
+            }
+
+
+            ${
+                order.pickupTime
+
+                ? `
+
+                    <p>
+
+                        ⏰ 預約時間：
+
+                        ${escapeHTML(
+                            order.pickupTime
+                        )}
+
+                    </p>
+
+                `
+
+                : ""
+
+            }
+
+
+            ${
+                order.tableware
+
+                ? `
+
+                    <p>
+
+                        🍴 餐具：
+
+                        ${escapeHTML(
+                            order.tableware
+                        )}
+
+                    </p>
+
+                `
+
+                : ""
+
+            }
+
+
+            <div class="customer-order-items">
+
+                ${renderItems(
+                    order.items
+                )}
+
+            </div>
+
+
+            <div class="customer-order-total">
+
+                💰 訂單金額：
+
+                <strong>
+
+                    NT$${Number(
+                        order.total ||
+                        0
+                    )}
+
+                </strong>
+
+            </div>
+
+
+            ${
+                order.note
+
+                ? `
+
+                    <p>
+
+                        📝 備註：
+
+                        ${escapeHTML(
+                            order.note
+                        )}
+
+                    </p>
+
+                `
+
+                : ""
+
+            }
+
+
+            <p>
+
+                📌 訂單狀態：
+
+                <strong>
+
+                    ${escapeHTML(
+
+                        order.status ||
+                        "新訂單"
+
+                    )}
+
+                </strong>
+
+            </p>
+
+        </div>
+
+    `;
+
+}
+
+
+/* ==================================================
+   ⭐ 顯示常點餐點
+================================================== */
+
+function renderFavorites(
+    favorites
+) {
+
+    if (
+        !favorites ||
+        Object.keys(
+            favorites
+        ).length === 0
+    ) {
+
+        return "目前還沒有足夠的點餐紀錄";
+
+    }
+
+
+    const list =
+
+        Object.entries(
+            favorites
+        )
+
+        .sort(
+
+            function(
+                a,
+                b
+            ) {
+
+                return b[1] - a[1];
+
+            }
+
+        );
+
+
+    return list
+
+        .slice(
+            0,
+            5
+        )
+
+        .map(
+
+            function(
+                item
+            ) {
+
+                return `
+
+                    <div class="favorite-item">
+
+                        ⭐
+
+                        ${escapeHTML(
+                            item[0]
+                        )}
+
+                        <strong>
+
+                            ${item[1]}
+
+                            次
+
+                        </strong>
+
+                    </div>
+
+                `;
+
+            }
+
+        )
+
+        .join("");
+
+}
+
+
+/* ==================================================
+   📦 顯示歷史訂單
+================================================== */
+
+function renderHistory(
+    orders
+) {
+
+    if (
+        !Array.isArray(
+            orders
+        ) ||
+        orders.length === 0
+    ) {
+
+        return "目前沒有訂單紀錄";
+
+    }
+
+
+    return orders
+
+        .map(
+
+            function(
+                order,
+                index
+            ) {
+
+                return `
+
+                    <details class="customer-history-item">
+
+                        <summary>
+
+                            📦 第 ${
+
+                                orders.length -
+                                index
+
+                            } 筆訂單
+
+                            ｜
+
+                            NT$${Number(
+
+                                order.total ||
+
+                                0
+
+                            )}
+
+                        </summary>
+
+
+                        <div>
+
+                            ${renderOrder(
+                                order
+                            )}
+
+                        </div>
+
+                    </details>
+
+                `;
+
+            }
+
+        )
+
+        .join("");
+
+}
+
+
+/* ==================================================
+   🎉 顯示查詢結果
+================================================== */
+
+function showResult(
+    data
+) {
+
+    const orders =
+        data.orders || [];
+
+
+    const latest =
+        data.latestOrder ||
+        orders[0];
+
+
+    if (
+        !latest
+    ) {
+
+        showNotFound();
+
+        return;
+
+    }
+
+
+    if (
+        resultName
+    ) {
+
+        resultName.textContent =
+
+            "歡迎回來，" +
+
+            (
+                latest.name ||
+                "顧客"
+            );
+
+    }
+
+
+    if (
+        resultMessage
+    ) {
+
+        resultMessage.textContent =
+
+            "這是您的訂單紀錄";
+
+    }
+
+
+    if (
+        orderCount
+    ) {
+
+        orderCount.textContent =
+
+            orders.length;
+
+    }
+
+
+    if (
+        lastOrderTime
+    ) {
+
+        lastOrderTime.textContent =
+
+            formatDate(
+                latest.date
+            );
+
+    }
+
+
+    if (
+        lastOrderContent
+    ) {
+
+        lastOrderContent.innerHTML =
+
+            renderOrder(
+                latest
+            );
+
+    }
+
+
+    if (
+        favoriteItems
+    ) {
+
+        favoriteItems.innerHTML =
+
+            renderFavorites(
+
+                data.favorites
+
+            );
+
+    }
+
+
+    if (
+        orderHistory
+    ) {
+
+        orderHistory.innerHTML =
+
+            renderHistory(
+                orders
+            );
+
+    }
+
+
+    if (
+        loadingBox
+    ) {
+
+        loadingBox.style.display =
             "none";
 
     }
 
 
-    /*
-        顯示查無資料
-    */
-
     if (
-        customerNotFound
+        notFoundBox
     ) {
 
+        notFoundBox.style.display =
+            "none";
 
-        customerNotFound.style.display =
+    }
+
+
+    if (
+        resultBox
+    ) {
+
+        resultBox.style.display =
             "block";
 
+    }
 
-        customerNotFound.scrollIntoView({
 
-            behavior:
-                "smooth",
+    window.scrollTo({
 
-            block:
-                "center"
+        top:0,
 
-        });
+        behavior:"smooth"
+
+    });
+
+}
+
+
+/* ==================================================
+   ❌ 查無資料
+================================================== */
+
+function showNotFound() {
+
+    if (
+        loadingBox
+    ) {
+
+        loadingBox.style.display =
+            "none";
+
+    }
+
+
+    if (
+        resultBox
+    ) {
+
+        resultBox.style.display =
+            "none";
+
+    }
+
+
+    if (
+        notFoundBox
+    ) {
+
+        notFoundBox.style.display =
+            "block";
 
     }
 
 }
 
 
-/* =========================================
-   查詢客戶
-========================================= */
+/* ==================================================
+   🔍 執行查詢
+================================================== */
 
 async function searchCustomer() {
 
-
-    clearError();
-
-
-    /*
-        隱藏舊結果
-    */
-
-    if (
-        customerResult
-    ) {
-
-
-        customerResult.style.display =
-            "none";
-
-    }
-
-
-    if (
-        customerNotFound
-    ) {
-
-
-        customerNotFound.style.display =
-            "none";
-
-    }
-
-
-    /*
-        取得電話
-    */
-
     const phone =
-
-        normalizePhone(
+        cleanPhone(
 
             phoneInput
 
-                ?
+                ? phoneInput.value
 
-            phoneInput.value
-
-                :
-
-            ""
+                : ""
 
         );
 
-
-    /*
-        電話驗證
-    */
 
     if (
         !/^09\d{8}$/.test(
@@ -527,211 +1081,173 @@ async function searchCustomer() {
         )
     ) {
 
-
-        showError(
-
-            "📱 請輸入正確的手機號碼，例如 0903392687"
-
-        );
-
-
         if (
-            phoneInput
+            phoneError
         ) {
 
+            phoneError.textContent =
 
-            phoneInput.focus();
+                "請輸入正確的手機號碼";
+
+            phoneError.style.display =
+                "block";
 
         }
-
 
         return;
 
     }
 
 
-    /*
-        查詢中
-    */
+    if (
+        phoneError
+    ) {
+
+        phoneError.style.display =
+            "none";
+
+    }
+
+
+    if (
+        resultBox
+    ) {
+
+        resultBox.style.display =
+            "none";
+
+    }
+
+
+    if (
+        notFoundBox
+    ) {
+
+        notFoundBox.style.display =
+            "none";
+
+    }
+
+
+    if (
+        loadingBox
+    ) {
+
+        loadingBox.style.display =
+            "block";
+
+    }
+
 
     if (
         searchBtn
     ) {
 
-
         searchBtn.disabled =
             true;
 
-
         searchBtn.textContent =
-            "🔍 查詢中...";
+            "⏳ 查詢中...";
 
     }
 
 
     try {
 
+        const url =
 
-        /*
-            建立 API 網址
-        */
+            SCRIPT_URL +
 
-        const queryURL =
-
-            SCRIPT_URL
-
-            +
-
-            "?action=customerQuery&phone="
-
-            +
+            "?action=findCustomerOrders&phone=" +
 
             encodeURIComponent(
                 phone
             );
 
 
-        /*
-            呼叫 GAS
-        */
-
         const response =
 
             await fetch(
-                queryURL
+                url
             );
 
-
-        /*
-            HTTP 錯誤
-        */
-
-        if (
-            !response.ok
-        ) {
-
-
-            throw new Error(
-
-                "GAS API 連線失敗"
-
-            );
-
-        }
-
-
-        /*
-            取得 JSON
-        */
 
         const data =
 
             await response.json();
 
 
-        /*
-            API 回傳錯誤
-        */
+        console.log(
+
+            "客戶查詢結果：",
+
+            data
+
+        );
+
 
         if (
             !data.success
         ) {
 
+            showNotFound();
 
-            throw new Error(
-
-                data.message
-
-                ||
-
-                "查詢失敗"
-
-            );
+            return;
 
         }
 
 
-        /*
-            找到客戶
-        */
-
-        if (
-
-            data.found === true
-
-            &&
-
-            data.customer
-
-        ) {
-
-
-            showCustomerResult(
-
-                data.customer
-
-            );
-
-        }
-
-
-        /*
-            查無客戶
-        */
-
-        else {
-
-
-            showCustomerNotFound();
-
-        }
-
+        showResult(
+            data
+        );
 
     }
-
 
     catch (
         error
     ) {
 
-
         console.error(
-
-            "❌ 客戶查詢錯誤：",
-
             error
-
         );
 
 
-        showError(
+        if (
+            loadingBox
+        ) {
 
-            "⚠️ 查詢失敗，請確認網路連線後再試一次。"
+            loadingBox.style.display =
+                "none";
 
-        );
+        }
+
+
+        if (
+            phoneError
+        ) {
+
+            phoneError.textContent =
+
+                "查詢系統暫時無法使用，請稍後再試";
+
+            phoneError.style.display =
+                "block";
+
+        }
 
     }
 
-
     finally {
-
-
-        /*
-            恢復按鈕
-        */
 
         if (
             searchBtn
         ) {
 
-
             searchBtn.disabled =
                 false;
 
-
             searchBtn.textContent =
-
-                "🔍 查詢我的紀錄";
+                "🔍 查詢我的訂單";
 
         }
 
@@ -740,14 +1256,13 @@ async function searchCustomer() {
 }
 
 
-/* =========================================
-   查詢按鈕
-========================================= */
+/* ==================================================
+   🔍 查詢按鈕
+================================================== */
 
 if (
     searchBtn
 ) {
-
 
     searchBtn.addEventListener(
 
@@ -760,32 +1275,24 @@ if (
 }
 
 
-/* =========================================
-   Enter 查詢
-========================================= */
+/* ==================================================
+   ⌨️ Enter 查詢
+================================================== */
 
 if (
     phoneInput
 ) {
 
-
     phoneInput.addEventListener(
 
         "keydown",
 
-        function(
-            event
-        ) {
-
+        function(event) {
 
             if (
                 event.key ===
                 "Enter"
             ) {
-
-
-                event.preventDefault();
-
 
                 searchCustomer();
 
@@ -795,48 +1302,11 @@ if (
 
     );
 
-
-    /*
-        只允許數字
-    */
-
-    phoneInput.addEventListener(
-
-        "input",
-
-        function() {
-
-
-            this.value =
-
-                this.value
-
-                .replace(
-                    /\D/g,
-                    ""
-                )
-
-                .slice(
-                    0,
-                    10
-                );
-
-
-            clearError();
-
-        }
-
-    );
-
 }
 
 
-/* =========================================
-   初始化
-========================================= */
-
 console.log(
 
-    "🍜 初萊食麵 customer.js 正式版已載入"
+    "🍜 初萊食麵｜客戶查詢 V2 已載入"
 
 );
