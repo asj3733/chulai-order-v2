@@ -1,158 +1,1007 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
+
 <head>
+
 <meta charset="UTF-8">
-<title>初萊食麵｜外送平台</title>
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+<title>初萊食麵｜外送與店家資訊</title>
+
 <link
     rel="stylesheet"
     href="css/style.css">
+
+
 <style>
-/* =========================================
-   初萊食麵｜外送平台頁面
-========================================= */
-.delivery-page {
-    min-height: 100vh;
-    padding: 30px 20px 50px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+
+/* ==================================================
+   🍜 初萊食麵｜外送平台頁面
+================================================== */
+
+*{
+    box-sizing:border-box;
 }
-/* 標題 */
-.delivery-header {
-    text-align: center;
-    margin-bottom: 30px;
+
+
+body{
+
+    margin:0;
+
+    min-height:100vh;
+
+    font-family:
+
+        Arial,
+
+        "Noto Sans TC",
+
+        sans-serif;
+
+    background:
+
+        linear-gradient(
+
+            180deg,
+
+            #1c1c1c 0%,
+
+            #292929 50%,
+
+            #111 100%
+
+        );
+
+    color:#fff;
+
 }
-.delivery-header h1 {
-    margin: 0 0 10px;
+
+
+/* ==================================================
+   📦 主容器
+================================================== */
+
+.delivery-page{
+
+    width:100%;
+
+    max-width:600px;
+
+    min-height:100vh;
+
+    margin:0 auto;
+
+    padding:
+
+        25px
+
+        20px
+
+        50px;
+
 }
-.delivery-header p {
-    margin: 0;
-    opacity: 0.8;
+
+
+/* ==================================================
+   🏷️ 頂部品牌
+================================================== */
+
+.delivery-brand{
+
+    text-align:center;
+
+    padding:
+
+        10px
+
+        0
+
+        20px;
+
 }
-/* 外送平台區 */
-.delivery-platforms {
-    width: 100%;
-    max-width: 500px;
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
+
+
+.delivery-logo{
+
+    font-size:42px;
+
+    margin-bottom:8px;
+
 }
-/* 平台按鈕 */
-.delivery-platform {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 70px;
-    padding: 15px 20px;
-    box-sizing: border-box;
-    border-radius: 16px;
-    text-decoration: none;
-    font-size: 21px;
-    font-weight: bold;
-    transition: transform 0.2s ease,
-                box-shadow 0.2s ease;
+
+
+.delivery-brand h1{
+
+    margin:
+
+        0
+
+        0
+
+        8px;
+
+    color:#d4af37;
+
+    font-size:30px;
+
+    letter-spacing:2px;
+
 }
-/* 點擊效果 */
-.delivery-platform:active {
-    transform: scale(0.97);
+
+
+.delivery-brand p{
+
+    margin:0;
+
+    color:#ddd;
+
+    font-size:15px;
+
+    line-height:1.7;
+
 }
-/* Uber Eats */
-.delivery-platform.uber {
-    background: #000;
-    color: #fff;
+
+
+/* ==================================================
+   📍 店家資訊卡
+================================================== */
+
+.shop-info{
+
+    background:
+
+        rgba(
+
+            255,
+
+            255,
+
+            255,
+
+            0.06
+
+        );
+
+    border:
+
+        1px solid
+
+        rgba(
+
+            212,
+
+            175,
+
+            55,
+
+            0.35
+
+        );
+
+    border-radius:20px;
+
+    padding:20px;
+
+    margin-bottom:25px;
+
+    text-align:center;
+
 }
-/* foodpanda */
-.delivery-platform.panda {
-    background: #d50070;
-    color: #fff;
+
+
+.shop-info-title{
+
+    color:#d4af37;
+
+    font-size:19px;
+
+    font-weight:bold;
+
+    margin-bottom:12px;
+
 }
-/* foodomo */
-.delivery-platform.foodmo {
-    background: #f5b400;
-    color: #222;
+
+
+.shop-info-text{
+
+    color:#eee;
+
+    font-size:15px;
+
+    line-height:1.8;
+
 }
-/* 返回首頁 */
-.back-home {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 30px;
-    min-height: 55px;
-    padding: 0 30px;
-    border-radius: 14px;
-    background: #d4af37;
-    color: #222;
-    text-decoration: none;
-    font-size: 18px;
-    font-weight: bold;
-    box-sizing: border-box;
+
+
+.shop-info-note{
+
+    margin-top:10px;
+
+    color:#bbb;
+
+    font-size:13px;
+
 }
-/* 手機版 */
-@media (max-width: 480px) {
-    .delivery-page {
-        padding: 25px 16px 40px;
+
+
+/* ==================================================
+   🛵 平台標題
+================================================== */
+
+.section-title{
+
+    text-align:center;
+
+    color:#fff;
+
+    font-size:20px;
+
+    margin:
+
+        0
+
+        0
+
+        15px;
+
+}
+
+
+/* ==================================================
+   🛵 外送平台區
+================================================== */
+
+.delivery-platforms{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:14px;
+
+}
+
+
+/* ==================================================
+   🔘 共用按鈕
+================================================== */
+
+.delivery-platform{
+
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    min-height:72px;
+
+    width:100%;
+
+    padding:
+
+        14px
+
+        20px;
+
+    border-radius:18px;
+
+    text-decoration:none;
+
+    font-size:20px;
+
+    font-weight:bold;
+
+    transition:
+
+        transform
+
+        0.2s ease,
+
+        box-shadow
+
+        0.2s ease,
+
+        opacity
+
+        0.2s ease;
+
+    box-shadow:
+
+        0
+
+        5px
+
+        15px
+
+        rgba(
+
+            0,
+
+            0,
+
+            0,
+
+            0.25
+
+        );
+
+}
+
+
+.delivery-platform:hover{
+
+    transform:
+
+        translateY(-2px);
+
+    box-shadow:
+
+        0
+
+        8px
+
+        20px
+
+        rgba(
+
+            0,
+
+            0,
+
+            0,
+
+            0.35
+
+        );
+
+}
+
+
+.delivery-platform:active{
+
+    transform:
+
+        scale(
+
+            0.97
+
+        );
+
+}
+
+
+/* ==================================================
+   🛵 Uber Eats
+================================================== */
+
+.delivery-platform.uber{
+
+    background:#000;
+
+    color:#fff;
+
+    border:
+
+        1px solid
+
+        #333;
+
+}
+
+
+/* ==================================================
+   🐼 foodpanda
+================================================== */
+
+.delivery-platform.panda{
+
+    background:#d50070;
+
+    color:#fff;
+
+}
+
+
+/* ==================================================
+   🍱 foodomo
+================================================== */
+
+.delivery-platform.foodmo{
+
+    background:#f5b400;
+
+    color:#222;
+
+}
+
+
+/* ==================================================
+   📍 Google 地圖
+================================================== */
+
+.delivery-platform.google-map{
+
+    background:
+
+        linear-gradient(
+
+            135deg,
+
+            #d4af37,
+
+            #b8941f
+
+        );
+
+    color:#171717;
+
+}
+
+
+/* ==================================================
+   🔗 平台小提示
+================================================== */
+
+.platform-note{
+
+    display:block;
+
+    margin-top:
+
+        -5px;
+
+    margin-bottom:
+
+        4px;
+
+    text-align:center;
+
+    color:#aaa;
+
+    font-size:12px;
+
+}
+
+
+/* ==================================================
+   🍜 線上點餐
+================================================== */
+
+.online-order{
+
+    margin-top:30px;
+
+    padding-top:25px;
+
+    border-top:
+
+        1px solid
+
+        rgba(
+
+            255,
+
+            255,
+
+            255,
+
+            0.12
+
+        );
+
+}
+
+
+.online-order-title{
+
+    text-align:center;
+
+    color:#d4af37;
+
+    font-size:19px;
+
+    font-weight:bold;
+
+    margin-bottom:15px;
+
+}
+
+
+.online-order-btn{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    min-height:65px;
+
+    width:100%;
+
+    border-radius:16px;
+
+    background:#fff;
+
+    color:#222;
+
+    text-decoration:none;
+
+    font-size:19px;
+
+    font-weight:bold;
+
+    transition:
+
+        transform
+
+        0.2s ease;
+
+}
+
+
+.online-order-btn:active{
+
+    transform:
+
+        scale(
+
+            0.97
+
+        );
+
+}
+
+
+/* ==================================================
+   🏠 返回首頁
+================================================== */
+
+.back-home{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    width:100%;
+
+    min-height:55px;
+
+    margin-top:15px;
+
+    border:
+
+        1px solid
+
+        rgba(
+
+            212,
+
+            175,
+
+            55,
+
+            0.5
+
+        );
+
+    border-radius:15px;
+
+    color:#d4af37;
+
+    background:
+
+        rgba(
+
+            212,
+
+            175,
+
+            55,
+
+            0.08
+
+        );
+
+    text-decoration:none;
+
+    font-size:17px;
+
+    font-weight:bold;
+
+    transition:
+
+        background
+
+        0.2s ease,
+
+        transform
+
+        0.2s ease;
+
+}
+
+
+.back-home:active{
+
+    transform:
+
+        scale(
+
+            0.97
+
+        );
+
+}
+
+
+/* ==================================================
+   📞 店家提醒
+================================================== */
+
+.delivery-footer{
+
+    text-align:center;
+
+    margin-top:30px;
+
+    color:#888;
+
+    font-size:12px;
+
+    line-height:1.8;
+
+}
+
+
+/* ==================================================
+   📱 手機版
+================================================== */
+
+@media(
+
+    max-width:480px
+
+){
+
+    .delivery-page{
+
+        padding:
+
+            20px
+
+            16px
+
+            40px;
+
     }
-    .delivery-header h1 {
-        font-size: 28px;
+
+
+    .delivery-logo{
+
+        font-size:38px;
+
     }
-    .delivery-platform {
-        min-height: 68px;
-        font-size: 20px;
+
+
+    .delivery-brand h1{
+
+        font-size:27px;
+
     }
+
+
+    .delivery-platform{
+
+        min-height:68px;
+
+        font-size:19px;
+
+    }
+
 }
+
+
+/* ==================================================
+   💻 大螢幕
+================================================== */
+
+@media(
+
+    min-width:700px
+
+){
+
+    .delivery-page{
+
+        padding-top:45px;
+
+    }
+
+}
+
 </style>
+
 </head>
+
+
 <body>
+
+
 <main class="delivery-page">
-<!-- =========================
-     標題
-========================= -->
-<header class="delivery-header">
+
+
+<!-- ==================================================
+     🍜 品牌標題
+================================================== -->
+
+<header class="delivery-brand">
+
+    <div class="delivery-logo">
+
+        🍜
+
+    </div>
+
+
     <h1>
-        🛵 初萊食麵外送平台
+
+        初萊食麵
+
     </h1>
+
+
     <p>
-        選擇您習慣的外送平台點餐
+
+        好吃的麵食・小吃・關東煮
+
+        <br>
+
+        想吃什麼，選擇您習慣的方式即可
+
     </p>
+
 </header>
-<!-- =========================
-     外送平台
-========================= -->
-<section class="delivery-platforms">
-    <!-- Uber Eats -->
-    <a
-        class="delivery-platform uber"
-        href="https://www.ubereats.com/tw/store/%E5%88%9D%E8%90%8A%E9%A3%9F%E9%BA%B5%7C%E5%A4%A7%E8%85%B8%E9%A6%99%E8%85%B8%E3%80%81%E9%97%9C%E6%9D%B1%E7%85%AE/9-pIirZHWkWxCprbnjgzBQ?diningMode=PICKUP&ps=1&sc=SEARCH_SUGGESTION"
-        target="_blank"
-        rel="noopener">
-        🛵 Uber Eats
-    </a>
-    <!-- foodpanda -->
-    <a
-        class="delivery-platform panda"
-        href="https://foodpanda.com.tw/restaurant/o32y/chu-lai-shi-mian"
-        target="_blank"
-        rel="noopener">
-        🛵 foodpanda
-    </a>
-    <!-- foodomo -->
-    <a
-        class="delivery-platform foodmo"
-        href="https://www.foodomo.com/store?stid=163737&number=0903392687"
-        target="_blank"
-        rel="noopener">
-        🛵 foodomo
-    </a>
+
+
+
+<!-- ==================================================
+     📍 店家資訊
+================================================== -->
+
+<section class="shop-info">
+
+
+    <div class="shop-info-title">
+
+        📍 初萊食麵
+
+    </div>
+
+
+    <div class="shop-info-text">
+
+        歡迎到店用餐・外帶取餐・外送點餐
+
+        <br>
+
+        也可以直接線上點餐，到店快速取餐
+
+    </div>
+
+
+    <div class="shop-info-note">
+
+        點擊下方按鈕即可前往各平台
+
+    </div>
+
+
 </section>
-<!-- =========================
-     返回首頁
-========================= -->
+
+
+
+<!-- ==================================================
+     🛵 外送平台
+================================================== -->
+
+<section>
+
+
+    <h2 class="section-title">
+
+        🛵 選擇外送平台
+
+    </h2>
+
+
+    <div class="delivery-platforms">
+
+
+        <!-- =========================================
+             Uber Eats
+        ========================================== -->
+
+        <a
+
+            class="delivery-platform uber"
+
+            href="https://www.ubereats.com/tw/store/%E5%88%9D%E8%90%8A%E9%A3%9F%E9%BA%B5%7C%E5%A4%A7%E8%85%B8%E9%A6%99%E8%85%B8%E3%80%81%E9%97%9C%E6%9D%B1%E7%85%AE/9-pIirZHWkWxCprbnjgzBQ?diningMode=PICKUP&ps=1&sc=SEARCH_SUGGESTION"
+
+            target="_blank"
+
+            rel="noopener noreferrer">
+
+            🛵 Uber Eats
+
+        </a>
+
+
+        <span class="platform-note">
+
+            前往 Uber Eats 點餐
+
+        </span>
+
+
+
+        <!-- =========================================
+             foodpanda
+        ========================================== -->
+
+        <a
+
+            class="delivery-platform panda"
+
+            href="https://foodpanda.com.tw/restaurant/o32y/chu-lai-shi-mian"
+
+            target="_blank"
+
+            rel="noopener noreferrer">
+
+            🐼 foodpanda
+
+        </a>
+
+
+        <span class="platform-note">
+
+            前往 foodpanda 點餐
+
+        </span>
+
+
+
+        <!-- =========================================
+             foodomo
+        ========================================== -->
+
+        <a
+
+            class="delivery-platform foodmo"
+
+            href="https://www.foodomo.com/store?stid=163737&number=0903392687"
+
+            target="_blank"
+
+            rel="noopener noreferrer">
+
+            🍱 foodomo
+
+        </a>
+
+
+        <span class="platform-note">
+
+            前往 foodomo 點餐
+
+        </span>
+
+
+
+        <!-- =========================================
+             Google 地圖
+        ========================================== -->
+
+        <a
+
+            class="delivery-platform google-map"
+
+            href="https://maps.app.goo.gl/u7re7YuqQW4EPbeF6?g_st=ic"
+
+            target="_blank"
+
+            rel="noopener noreferrer">
+
+            📍 Google 地圖｜導航到初萊食麵
+
+        </a>
+
+
+        <span class="platform-note">
+
+            查看店家位置・取得導航
+
+        </span>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- ==================================================
+     🍜 線上點餐
+================================================== -->
+
+<section class="online-order">
+
+
+    <div class="online-order-title">
+
+        🍜 不想使用外送平台？
+
+    </div>
+
+
+    <a
+
+        href="order.html"
+
+        class="online-order-btn">
+
+        🛒 初萊食麵線上點餐
+
+    </a>
+
+
+</section>
+
+
+
+<!-- ==================================================
+     🏠 返回首頁
+================================================== -->
+
 <a
+
     href="index.html"
+
     class="back-home">
+
     ← 返回初萊食麵首頁
+
 </a>
+
+
+
+<!-- ==================================================
+     📌 頁尾
+================================================== -->
+
+<footer class="delivery-footer">
+
+    初萊食麵 🍜
+
+    <br>
+
+    感謝您的支持與光臨 ❤️
+
+</footer>
+
+
 </main>
+
+
 </body>
+
 </html>
