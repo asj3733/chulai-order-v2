@@ -9,7 +9,7 @@
     name="viewport"
     content="width=device-width, initial-scale=1.0">
 
-<title>初萊食麵｜客戶查詢</title>
+<title>初萊食麵｜我的訂單紀錄</title>
 
 <link
     rel="stylesheet"
@@ -25,6 +25,10 @@
 <body>
 
 
+<!-- ==================================================
+     頁首
+================================================== -->
+
 <header class="page-header">
 
     <a
@@ -36,18 +40,22 @@
     </a>
 
     <p>
-        客戶查詢
+        我的訂單紀錄
     </p>
 
 </header>
 
 
 
+<!-- ==================================================
+     主要內容
+================================================== -->
+
 <main class="customer-page">
 
 
 <!-- ==================================================
-     🔍 查詢區
+     查詢卡片
 ================================================== -->
 
 <section class="customer-search-card">
@@ -59,17 +67,15 @@
 
 
     <h1>
-        歡迎回到初萊食麵
+        我的訂單紀錄
     </h1>
 
 
     <p class="customer-description">
 
-        輸入您曾經訂餐的手機號碼
+        輸入您曾經訂餐的手機號碼<br>
 
-        <br>
-
-        查看您的訂單紀錄
+        查看您的訂單紀錄與常點餐點
 
     </p>
 
@@ -82,39 +88,26 @@
 
 
     <input
-
         type="tel"
-
         id="customer-phone"
-
         class="customer-phone-input"
-
         placeholder="請輸入 09xxxxxxxx"
-
         maxlength="10"
-
         inputmode="numeric"
-
         autocomplete="tel">
 
-    
+
     <div
-
         id="phone-error"
-
         class="customer-error"
-
         style="display:none;">
 
     </div>
 
 
     <button
-
         type="button"
-
         id="customer-search-btn"
-
         class="customer-search-btn">
 
         🔍 查詢我的訂單
@@ -123,9 +116,7 @@
 
 
     <a
-
         href="order.html"
-
         class="customer-order-btn">
 
         🍜 直接開始點餐
@@ -133,80 +124,51 @@
     </a>
 
 
-</section>
+    <div
+        id="customer-loading"
+        class="customer-loading"
+        style="display:none;">
 
-
-
-<!-- ==================================================
-     ⏳ 查詢中
-================================================== -->
-
-<section
-
-    id="customer-loading"
-
-    class="customer-result"
-
-    style="display:none;">
-
-    <div class="customer-icon">
-
-        ⏳
+        ⏳ 正在查詢您的訂單，請稍候...
 
     </div>
 
-    <h2>
-
-        正在查詢您的訂單
-
-    </h2>
-
-    <p>
-
-        請稍候...
-
-    </p>
 
 </section>
 
 
 
 <!-- ==================================================
-     🎉 查詢結果
+     查詢結果
 ================================================== -->
 
 <section
-
     id="customer-result"
-
     class="customer-result"
-
     style="display:none;">
 
+
+    <!-- ==================================================
+         歡迎
+    ================================================== -->
 
     <div class="result-welcome">
 
 
         <div class="customer-result-icon">
-
             🎉
-
         </div>
 
 
         <div>
 
             <strong id="result-name">
-
                 歡迎回來
-
             </strong>
 
 
             <p id="result-message">
-
                 很高興再次見到您
-
             </p>
 
         </div>
@@ -217,7 +179,7 @@
 
 
     <!-- ==================================================
-         📊 統計
+         統計
     ================================================== -->
 
     <div class="customer-stat-grid">
@@ -239,6 +201,22 @@
 
         </div>
 
+
+        <div class="customer-stat-card">
+
+            <span>
+                💰
+            </span>
+
+            <strong id="total-spent">
+                NT$0
+            </strong>
+
+            <small>
+                累計消費
+            </small>
+
+        </div>
 
 
         <div class="customer-stat-card">
@@ -263,7 +241,7 @@
 
 
     <!-- ==================================================
-         📋 最近訂單
+         最近一次訂單
     ================================================== -->
 
     <div class="customer-info-box">
@@ -284,14 +262,14 @@
 
 
     <!-- ==================================================
-         ⭐ 常點餐點
+         常點餐點
     ================================================== -->
 
     <div class="customer-info-box">
 
 
         <h3>
-            ⭐ 常點餐點
+            ⭐ 我的常點餐點
         </h3>
 
 
@@ -305,14 +283,14 @@
 
 
     <!-- ==================================================
-         📦 歷史訂單
+         歷史訂單
     ================================================== -->
 
     <div class="customer-info-box">
 
 
         <h3>
-            📦 歷史訂單
+            📜 我的訂單紀錄
         </h3>
 
 
@@ -325,13 +303,15 @@
 
 
 
+    <!-- ==================================================
+         再次點餐
+    ================================================== -->
+
     <a
-
         href="order.html"
-
         class="customer-start-order">
 
-        🍜 再點一次
+        🍜 再次開始點餐
 
     </a>
 
@@ -341,51 +321,38 @@
 
 
 <!-- ==================================================
-     ❌ 查無資料
+     查無資料
 ================================================== -->
 
 <section
-
     id="customer-not-found"
-
     class="customer-not-found"
-
     style="display:none;">
 
 
     <div class="not-found-icon">
-
         🔍
-
     </div>
 
 
     <h2>
-
-        尚未找到您的訂單紀錄
-
+        找不到之前的訂單
     </h2>
 
 
     <p>
 
-        請確認手機號碼是否輸入正確。
+        這個手機號碼目前沒有訂單紀錄。
 
         <br>
 
-        如果這是您第一次使用線上點餐，
-
-        <br>
-
-        歡迎開始您的第一筆訂單！
+        歡迎第一次來到初萊食麵！
 
     </p>
 
 
     <a
-
         href="order.html"
-
         class="customer-start-order">
 
         🍜 開始第一次點餐
@@ -399,6 +366,10 @@
 </main>
 
 
+
+<!-- ==================================================
+     JS
+================================================== -->
 
 <script src="js/customer.js?v=20260801"></script>
 
