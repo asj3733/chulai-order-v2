@@ -1,5 +1,6 @@
 /* ==================================================
-   🍜 初萊食麵｜客戶查詢系統 V2
+   🍜 初萊食麵｜客戶查詢系統 V3
+   完整新版
 ================================================== */
 
 
@@ -16,194 +17,95 @@ const SCRIPT_URL =
 ================================================== */
 
 const phoneInput =
-    document.getElementById(
-        "customer-phone"
-    );
-
+    document.getElementById("customer-phone");
 
 const searchBtn =
-    document.getElementById(
-        "customer-search-btn"
-    );
-
+    document.getElementById("customer-search-btn");
 
 const phoneError =
-    document.getElementById(
-        "phone-error"
-    );
-
+    document.getElementById("phone-error");
 
 const loading =
-    document.getElementById(
-        "customer-loading"
-    );
-
+    document.getElementById("customer-loading");
 
 const resultBox =
-    document.getElementById(
-        "customer-result"
-    );
-
+    document.getElementById("customer-result");
 
 const notFoundBox =
-    document.getElementById(
-        "customer-not-found"
-    );
-
+    document.getElementById("customer-not-found");
 
 const resultName =
-    document.getElementById(
-        "result-name"
-    );
-
+    document.getElementById("result-name");
 
 const resultMessage =
-    document.getElementById(
-        "result-message"
-    );
-
+    document.getElementById("result-message");
 
 const orderCount =
-    document.getElementById(
-        "order-count"
-    );
-
+    document.getElementById("order-count");
 
 const totalSpent =
-    document.getElementById(
-        "total-spent"
-    );
-
+    document.getElementById("total-spent");
 
 const lastOrderTime =
-    document.getElementById(
-        "last-order-time"
-    );
-
+    document.getElementById("last-order-time");
 
 const lastOrderContent =
-    document.getElementById(
-        "last-order-content"
-    );
-
+    document.getElementById("last-order-content");
 
 const favoriteItems =
-    document.getElementById(
-        "favorite-items"
-    );
-
+    document.getElementById("favorite-items");
 
 const orderHistory =
-    document.getElementById(
-        "order-history"
-    );
+    document.getElementById("order-history");
 
 
 /* ==================================================
-   HTML 防注入
+   🔐 HTML 防注入
 ================================================== */
 
-function escapeHTML(
-    text
-) {
+function escapeHTML(text) {
 
-    return String(
-        text ?? ""
-    )
+    return String(text ?? "")
 
-    .replace(
-        /&/g,
-        "&amp;"
-    )
+        .replace(/&/g, "&amp;")
 
-    .replace(
-        /</g,
-        "&lt;"
-    )
+        .replace(/</g, "&lt;")
 
-    .replace(
-        />/g,
-        "&gt;"
-    )
+        .replace(/>/g, "&gt;")
 
-    .replace(
-        /"/g,
-        "&quot;"
-    )
+        .replace(/"/g, "&quot;")
 
-    .replace(
-        /'/g,
-        "&#039;"
-    );
+        .replace(/'/g, "&#039;");
 
 }
 
 
 /* ==================================================
-   金額格式
+   💰 金額格式
 ================================================== */
 
-function formatMoney(
-    amount
-) {
+function formatMoney(amount) {
 
     return Number(
         amount || 0
-    ).toLocaleString(
-        "zh-TW"
-    );
+    ).toLocaleString("zh-TW");
 
 }
 
 
 /* ==================================================
-   日期格式
-================================================== */
-
-function formatDate(
-    value
-) {
-
-    if (!value) {
-
-        return "-";
-
-    }
-
-
-    return String(
-        value
-    );
-
-}
-
-
-/* ==================================================
-   手機號碼限制
+   📱 手機號碼
 ================================================== */
 
 if (phoneInput) {
 
     phoneInput.addEventListener(
-
         "input",
-
         function() {
 
-            this.value =
-
-                this.value
-
-                    .replace(
-                        /\D/g,
-                        ""
-                    )
-
-                    .slice(
-                        0,
-                        10
-                    );
-
+            this.value = this.value
+                .replace(/\D/g, "")
+                .slice(0, 10);
 
             if (phoneError) {
 
@@ -216,19 +118,15 @@ if (phoneInput) {
             }
 
         }
-
     );
 
 
     phoneInput.addEventListener(
-
         "keydown",
-
         function(event) {
 
             if (
-                event.key ===
-                "Enter"
+                event.key === "Enter"
             ) {
 
                 searchCustomer();
@@ -236,34 +134,27 @@ if (phoneInput) {
             }
 
         }
-
     );
 
 }
 
 
 /* ==================================================
-   顯示錯誤
+   ❌ 顯示錯誤
 ================================================== */
 
-function showError(
-    message
-) {
+function showError(message) {
 
     if (!phoneError) {
 
-        alert(
-            message
-        );
+        alert(message);
 
         return;
 
     }
 
-
     phoneError.textContent =
         message;
-
 
     phoneError.style.display =
         "block";
@@ -272,7 +163,7 @@ function showError(
 
 
 /* ==================================================
-   查詢客戶
+   🔍 查詢客戶
 ================================================== */
 
 async function searchCustomer() {
@@ -289,9 +180,7 @@ async function searchCustomer() {
     ================================================ */
 
     if (
-        !/^09\d{8}$/.test(
-            phone
-        )
+        !/^09\d{8}$/.test(phone)
     ) {
 
         showError(
@@ -310,7 +199,17 @@ async function searchCustomer() {
 
 
     /* ================================================
-       開始查詢
+       儲存手機
+    ================================================ */
+
+    localStorage.setItem(
+        "customerPhone",
+        phone
+    );
+
+
+    /* ================================================
+       查詢狀態
     ================================================ */
 
     if (searchBtn) {
@@ -352,7 +251,7 @@ async function searchCustomer() {
 
 
         /* ============================================
-           呼叫 GAS
+           建立查詢 URL
         ============================================ */
 
         const url =
@@ -361,31 +260,44 @@ async function searchCustomer() {
 
             "?action=queryCustomer&phone=" +
 
-            encodeURIComponent(
-                phone
-            );
+            encodeURIComponent(phone) +
 
+            "&t=" +
+
+            Date.now();
+
+
+        console.log(
+            "查詢網址：",
+            url
+        );
+
+
+        /* ============================================
+           呼叫 GAS
+        ============================================ */
 
         const response =
 
             await fetch(
-                url,
-                {
-                    method:
-                        "GET",
 
-                    cache:
-                        "no-store"
+                url,
+
+                {
+
+                    method: "GET",
+
+                    cache: "no-store"
+
                 }
+
             );
 
 
-        if (
-            !response.ok
-        ) {
+        if (!response.ok) {
 
             throw new Error(
-                "伺服器回應錯誤：" +
+                "伺服器錯誤：" +
                 response.status
             );
 
@@ -397,13 +309,13 @@ async function searchCustomer() {
 
 
         console.log(
-            "客戶查詢結果：",
+            "🍜 GAS 客戶查詢完整結果：",
             result
         );
 
 
         /* ============================================
-           查詢失敗
+           確認 GAS 是否成功
         ============================================ */
 
         if (
@@ -419,7 +331,7 @@ async function searchCustomer() {
 
 
         /* ============================================
-           確認真的有訂單
+           取得訂單
         ============================================ */
 
         const orders =
@@ -433,18 +345,46 @@ async function searchCustomer() {
                 : [];
 
 
-        const count =
+        /* ============================================
+           使用 GAS 回傳的訂單數
+        ============================================ */
+
+        const apiOrderCount =
 
             Number(
-                result.orderCount ||
-                orders.length ||
-                0
-            );
+                result.orderCount
+            ) || 0;
 
+
+        /* ============================================
+           最終訂單數
+           
+           只要 GAS 有回傳 orderCount
+           或 orders 有資料
+           就視為老客戶
+        ============================================ */
+
+        const finalOrderCount =
+
+            apiOrderCount > 0
+
+                ? apiOrderCount
+
+                : orders.length;
+
+
+        console.log(
+            "訂單數量：",
+            finalOrderCount
+        );
+
+
+        /* ============================================
+           確認是否真的有資料
+        ============================================ */
 
         if (
-            count <= 0 &&
-            orders.length === 0
+            finalOrderCount <= 0
         ) {
 
             showNotFound();
@@ -455,36 +395,38 @@ async function searchCustomer() {
 
 
         /* ============================================
-           顯示完整結果
+           顯示查詢結果
         ============================================ */
 
-        renderCustomerResult(
-            result
-        );
+        renderCustomerResult({
+
+            ...result,
+
+            orders: orders,
+
+            orderCount:
+                finalOrderCount
+
+        });
 
 
     }
 
-    catch (
-        error
-    ) {
+    catch (error) {
 
         console.error(
-            "客戶查詢錯誤：",
+            "❌ 客戶查詢錯誤：",
             error
         );
 
 
         showError(
-
             "查詢失敗，請稍後再試。"
-
         );
 
     }
 
     finally {
-
 
         if (loading) {
 
@@ -510,11 +452,10 @@ async function searchCustomer() {
 
 
 /* ==================================================
-   顯示查無資料
+   🔍 查無資料
 ================================================== */
 
 function showNotFound() {
-
 
     if (resultBox) {
 
@@ -535,12 +476,10 @@ function showNotFound() {
 
 
 /* ==================================================
-   顯示查詢結果
+   🎉 顯示查詢結果
 ================================================== */
 
-function renderCustomerResult(
-    result
-) {
+function renderCustomerResult(result) {
 
 
     if (notFoundBox) {
@@ -559,10 +498,6 @@ function renderCustomerResult(
     }
 
 
-    /* ================================================
-       訂單
-    ================================================ */
-
     const orders =
 
         Array.isArray(
@@ -573,10 +508,6 @@ function renderCustomerResult(
 
             : [];
 
-
-    /* ================================================
-       最新訂單
-    ================================================ */
 
     const lastOrder =
 
@@ -593,10 +524,6 @@ function renderCustomerResult(
                 : null;
 
 
-    /* ================================================
-       姓名
-    ================================================ */
-
     const name =
 
         lastOrder &&
@@ -607,11 +534,16 @@ function renderCustomerResult(
             : "貴賓";
 
 
+    /* ================================================
+       姓名
+    ================================================ */
+
     if (resultName) {
 
         resultName.textContent =
 
             "👋 " +
+
             name +
 
             "，歡迎回來！";
@@ -636,8 +568,12 @@ function renderCustomerResult(
 
         orderCount.textContent =
 
-            result.orderCount ||
+            Number(
+                result.orderCount
+            ) ||
+
             orders.length ||
+
             0;
 
     }
@@ -659,8 +595,7 @@ function renderCustomerResult(
                 return total +
 
                     Number(
-                        order.total ||
-                        0
+                        order.total || 0
                     );
 
             },
@@ -684,7 +619,7 @@ function renderCustomerResult(
 
 
     /* ================================================
-       最近訂單時間
+       最近訂單
     ================================================ */
 
     if (lastOrderTime) {
@@ -693,8 +628,8 @@ function renderCustomerResult(
 
             lastOrder
 
-                ? formatDate(
-                    lastOrder.date
+                ? String(
+                    lastOrder.date || "-"
                 )
 
                 : "-";
@@ -702,18 +637,10 @@ function renderCustomerResult(
     }
 
 
-    /* ================================================
-       最近一次訂單
-    ================================================ */
-
     renderLastOrder(
         lastOrder
     );
 
-
-    /* ================================================
-       常點餐點
-    ================================================ */
 
     renderFavoriteItems(
 
@@ -728,10 +655,6 @@ function renderCustomerResult(
     );
 
 
-    /* ================================================
-       歷史訂單
-    ================================================ */
-
     renderOrderHistory(
         orders
     );
@@ -740,12 +663,10 @@ function renderCustomerResult(
 
 
 /* ==================================================
-   最近一次訂單
+   📋 最近一次訂單
 ================================================== */
 
-function renderLastOrder(
-    order
-) {
+function renderLastOrder(order) {
 
 
     if (!lastOrderContent) {
@@ -766,30 +687,32 @@ function renderLastOrder(
     }
 
 
-    const pickupText =
+    let pickupHTML = "";
 
+
+    if (
         order.pickupDate
+    ) {
 
-            ? (
+        pickupHTML = `
 
-                "📅 取餐日期：" +
+            <div class="order-detail-line">
 
-                escapeHTML(
+                📅 預約取餐：
+
+                ${escapeHTML(
                     order.pickupDate
-                ) +
+                )}
 
-                "<br>" +
+                ${escapeHTML(
+                    order.pickupTime || ""
+                )}
 
-                "⏰ 取餐時間：" +
+            </div>
 
-                escapeHTML(
-                    order.pickupTime ||
-                    "-"
-                )
+        `;
 
-            )
-
-            : "";
+    }
 
 
     lastOrderContent.innerHTML = `
@@ -799,12 +722,15 @@ function renderLastOrder(
 
             <div class="order-id">
 
-                🆔 訂單編號：
+                🆔 訂單編號
 
-                ${escapeHTML(
-                    order.orderId ||
-                    "-"
-                )}
+                <strong>
+
+                    ${escapeHTML(
+                        order.orderId || "-"
+                    )}
+
+                </strong>
 
             </div>
 
@@ -814,8 +740,7 @@ function renderLastOrder(
                 📅 訂單時間：
 
                 ${escapeHTML(
-                    order.date ||
-                    "-"
+                    order.date || "-"
                 )}
 
             </div>
@@ -826,8 +751,7 @@ function renderLastOrder(
                 🍜 取餐方式：
 
                 ${escapeHTML(
-                    order.orderType ||
-                    "-"
+                    order.orderType || "-"
                 )}
 
             </div>
@@ -854,21 +778,7 @@ function renderLastOrder(
             }
 
 
-            ${
-                pickupText
-
-                    ? `
-
-                        <div class="order-detail-line">
-
-                            ${pickupText}
-
-                        </div>
-
-                    `
-
-                    : ""
-            }
+            ${pickupHTML}
 
 
             ${
@@ -929,11 +839,15 @@ function renderLastOrder(
 
             <div class="order-total">
 
-                合計 NT$
+                訂單合計：
 
-                ${formatMoney(
-                    order.total
-                )}
+                <strong>
+
+                    NT$${formatMoney(
+                        order.total
+                    )}
+
+                </strong>
 
             </div>
 
@@ -946,12 +860,10 @@ function renderLastOrder(
 
 
 /* ==================================================
-   常點餐點
+   ⭐ 常點餐點
 ================================================== */
 
-function renderFavoriteItems(
-    items
-) {
+function renderFavoriteItems(items) {
 
 
     if (!favoriteItems) {
@@ -977,28 +889,23 @@ function renderFavoriteItems(
 
     const sortedItems =
 
-        [...items]
+        [...items].sort(
 
-            .sort(
+            function(a, b) {
 
-                function(
-                    a,
-                    b
-                ) {
+                return Number(
+                    b.qty || 0
+                )
 
-                    return Number(
-                        b.qty || 0
-                    )
+                -
 
-                    -
+                Number(
+                    a.qty || 0
+                );
 
-                    Number(
-                        a.qty || 0
-                    );
+            }
 
-                }
-
-            );
+        );
 
 
     let html =
@@ -1008,9 +915,7 @@ function renderFavoriteItems(
 
     sortedItems.forEach(
 
-        function(
-            item
-        ) {
+        function(item) {
 
             html += `
 
@@ -1021,8 +926,7 @@ function renderFavoriteItems(
                         ⭐
 
                         ${escapeHTML(
-                            item.name ||
-                            "-"
+                            item.name || "-"
                         )}
 
                     </span>
@@ -1031,8 +935,7 @@ function renderFavoriteItems(
                     <span class="favorite-count">
 
                         ${Number(
-                            item.qty ||
-                            0
+                            item.qty || 0
                         )}
 
                         次
@@ -1060,12 +963,10 @@ function renderFavoriteItems(
 
 
 /* ==================================================
-   歷史訂單
+   📚 歷史訂單
 ================================================== */
 
-function renderOrderHistory(
-    orders
-) {
+function renderOrderHistory(orders) {
 
 
     if (!orderHistory) {
@@ -1094,8 +995,6 @@ function renderOrderHistory(
         '<div class="order-history-list">';
 
 
-    /* 最新的排前面 */
-
     const sortedOrders =
 
         [...orders].reverse();
@@ -1103,31 +1002,35 @@ function renderOrderHistory(
 
     sortedOrders.forEach(
 
-        function(
-            order
-        ) {
+        function(order) {
 
 
-            const pickup =
+            let pickupHTML = "";
 
+
+            if (
                 order.pickupDate
+            ) {
 
-                    ? (
+                pickupHTML = `
 
-                        escapeHTML(
+                    <div class="history-pickup">
+
+                        📅 預約取餐：
+
+                        ${escapeHTML(
                             order.pickupDate
-                        ) +
+                        )}
 
-                        " " +
+                        ${escapeHTML(
+                            order.pickupTime || ""
+                        )}
 
-                        escapeHTML(
-                            order.pickupTime ||
-                            ""
-                        )
+                    </div>
 
-                    )
+                `;
 
-                    : "";
+            }
 
 
             html += `
@@ -1137,12 +1040,10 @@ function renderOrderHistory(
 
                     <div class="history-header">
 
-
                         <span class="history-date">
 
                             ${escapeHTML(
-                                order.date ||
-                                "-"
+                                order.date || "-"
                             )}
 
                         </span>
@@ -1157,7 +1058,6 @@ function renderOrderHistory(
 
                         </span>
 
-
                     </div>
 
 
@@ -1166,8 +1066,7 @@ function renderOrderHistory(
                         🆔
 
                         ${escapeHTML(
-                            order.orderId ||
-                            "-"
+                            order.orderId || "-"
                         )}
 
                     </div>
@@ -1183,39 +1082,21 @@ function renderOrderHistory(
                     </div>
 
 
-                    ${
-                        pickup
-
-                            ? `
-
-                                <div class="history-pickup">
-
-                                    📅 預約取餐：
-
-                                    ${pickup}
-
-                                </div>
-
-                            `
-
-                            : ""
-                    }
+                    ${pickupHTML}
 
 
                     <div class="history-footer">
 
-
                         <span>
 
                             ${escapeHTML(
-                                order.orderType ||
-                                ""
+                                order.orderType || ""
                             )}
 
                         </span>
 
 
-                        <span class="history-total">
+                        <strong class="history-total">
 
                             NT$
 
@@ -1223,8 +1104,7 @@ function renderOrderHistory(
                                 order.total
                             )}
 
-                        </span>
-
+                        </strong>
 
                     </div>
 
@@ -1250,7 +1130,7 @@ function renderOrderHistory(
 
 
 /* ==================================================
-   查詢按鈕
+   🔍 查詢按鈕
 ================================================== */
 
 if (searchBtn) {
@@ -1267,7 +1147,7 @@ if (searchBtn) {
 
 
 /* ==================================================
-   載入之前查詢的手機
+   📱 自動帶入上次手機
 ================================================== */
 
 const savedPhone =
@@ -1292,9 +1172,9 @@ if (
 
 
 /* ==================================================
-   完成
+   🚀 完成
 ================================================== */
 
 console.log(
-    "🍜 初萊食麵｜客戶查詢系統 V2 已載入"
+    "🍜 初萊食麵｜客戶查詢系統 V3 已載入"
 );
