@@ -5,1419 +5,1609 @@
 
 <meta
 name=“viewport”
-content=“width=device-width, initial-scale=1.0, viewport-fit=cover”
+content=“width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no”
 
-<title>初萊食麵｜POS</title>
+<title>初萊食麵｜POS 後台</title>
 <style>
-*{
-box-sizing:border-box;
-margin:0;
-padding:0;
-}
-body{
-font-family:
--apple-system,
-BlinkMacSystemFont,
-"Noto Sans TC",
-"Microsoft JhengHei",
-sans-serif;
-background:#f3f3f3;
-color:#222;
-padding-bottom:90px;
-}
-/* =========================
-HEADER
-========================= */
-.header{
-background:
-linear-gradient(
-135deg,
-#252525,
-#111
-);
-color:white;
-padding:
-18px
-16px
-20px;
-position:sticky;
-top:0;
-z-index:100;
-box-shadow:
-0 3px 12px
-rgba(0,0,0,.2);
-}
-.header-top{
-display:flex;
-align-items:center;
-justify-content:space-between;
-}
-.brand{
-display:flex;
-align-items:center;
-gap:10px;
-}
-.brand-logo{
-width:42px;
-height:42px;
-border:
-2px solid
-#d4af37;
-border-radius:12px;
-display:flex;
-align-items:center;
-justify-content:center;
-color:#d4af37;
-font-weight:bold;
-font-size:18px;
-}
-.brand-text h1{
-font-size:19px;
-letter-spacing:2px;
-}
-.brand-text p{
-color:#aaa;
-font-size:12px;
-margin-top:2px;
-}
-.shop-status{
-background:#1d8f4e;
-border-radius:20px;
-padding:8px 12px;
-font-size:13px;
-font-weight:bold;
-}
-/* =========================
-CONTAINER
-========================= */
-.container{
-max-width:1100px;
-margin:auto;
-padding:16px;
-}
-/* =========================
-DASHBOARD
-========================= */
-.dashboard{
-display:grid;
-grid-template-columns:
-repeat(3,1fr);
-gap:10px;
-margin-bottom:18px;
-}
-.stat-card{
-background:white;
-border-radius:16px;
-padding:16px;
-box-shadow:
-0 2px 8px
-rgba(0,0,0,.06);
-}
-.stat-title{
-color:#777;
-font-size:13px;
-margin-bottom:8px;
-}
-.stat-value{
-font-size:23px;
-font-weight:800;
-}
-.gold{
-color:#b08b00;
-}
-.red{
-color:#d64545;
-}
-.green{
-color:#16834a;
-}
-/* =========================
-SECTION
-========================= */
-.section-title{
-display:flex;
-align-items:center;
-justify-content:space-between;
-margin:
-22px
-0
-12px;
-}
-.section-title h2{
-font-size:19px;
-}
-.section-title span{
-color:#888;
-font-size:13px;
-}
-/* =========================
-ORDER LIST
-========================= */
-.order-list{
-display:flex;
-flex-direction:column;
-gap:12px;
-}
-/* =========================
-ORDER CARD
-========================= */
-.order-card{
-background:white;
-border-radius:18px;
-padding:16px;
-box-shadow:
-0 3px 10px
-rgba(0,0,0,.06);
-border-left:
-5px solid
-#d4af37;
-}
-.order-card.new{
-border-left-color:
-#d64545;
-}
-.order-card.accepted{
-border-left-color:
-#d4af37;
-}
-.order-card.cooking{
-border-left-color:
-#e88b00;
-}
-.order-card.ready{
-border-left-color:
-#16834a;
-}
-.order-card.completed{
-opacity:.65;
-border-left-color:
-#888;
-}
-.order-top{
-display:flex;
-justify-content:space-between;
-align-items:flex-start;
-gap:10px;
-}
-.order-number{
-font-size:18px;
-font-weight:800;
-}
-.order-time{
-color:#888;
-font-size:12px;
-margin-top:4px;
-}
-.order-source{
-background:#f5ead0;
-color:#8c6b00;
-border-radius:20px;
-padding:
-5px
-10px;
-font-size:12px;
-font-weight:bold;
-white-space:nowrap;
-}
-.customer{
-margin-top:14px;
-font-size:14px;
-line-height:1.7;
-}
-.order-items{
-margin-top:12px;
-border-top:
-1px solid
-#eee;
-padding-top:10px;
-white-space:pre-line;
-font-size:14px;
-line-height:1.7;
-}
-.order-total{
-display:flex;
-justify-content:space-between;
-border-top:
-1px solid
-#eee;
-margin-top:10px;
-padding-top:12px;
-font-size:17px;
-font-weight:800;
-}
-.order-status{
-display:inline-block;
-margin-top:10px;
-padding:
-6px
-10px;
-border-radius:20px;
-font-size:12px;
-font-weight:bold;
-background:#eee;
-}
-.status-new{
-background:#ffe2e2;
-color:#c62828;
-}
-.status-accepted{
-background:#fff2cc;
-color:#946f00;
-}
-.status-cooking{
-background:#ffe8cc;
-color:#c35d00;
-}
-.status-ready{
-background:#dff5e7;
-color:#16834a;
-}
-.status-completed{
-background:#e8e8e8;
-color:#666;
-}
-/* =========================
-BUTTONS
-========================= */
-.order-actions{
-display:grid;
-grid-template-columns:
-repeat(2,1fr);
-gap:8px;
-margin-top:14px;
-}
-.btn{
-border:none;
-border-radius:12px;
-padding:13px;
-font-size:14px;
-font-weight:bold;
-cursor:pointer;
-}
-.btn:active{
-transform:
-scale(.97);
-}
-.btn-primary{
-background:#222;
-color:white;
-}
-.btn-gold{
-background:#d4af37;
-color:#222;
-}
-.btn-green{
-background:#16834a;
-color:white;
-}
-.btn-orange{
-background:#e88b00;
-color:white;
-}
-.btn-light{
-background:#eee;
-color:#333;
-}
-.btn:disabled{
-opacity:.5;
-}
-/* =========================
-FILTER
-========================= */
-.filter-bar{
-display:flex;
-gap:8px;
-overflow-x:auto;
-padding-bottom:5px;
-}
-.filter-btn{
-flex-shrink:0;
-border:
-1px solid
-#ddd;
-background:white;
-padding:
-9px
-14px;
-border-radius:20px;
-font-size:13px;
-}
-.filter-btn.active{
-background:#222;
-color:white;
-border-color:#222;
-}
-/* =========================
-EMPTY
-========================= */
-.empty{
-background:white;
-border-radius:18px;
-padding:35px 20px;
-text-align:center;
-color:#888;
-box-shadow:
-0 3px 10px
-rgba(0,0,0,.05);
-}
-/* =========================
-LOADING
-========================= */
-.loading{
-text-align:center;
-padding:30px;
-color:#888;
-}
-/* =========================
-TOAST
-========================= */
-.toast{
-position:fixed;
-left:50%;
-bottom:100px;
-transform:
-translateX(-50%);
-background:#222;
-color:white;
-padding:
-12px
-20px;
-border-radius:30px;
-font-size:14px;
-z-index:999;
-display:none;
-box-shadow:
-0 4px 15px
-rgba(0,0,0,.2);
-}
-/* =========================
-BOTTOM NAV
-========================= */
-.bottom-nav{
-position:fixed;
-bottom:0;
-left:0;
-right:0;
-height:76px;
-background:
-rgba(
-255,
-255,
-255,
-.97
-);
-backdrop-filter:
-blur(10px);
-border-top:
-1px solid
-#ddd;
-display:grid;
-grid-template-columns:
-repeat(5,1fr);
-z-index:200;
-padding-bottom:
-env(
-safe-area-inset-bottom
-);
-}
-.nav-item{
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-color:#888;
-font-size:11px;
-gap:4px;
-cursor:pointer;
-}
-.nav-item span:first-child{
-font-size:22px;
-}
-.nav-item.active{
-color:#b08b00;
-font-weight:bold;
-}
-/* =========================
-RESPONSIVE
-========================= */
-@media(
-min-width:700px
-){
-.dashboard{
-grid-template-columns:
-repeat(3,1fr);
-}
-.order-list{
-display:grid;
-grid-template-columns:
-repeat(2,1fr);
-}
-}
-/* =========================
-DARK POS CARD
-========================= */
-.pos-action{
-background:
-linear-gradient(
-135deg,
-#252525,
-#111
-);
-color:white;
-border-radius:18px;
-padding:18px;
-margin-top:20px;
-box-shadow:
-0 4px 15px
-rgba(0,0,0,.15);
-}
-.pos-action h2{
-font-size:18px;
-margin-bottom:6px;
-}
-.pos-action p{
-font-size:13px;
-color:#aaa;
-margin-bottom:14px;
-}
-.pos-action button{
-width:100%;
-background:#d4af37;
-border:none;
-padding:14px;
-border-radius:12px;
-font-size:16px;
-font-weight:bold;
+/* ==================================================
+   基本設定
+================================================== */
+* {
+  box-sizing:
+    border-box;
+  -webkit-tap-highlight-color:
+    transparent;
+}
+body {
+  margin:
+    0;
+  padding:
+    0;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Noto Sans TC",
+    "Microsoft JhengHei",
+    sans-serif;
+  background:
+    #f2f3f5;
+  color:
+    #222;
+}
+/* ==================================================
+   Header
+================================================== */
+.header {
+  position:
+    sticky;
+  top:
+    0;
+  z-index:
+    100;
+  background:
+    linear-gradient(
+      135deg,
+      #222,
+      #3b3b3b
+    );
+  color:
+    white;
+  padding:
+    15px 18px;
+  display:
+    flex;
+  align-items:
+    center;
+  justify-content:
+    space-between;
+  box-shadow:
+    0 2px 10px
+    rgba(
+      0,
+      0,
+      0,
+      0.18
+    );
+}
+.brand {
+  font-size:
+    20px;
+  font-weight:
+    800;
+}
+.brand small {
+  display:
+    block;
+  font-size:
+    11px;
+  font-weight:
+    400;
+  opacity:
+    0.65;
+  margin-top:
+    3px;
+}
+.header-right {
+  display:
+    flex;
+  gap:
+    8px;
+}
+.icon-btn {
+  width:
+    42px;
+  height:
+    42px;
+  border:
+    0;
+  border-radius:
+    12px;
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.12
+    );
+  color:
+    white;
+  font-size:
+    20px;
+  cursor:
+    pointer;
+}
+/* ==================================================
+   主容器
+================================================== */
+.container {
+  width:
+    100%;
+  max-width:
+    900px;
+  margin:
+    0 auto;
+  padding:
+    16px;
+  padding-bottom:
+    100px;
+}
+/* ==================================================
+   狀態區
+================================================== */
+.status-card {
+  background:
+    white;
+  border-radius:
+    18px;
+  padding:
+    16px;
+  margin-bottom:
+    14px;
+  display:
+    flex;
+  justify-content:
+    space-between;
+  align-items:
+    center;
+  box-shadow:
+    0 2px 10px
+    rgba(
+      0,
+      0,
+      0,
+      0.06
+    );
+}
+.status-left {
+  display:
+    flex;
+  align-items:
+    center;
+  gap:
+    10px;
+}
+.status-dot {
+  width:
+    12px;
+  height:
+    12px;
+  border-radius:
+    50%;
+  background:
+    #22c55e;
+  box-shadow:
+    0 0 0 5px
+    rgba(
+      34,
+      197,
+      94,
+      0.12
+    );
+}
+.status-dot.closed {
+  background:
+    #ef4444;
+  box-shadow:
+    0 0 0 5px
+    rgba(
+      239,
+      68,
+      68,
+      0.12
+    );
+}
+.status-text {
+  font-weight:
+    700;
+}
+.status-sub {
+  font-size:
+    12px;
+  color:
+    #888;
+  margin-top:
+    3px;
+}
+.notice {
+  margin-bottom:
+    16px;
+  background:
+    #fff8df;
+  border:
+    1px solid
+    #f0d77a;
+  color:
+    #735c00;
+  padding:
+    13px 15px;
+  border-radius:
+    14px;
+  font-size:
+    14px;
+}
+/* ==================================================
+   統計卡片
+================================================== */
+.stats {
+  display:
+    grid;
+  grid-template-columns:
+    repeat(
+      3,
+      1fr
+    );
+  gap:
+    10px;
+  margin-bottom:
+    18px;
+}
+.stat-card {
+  background:
+    white;
+  border-radius:
+    16px;
+  padding:
+    15px 10px;
+  box-shadow:
+    0 2px 10px
+    rgba(
+      0,
+      0,
+      0,
+      0.05
+    );
+  text-align:
+    center;
+}
+.stat-title {
+  font-size:
+    12px;
+  color:
+    #888;
+  margin-bottom:
+    8px;
+}
+.stat-value {
+  font-size:
+    22px;
+  font-weight:
+    800;
+}
+.stat-value.money {
+  font-size:
+    20px;
+}
+.stat-value.pending {
+  color:
+    #d97706;
+}
+/* ==================================================
+   訂單標題
+================================================== */
+.section-title {
+  display:
+    flex;
+  align-items:
+    center;
+  justify-content:
+    space-between;
+  margin:
+    20px 2px 12px;
+}
+.section-title h2 {
+  margin:
+    0;
+  font-size:
+    20px;
+}
+.refresh-time {
+  color:
+    #999;
+  font-size:
+    11px;
+}
+/* ==================================================
+   訂單卡片
+================================================== */
+.order-card {
+  background:
+    white;
+  border-radius:
+    18px;
+  margin-bottom:
+    14px;
+  overflow:
+    hidden;
+  box-shadow:
+    0 3px 12px
+    rgba(
+      0,
+      0,
+      0,
+      0.07
+    );
+}
+.order-top {
+  padding:
+    15px;
+  display:
+    flex;
+  justify-content:
+    space-between;
+  align-items:
+    flex-start;
+  border-bottom:
+    1px solid
+    #eee;
+}
+.order-number {
+  font-size:
+    17px;
+  font-weight:
+    800;
+}
+.order-time {
+  font-size:
+    12px;
+  color:
+    #999;
+  margin-top:
+    4px;
+}
+.order-status {
+  padding:
+    6px 10px;
+  border-radius:
+    999px;
+  font-size:
+    12px;
+  font-weight:
+    700;
+  white-space:
+    nowrap;
+}
+.status-new {
+  background:
+    #fff1f2;
+  color:
+    #e11d48;
+}
+.status-accepted {
+  background:
+    #eff6ff;
+  color:
+    #2563eb;
+}
+.status-making {
+  background:
+    #fff7ed;
+  color:
+    #ea580c;
+}
+.status-ready {
+  background:
+    #ecfdf5;
+  color:
+    #059669;
+}
+.status-completed {
+  background:
+    #f3f4f6;
+  color:
+    #6b7280;
+}
+.status-cancelled {
+  background:
+    #fef2f2;
+  color:
+    #b91c1c;
+}
+.order-info {
+  padding:
+    14px 15px 5px;
+}
+.customer {
+  font-weight:
+    700;
+  margin-bottom:
+    5px;
+}
+.customer-detail {
+  font-size:
+    13px;
+  color:
+    #666;
+  line-height:
+    1.7;
+}
+.order-items {
+  margin:
+    12px 15px;
+  padding:
+    12px;
+  background:
+    #f7f7f7;
+  border-radius:
+    12px;
+  white-space:
+    pre-wrap;
+  font-size:
+    14px;
+  line-height:
+    1.7;
+}
+.order-bottom {
+  padding:
+    12px 15px 15px;
+  display:
+    flex;
+  align-items:
+    center;
+  justify-content:
+    space-between;
+}
+.total {
+  font-size:
+    20px;
+  font-weight:
+    800;
+}
+.total span {
+  font-size:
+    12px;
+  color:
+    #888;
+  margin-right:
+    4px;
+}
+.order-actions {
+  padding:
+    0 15px 15px;
+  display:
+    grid;
+  grid-template-columns:
+    repeat(
+      2,
+      1fr
+    );
+  gap:
+    8px;
+}
+.action-btn {
+  border:
+    0;
+  min-height:
+    46px;
+  border-radius:
+    12px;
+  font-size:
+    14px;
+  font-weight:
+    700;
+  cursor:
+    pointer;
+}
+.btn-accept {
+  background:
+    #2563eb;
+  color:
+    white;
+}
+.btn-making {
+  background:
+    #f97316;
+  color:
+    white;
+}
+.btn-ready {
+  background:
+    #10b981;
+  color:
+    white;
+}
+.btn-complete {
+  background:
+    #374151;
+  color:
+    white;
+}
+.btn-cancel {
+  background:
+    #fee2e2;
+  color:
+    #b91c1c;
+}
+.action-btn:disabled {
+  opacity:
+    0.4;
+  cursor:
+    not-allowed;
+}
+/* ==================================================
+   空白
+================================================== */
+.empty {
+  background:
+    white;
+  border-radius:
+    18px;
+  padding:
+    50px 20px;
+  text-align:
+    center;
+  color:
+    #999;
+}
+.empty-icon {
+  font-size:
+    45px;
+  margin-bottom:
+    10px;
+}
+/* ==================================================
+   Loading
+================================================== */
+.loading {
+  position:
+    fixed;
+  inset:
+    0;
+  z-index:
+    999;
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.85
+    );
+  display:
+    flex;
+  justify-content:
+    center;
+  align-items:
+    center;
+  flex-direction:
+    column;
+  gap:
+    12px;
+}
+.spinner {
+  width:
+    40px;
+  height:
+    40px;
+  border:
+    4px solid
+    #ddd;
+  border-top-color:
+    #333;
+  border-radius:
+    50%;
+  animation:
+    spin
+    0.8s
+    linear
+    infinite;
+}
+@keyframes spin {
+  to {
+    transform:
+      rotate(
+        360deg
+      );
+  }
+}
+.hidden {
+  display:
+    none !important;
+}
+/* ==================================================
+   Toast
+================================================== */
+.toast {
+  position:
+    fixed;
+  left:
+    50%;
+  bottom:
+    25px;
+  transform:
+    translateX(
+      -50%
+    );
+  z-index:
+    1000;
+  background:
+    #222;
+  color:
+    white;
+  padding:
+    12px 18px;
+  border-radius:
+    999px;
+  font-size:
+    14px;
+  opacity:
+    0;
+  pointer-events:
+    none;
+  transition:
+    0.25s;
+}
+.toast.show {
+  opacity:
+    1;
+}
+/* ==================================================
+   錯誤畫面
+================================================== */
+.error-box {
+  background:
+    #fff1f2;
+  border:
+    1px solid
+    #fecdd3;
+  color:
+    #be123c;
+  padding:
+    15px;
+  border-radius:
+    14px;
+  margin-bottom:
+    15px;
+  font-size:
+    14px;
+  line-height:
+    1.6;
+}
+/* ==================================================
+   桌面版
+================================================== */
+@media (
+  min-width:
+  700px
+) {
+  .container {
+    padding:
+      24px;
+  }
+  .stats {
+    gap:
+      15px;
+  }
+  .stat-card {
+    padding:
+      20px;
+  }
+  .order-actions {
+    grid-template-columns:
+      repeat(
+        5,
+        1fr
+      );
+  }
 }
 </style>
 </head>
 <body>
+<!-- ==================================================
+     Header
+================================================== -->
 <header class="header">
-<div class="header-top">
-<div class="brand">
-<div class="brand-logo">
-
-初
-
-</div>
-<div class="brand-text">
-<h1>初萊食麵 POS</h1>
-<p>店家管理系統</p>
-</div>
-</div>
-<div
-class="shop-status"
-id="shopStatus"
+  <div class="brand">
+初萊食麵
+<small>
+  POS 後台管理系統
+</small>
+  </div>
+  <div class="header-right">
+<button
+  class="icon-btn"
+  onclick="loadAll()"
+  title="重新整理"
 >
-
-🟢 營業中
-
-</div>
-</div>
+  🔄
+</button>
+<button
+  class="icon-btn"
+  onclick="showSettings()"
+  title="設定"
+>
+  ⚙️
+</button>
+  </div>
 </header>
+<!-- ==================================================
+     主內容
+================================================== -->
 <main class="container">
-<!-- DASHBOARD -->
-<section class="dashboard">
+  <!-- 錯誤 -->
+  <div
+    id="errorBox"
+    class="error-box hidden"
+  ></div>
+  <!-- 營業狀態 -->
+  <div class="status-card">
+<div class="status-left">
+  <div
+    id="statusDot"
+    class="status-dot"
+  ></div>
+  <div>
+    <div
+      id="shopStatus"
+      class="status-text"
+    >
+      讀取中...
+    </div>
+    <div class="status-sub">
+      初萊食麵目前營業狀態
+    </div>
+  </div>
+</div>
+  </div>
+  <!-- 公告 -->
+  <div
+    id="notice"
+    class="notice hidden"
+  ></div>
+  <!-- 統計 -->
+  <div class="stats">
 <div class="stat-card">
-<div class="stat-title">
-
-今日營業額
-
-</div>
-<div
-class="stat-value gold"
-id="todayTotal"
->
-
-$0
-
-</div>
+  <div class="stat-title">
+    今日營業額
+  </div>
+  <div
+    id="todayTotal"
+    class="stat-value money"
+  >
+    $0
+  </div>
 </div>
 <div class="stat-card">
-<div class="stat-title">
-
-今日訂單
-
-</div>
-<div
-class="stat-value"
-id="todayOrders"
->
-
-0
-
-</div>
+  <div class="stat-title">
+    今日訂單
+  </div>
+  <div
+    id="todayCount"
+    class="stat-value"
+  >
+    0
+  </div>
 </div>
 <div class="stat-card">
-<div class="stat-title">
-
-待處理
-
+  <div class="stat-title">
+    待處理
+  </div>
+  <div
+    id="pendingCount"
+    class="stat-value pending"
+  >
+    0
+  </div>
 </div>
-<div
-class="stat-value red"
-id="pendingOrders"
->
-
-0
-
-</div>
-</div>
-</section>
-<!-- POS QUICK -->
-<section class="pos-action">
+  </div>
+  <!-- 訂單 -->
+  <div class="section-title">
 <h2>
-
-🍜 現場快速點餐
-
+  📋 訂單管理
 </h2>
-<p>
-
-直接使用 POS 幫現場客人建立訂單
-
-</p>
-
-<button
-onclick=“openPOS()”
-
-＋ 開始現場點餐
-
-</button>
-</section>
-<!-- FILTER -->
-<section>
-<div class="section-title">
-<h2>
-
-📋 訂單管理
-
-</h2>
-
-<span
-id=“orderCount”
-
-0 筆
-
-</span>
-</div>
-<div class="filter-bar">
-
-<button
-class=“filter-btn active”
-onclick=“filterOrders(‘all’,this)”
-
-全部
-
-</button>
-
-<button
-class=“filter-btn”
-onclick=“filterOrders(‘新訂單’,this)”
-
-🔴 新訂單
-
-</button>
-
-<button
-class=“filter-btn”
-onclick=“filterOrders(‘已接單’,this)”
-
-🟡 已接單
-
-</button>
-
-<button
-class=“filter-btn”
-onclick=“filterOrders(‘製作中’,this)”
-
-🟠 製作中
-
-</button>
-
-<button
-class=“filter-btn”
-onclick=“filterOrders(‘可取餐’,this)”
-
-🟢 可取餐
-
-</button>
-
-<button
-class=“filter-btn”
-onclick=“filterOrders(‘已完成’,this)”
-
-✅ 已完成
-
-</button>
-</div>
-</section>
-<!-- ORDER LIST -->
-<section>
 <div
-id="orderList"
-class="order-list"
+  id="refreshTime"
+  class="refresh-time"
 >
-<div class="loading">
-
-正在載入訂單…
-
+  尚未更新
 </div>
-</div>
-</section>
+  </div>
+  <div
+    id="orders"
+  ></div>
 </main>
-<!-- BOTTOM NAV -->
-<nav class="bottom-nav">
+<!-- ==================================================
+     Loading
+================================================== -->
 <div
-class="nav-item active"
-onclick="location.reload()"
+  id="loading"
+  class="loading"
 >
-
-🏠
-
-首頁
-
+  <div class="spinner"></div>
+  <div>
+正在連接 POS 後端...
+  </div>
 </div>
+<!-- Toast -->
 <div
-class="nav-item"
-onclick="scrollToOrders()"
->
-
-📋
-
-訂單
-
-</div>
-<div
-class="nav-item"
-onclick="openPOS()"
->
-
-🍜
-
-點餐
-
-</div>
-<div
-class="nav-item"
-onclick="showStats()"
->
-
-📊
-
-統計
-
-</div>
-<div
-class="nav-item"
-onclick="showSettings()"
->
-
-⚙️
-
-設定
-
-</div>
-</nav>
-<div
-id="toast"
-class="toast"
->
-
-操作完成
-
-</div>
+  id="toast"
+  class="toast"
+></div>
 <script>
-/* =====================================================
-API URL
-===================================================== */
+/* ==================================================
+   ① API 設定
+================================================== */
 const API_URL =
-"https://script.google.com/macros/s/AKfycbwFD8XzZCmF7AKly_L0LDqA5JoERcg0eex2PzQFU4n_aBWqw9GJsRV-4XcMM_GLET8MLw/exec";
-/* =====================================================
-GLOBAL
-===================================================== */
-let allOrders = [];
-let currentFilter = "all";
-/* =====================================================
-INITIAL
-===================================================== */
+  "https://script.google.com/macros/s/AKfycbwFD8XzZCmF7AKly_L0LDqA5JoERcg0eex2PzQFU4n_aBWqw9GJsRV-4XcMM_GLET8MLw/exec";
+/* ==================================================
+   ② 系統資料
+================================================== */
+let settings = {};
+let orders = [];
+/* ==================================================
+   ③ 啟動
+================================================== */
 document.addEventListener(
-"DOMContentLoaded",
-function(){
-loadDashboard();
-loadOrders();
-loadSettings();
-}
+  "DOMContentLoaded",
+  function() {
+    loadAll();
+    setInterval(
+      loadAll,
+      10000
+    );
+  }
 );
-/* =====================================================
-LOAD DASHBOARD
-===================================================== */
-async function loadDashboard(){
-try{
-const response =
-await fetch(
-API_URL +
-"?action=getTodayStats"
-);
-const data =
-await response.json();
-if(
-data.success
-){
-document.getElementById(
-"todayTotal"
-).textContent =
-"$" +
-Number(
-data.total || 0
-).toLocaleString();
-document.getElementById(
-"todayOrders"
-).textContent =
-data.orderCount || 0;
-document.getElementById(
-"pendingOrders"
-).textContent =
-data.pendingCount || 0;
+/* ==================================================
+   ④ 載入全部
+================================================== */
+async function loadAll() {
+  showLoading();
+  try {
+    await Promise.all([
+      loadSettings(),
+      loadOrders(),
+      loadStats()
+    ]);
+    hideError();
+  } catch (
+    error
+  ) {
+    showError(
+      "❌ 無法連接 POS 後端<br><br>" +
+      "請確認 Apps Script Web App 已部署為「所有人可存取」。<br><br>" +
+      "錯誤：" +
+      error.message
+    );
+  }
+  hideLoading();
+  document
+    .getElementById(
+      "refreshTime"
+    )
+    .textContent =
+    "更新：" +
+    new Date()
+      .toLocaleTimeString(
+        "zh-TW",
+        {
+          hour:
+            "2-digit",
+          minute:
+            "2-digit",
+          second:
+            "2-digit"
+        }
+      );
 }
-}catch(error){
-console.error(
-error
-);
-showToast(
-"統計資料載入失敗"
-);
+/* ==================================================
+   ⑤ 取得設定
+================================================== */
+async function loadSettings() {
+  const response =
+    await fetch(
+      API_URL +
+      "?action=getSettings"
+    );
+  if (
+    !response.ok
+  ) {
+    throw new Error(
+      "設定 API HTTP " +
+      response.status
+    );
+  }
+  const data =
+    await response.json();
+  if (
+    !data.success
+  ) {
+    throw new Error(
+      data.error ||
+      "設定 API 回傳失敗"
+    );
+  }
+  settings =
+    data.settings ||
+    {};
+  renderSettings();
 }
+/* ==================================================
+   ⑥ 顯示設定
+================================================== */
+function renderSettings() {
+  const status =
+    settings["營業狀態"] ||
+    "營業中";
+  const notice =
+    settings["公告"] ||
+    "";
+  const statusText =
+    document
+      .getElementById(
+        "shopStatus"
+      );
+  const statusDot =
+    document
+      .getElementById(
+        "statusDot"
+      );
+  statusText.textContent =
+    status;
+  if (
+    status.includes(
+      "休息"
+    )
+    ||
+    status.includes(
+      "暫停"
+    )
+    ||
+    status.includes(
+      "關閉"
+    )
+  ) {
+    statusDot
+      .classList
+      .add(
+        "closed"
+      );
+  } else {
+    statusDot
+      .classList
+      .remove(
+        "closed"
+      );
+  }
+  const noticeBox =
+    document
+      .getElementById(
+        "notice"
+      );
+  if (
+    notice
+  ) {
+    noticeBox
+      .classList
+      .remove(
+        "hidden"
+      );
+    noticeBox.textContent =
+      "📢 " +
+      notice;
+  } else {
+    noticeBox
+      .classList
+      .add(
+        "hidden"
+      );
+  }
 }
-/* =====================================================
-LOAD ORDERS
-===================================================== */
-async function loadOrders(){
-const list =
-document.getElementById(
-"orderList"
-);
-try{
-const response =
-await fetch(
-API_URL +
-"?action=getOrders"
-);
-const data =
-await response.json();
-if(
-data.success
-){
-allOrders =
-data.orders || [];
-renderOrders();
+/* ==================================================
+   ⑦ 取得訂單
+================================================== */
+async function loadOrders() {
+  const response =
+    await fetch(
+      API_URL +
+      "?action=getOrders"
+    );
+  if (
+    !response.ok
+  ) {
+    throw new Error(
+      "訂單 API HTTP " +
+      response.status
+    );
+  }
+  const data =
+    await response.json();
+  if (
+    !data.success
+  ) {
+    throw new Error(
+      data.error ||
+      "訂單 API 回傳失敗"
+    );
+  }
+  orders =
+    data.orders ||
+    [];
+  renderOrders();
 }
-}catch(error){
-console.error(
-error
-);
-list.innerHTML =
-`
-<div class="empty">
-❌ 無法連接 POS 後端
-<br><br>
-請確認 Apps Script 部署權限。
-</div>
-`;
+/* ==================================================
+   ⑧ 今日統計
+================================================== */
+async function loadStats() {
+  const response =
+    await fetch(
+      API_URL +
+      "?action=getTodayStats"
+    );
+  if (
+    !response.ok
+  ) {
+    throw new Error(
+      "統計 API HTTP " +
+      response.status
+    );
+  }
+  const data =
+    await response.json();
+  if (
+    !data.success
+  ) {
+    throw new Error(
+      data.error ||
+      "統計 API 回傳失敗"
+    );
+  }
+  document
+    .getElementById(
+      "todayTotal"
+    )
+    .textContent =
+    "$" +
+    Number(
+      data.total ||
+      0
+    ).toLocaleString();
+  document
+    .getElementById(
+      "todayCount"
+    )
+    .textContent =
+    data.orderCount ||
+    0;
+  document
+    .getElementById(
+      "pendingCount"
+    )
+    .textContent =
+    data.pendingCount ||
+    0;
 }
+/* ==================================================
+   ⑨ 顯示訂單
+================================================== */
+function renderOrders() {
+  const container =
+    document
+      .getElementById(
+        "orders"
+      );
+  if (
+    !orders.length
+  ) {
+    container.innerHTML =
+      `
+      <div class="empty">
+        <div class="empty-icon">
+          🍜
+        </div>
+        <div>
+          目前沒有訂單
+        </div>
+        <div
+          style="
+            font-size:12px;
+            margin-top:6px;
+          "
+        >
+          新訂單會自動出現在這裡
+        </div>
+      </div>
+      `;
+    return;
+  }
+  container.innerHTML =
+    orders
+      .map(
+        renderOrder
+      )
+      .join(
+        ""
+      );
 }
-/* =====================================================
-RENDER ORDERS
-===================================================== */
-function renderOrders(){
-const list =
-document.getElementById(
-"orderList"
-);
-let orders =
-allOrders;
-if(
-currentFilter !== "all"
-){
-orders =
-orders.filter(
-function(order){
-return (
-order.status ===
-currentFilter
-);
+/* ==================================================
+   ⑩ 訂單卡片
+================================================== */
+function renderOrder(
+  order
+) {
+  const status =
+    order.status ||
+    "新訂單";
+  const statusClass =
+    getStatusClass(
+      status
+    );
+  return `
+  <div
+    class="order-card"
+  >
+    <div
+      class="order-top"
+    >
+      <div>
+        <div
+          class="order-number"
+        >
+          #${escapeHtml(
+            order.orderId
+          )}
+        </div>
+        <div
+          class="order-time"
+        >
+          ${escapeHtml(
+            order.createdAt ||
+            ""
+          )}
+        </div>
+      </div>
+      <div
+        class="order-status ${statusClass}"
+      >
+        ${escapeHtml(
+          status
+        )}
+      </div>
+    </div>
+    <div
+      class="order-info"
+    >
+      <div
+        class="customer"
+      >
+        👤 ${escapeHtml(
+          order.name ||
+          "未提供姓名"
+        )}
+      </div>
+      <div
+        class="customer-detail"
+      >
+        📞 ${escapeHtml(
+          order.phone ||
+          "未提供電話"
+        )}
+        <br>
+        🛍️ ${escapeHtml(
+          order.pickupType ||
+          "外帶"
+        )}
+        ${
+          order.pickupTime
+            ? "｜⏰ " +
+              escapeHtml(
+                order.pickupTime
+              )
+            : ""
+        }
+        ${
+          order.payment
+            ? "<br>💳 " +
+              escapeHtml(
+                order.payment
+              )
+            : ""
+        }
+      </div>
+    </div>
+    <div
+      class="order-items"
+    >
+      ${escapeHtml(
+        order.items ||
+        "未提供餐點"
+      )}
+    </div>
+    ${
+      order.note
+        ? `
+        <div
+          style="
+            padding:
+              0 15px 10px;
+            font-size:
+              13px;
+            color:
+              #b45309;
+          "
+        >
+          📝 備註：
+          ${escapeHtml(
+            order.note
+          )}
+        </div>
+        `
+        : ""
+    }
+    <div
+      class="order-bottom"
+    >
+      <div
+        class="total"
+      >
+        <span>
+          合計
+        </span>
+        $
+        ${Number(
+          order.total ||
+          0
+        ).toLocaleString()}
+      </div>
+    </div>
+    <div
+      class="order-actions"
+    >
+      <button
+        class="action-btn btn-accept"
+        onclick="
+          updateStatus(
+            '${escapeJs(
+              order.orderId
+            )}',
+            '已接單'
+          )
+        "
+        ${
+          status ===
+          "已接單"
+            ? "disabled"
+            : ""
+        }
+      >
+        📥 接單
+      </button>
+      <button
+        class="action-btn btn-making"
+        onclick="
+          updateStatus(
+            '${escapeJs(
+              order.orderId
+            )}',
+            '製作中'
+          )
+        "
+        ${
+          status ===
+          "製作中"
+            ? "disabled"
+            : ""
+        }
+      >
+        👨‍🍳 製作中
+      </button>
+      <button
+        class="action-btn btn-ready"
+        onclick="
+          updateStatus(
+            '${escapeJs(
+              order.orderId
+            )}',
+            '可取餐'
+          )
+        "
+        ${
+          status ===
+          "可取餐"
+            ? "disabled"
+            : ""
+        }
+      >
+        🟢 可取餐
+      </button>
+      <button
+        class="action-btn btn-complete"
+        onclick="
+          updateStatus(
+            '${escapeJs(
+              order.orderId
+            )}',
+            '已完成'
+          )
+        "
+        ${
+          status ===
+          "已完成"
+            ? "disabled"
+            : ""
+        }
+      >
+        ✔️ 完成
+      </button>
+      <button
+        class="action-btn btn-cancel"
+        onclick="
+          updateStatus(
+            '${escapeJs(
+              order.orderId
+            )}',
+            '取消'
+          )
+        "
+        ${
+          status ===
+          "取消"
+            ? "disabled"
+            : ""
+        }
+      >
+        ❌ 取消
+      </button>
+    </div>
+  </div>
+  `;
 }
-);
+/* ==================================================
+   ⑪ 更新訂單狀態
+================================================== */
+async function updateStatus(
+  orderId,
+  status
+) {
+  if (
+    !confirm(
+      "確定將訂單 " +
+      orderId +
+      " 設為「" +
+      status +
+      "」嗎？"
+    )
+  ) {
+    return;
+  }
+  showLoading();
+  try {
+    const response =
+      await fetch(
+        API_URL,
+        {
+          method:
+            "POST",
+          headers: {
+            "Content-Type":
+              "text/plain;charset=utf-8"
+          },
+          body:
+            JSON.stringify({
+              action:
+                "updateOrderStatus",
+              orderId:
+                orderId,
+              status:
+                status
+            })
+        }
+      );
+    const data =
+      await response.json();
+    if (
+      !data.success
+    ) {
+      throw new Error(
+        data.error ||
+        "更新失敗"
+      );
+    }
+    showToast(
+      "✅ 訂單已更新為「" +
+      status +
+      "」"
+    );
+    await loadAll();
+  } catch (
+    error
+  ) {
+    showError(
+      "更新訂單失敗：" +
+      error.message
+    );
+  }
+  hideLoading();
 }
-document.getElementById(
-"orderCount"
-).textContent =
-orders.length +
-" 筆";
-if(
-orders.length === 0
-){
-list.innerHTML =
-`
-<div class="empty">
-📭
-<br><br>
-目前沒有訂單
-</div>
-`;
-return;
+/* ==================================================
+   ⑫ 狀態 CSS
+================================================== */
+function getStatusClass(
+  status
+) {
+  if (
+    status ===
+    "新訂單"
+  ) {
+    return "status-new";
+  }
+  if (
+    status ===
+    "已接單"
+  ) {
+    return "status-accepted";
+  }
+  if (
+    status ===
+    "製作中"
+  ) {
+    return "status-making";
+  }
+  if (
+    status ===
+    "可取餐"
+  ) {
+    return "status-ready";
+  }
+  if (
+    status ===
+    "已完成"
+  ) {
+    return "status-completed";
+  }
+  if (
+    status ===
+    "取消"
+  ) {
+    return "status-cancelled";
+  }
+  return "status-new";
 }
-list.innerHTML =
-orders.map(
-function(order){
-return createOrderCard(
-order
-);
+/* ==================================================
+   ⑬ 設定提示
+================================================== */
+function showSettings() {
+  alert(
+    "⚙️ 系統設定\n\n" +
+    "目前設定統一由 Google Sheet「設定」管理。\n\n" +
+    "LINE Token、LINE Secret、店家 LINE User ID 不會顯示在這裡。\n\n" +
+    "下一階段可以加入手機 POS 設定中心。"
+  );
 }
-).join("");
+/* ==================================================
+   ⑭ Loading
+================================================== */
+function showLoading() {
+  document
+    .getElementById(
+      "loading"
+    )
+    .classList
+    .remove(
+      "hidden"
+    );
 }
-/* =====================================================
-CREATE ORDER CARD
-===================================================== */
-function createOrderCard(order){
-const statusClass =
-getStatusClass(
-order.status
-);
-const statusButton =
-getNextStatusButton(
-order
-);
-return `
-<div class="order-card ${statusClass}">
-<div class="order-top">
-<div>
-<div class="order-number">
-${escapeHtml(
-order.orderId
-)}
-</div>
-<div class="order-time">
-${escapeHtml(
-order.createdAt || ""
-)}
-</div>
-</div>
-<div class="order-source">
-${escapeHtml(
-order.source || "官網"
-)}
-</div>
-</div>
-<div class="customer">
-👤
-<strong>
-${escapeHtml(
-order.name || "現場客人"
-)}
-</strong>
-<br>
-${order.phone ?
-"📱 " +
-escapeHtml(
-order.phone
-)
-:
-""}
-<br>
-🛍️
-${escapeHtml(
-order.pickupType || "外帶"
-)}
-${order.pickupTime ?
-"<br>⏰ " +
-escapeHtml(
-order.pickupTime
-)
-:
-""}
-</div>
-<div class="order-status status-${statusClass}">
-${escapeHtml(
-order.status || "新訂單"
-)}
-</div>
-<div class="order-items">
-${escapeHtml(
-order.items || "無餐點資料"
-)}
-</div>
-<div class="order-total">
-<span>
-訂單總額
-</span>
-<span>
-$${Number(
-order.total || 0
-).toLocaleString()}
-</span>
-</div>
-${
-order.note
-?
-`
-<div class="customer">
-📝 備註：
-${escapeHtml(
-order.note
-)}
-</div>
-`
-:
-""
+function hideLoading() {
+  document
+    .getElementById(
+      "loading"
+    )
+    .classList
+    .add(
+      "hidden"
+    );
 }
-${
-order.lineUserId
-?
-`
-<div
-style="
-margin-top:8px;
-font-size:12px;
-color:#16834a;
-"
->
-🟢 LINE 已綁定
-</div>
-`
-:
-`
-<div
-style="
-margin-top:8px;
-font-size:12px;
-color:#999;
-"
->
-⚪ 尚未綁定 LINE
-</div>
-`
+/* ==================================================
+   ⑮ Toast
+================================================== */
+let toastTimer;
+function showToast(
+  message
+) {
+  const toast =
+    document
+      .getElementById(
+        "toast"
+      );
+  toast.textContent =
+    message;
+  toast.classList
+    .add(
+      "show"
+    );
+  clearTimeout(
+    toastTimer
+  );
+  toastTimer =
+    setTimeout(
+      function() {
+        toast.classList
+          .remove(
+            "show"
+          );
+      },
+      2500
+    );
 }
-<div class="order-actions">
-${statusButton}
-<button
-class="btn btn-light"
-onclick="
-viewOrder('${escapeJs(
-order.orderId
-)}')
-"
->
-查看
-</button>
-</div>
-</div>
-`;
+/* ==================================================
+   ⑯ 錯誤
+================================================== */
+function showError(
+  message
+) {
+  const box =
+    document
+      .getElementById(
+        "errorBox"
+      );
+  box.innerHTML =
+    message;
+  box.classList
+    .remove(
+      "hidden"
+    );
 }
-/* =====================================================
-NEXT STATUS BUTTON
-===================================================== */
-function getNextStatusButton(order){
-const status =
-order.status;
-if(
-status === "新訂單"
-){
-return `
-<button
-class="btn btn-primary"
-onclick="
-changeStatus(
-'${escapeJs(order.orderId)}',
-'已接單'
-)
-"
->
-接單
-</button>
-`;
+function hideError() {
+  document
+    .getElementById(
+      "errorBox"
+    )
+    .classList
+    .add(
+      "hidden"
+    );
 }
-if(
-status === "已接單"
-){
-return `
-<button
-class="btn btn-orange"
-onclick="
-changeStatus(
-'${escapeJs(order.orderId)}',
-'製作中'
-)
-"
->
-開始製作
-</button>
-`;
+/* ==================================================
+   ⑰ HTML 安全
+================================================== */
+function escapeHtml(
+  value
+) {
+  return String(
+    value ||
+    ""
+  )
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
 }
-if(
-status === "製作中"
-){
-return `
-<button
-class="btn btn-green"
-onclick="
-changeStatus(
-'${escapeJs(order.orderId)}',
-'可取餐'
-)
-"
->
-完成／可取餐
-</button>
-`;
-}
-if(
-status === "可取餐"
-){
-return `
-<button
-class="btn btn-primary"
-onclick="
-changeStatus(
-'${escapeJs(order.orderId)}',
-'已完成'
-)
-"
->
-已取餐
-</button>
-`;
-}
-return `
-<button
-class="btn btn-light"
-disabled
->
-已完成
-</button>
-`;
-}
-/* =====================================================
-CHANGE STATUS
-===================================================== */
-async function changeStatus(
-orderId,
-status
-){
-if(
-!confirm(
-"確定將訂單 " +
-orderId +
-" 更新為「" +
-status +
-"」嗎？"
-)
-){
-return;
-}
-showToast(
-"正在更新..."
-);
-try{
-const response =
-await fetch(
-API_URL,
-{
-method:
-"POST",
-headers:{
-"Content-Type":
-"application/json"
-},
-body:
-JSON.stringify({
-action:
-"updateOrderStatus",
-orderId:
-orderId,
-status:
-status
-})
-}
-);
-const data =
-await response.json();
-if(
-data.success
-){
-showToast(
-"✅ 已更新為 " +
-status
-);
-await loadOrders();
-await loadDashboard();
-}else{
-showToast(
-"❌ " +
-(
-data.error ||
-"更新失敗"
-)
-);
-}
-}catch(error){
-console.error(
-error
-);
-showToast(
-"❌ 無法連接後端"
-);
-}
-}
-/* =====================================================
-FILTER
-===================================================== */
-function filterOrders(
-filter,
-button
-){
-currentFilter =
-filter;
-document
-.querySelectorAll(
-".filter-btn"
-)
-.forEach(
-function(btn){
-btn.classList.remove(
-"active"
-);
-}
-);
-button.classList.add(
-"active"
-);
-renderOrders();
-}
-/* =====================================================
-LOAD SETTINGS
-===================================================== */
-async function loadSettings(){
-try{
-const response =
-await fetch(
-API_URL +
-"?action=getSettings"
-);
-const data =
-await response.json();
-if(
-data.success &&
-data.settings
-){
-const status =
-data.settings[
-"營業狀態"
-];
-if(
-status
-){
-const element =
-document.getElementById(
-"shopStatus"
-);
-if(
-status === "營業中"
-){
-element.textContent =
-"🟢 營業中";
-element.style.background =
-"#1d8f4e";
-}else{
-element.textContent =
-"🔴 暫停接單";
-element.style.background =
-"#c62828";
-}
-}
-}
-}catch(error){
-console.error(
-error
-);
-}
-}
-/* =====================================================
-VIEW ORDER
-===================================================== */
-function viewOrder(orderId){
-const order =
-allOrders.find(
-function(item){
-return (
-String(
-item.orderId
-) ===
-String(
-orderId
-)
-);
-}
-);
-if(
-!order
-){
-return;
-}
-alert(
-"訂單：" +
-order.orderId +
-"\n\n" +
-"顧客：" +
-order.name +
-"\n" +
-"電話：" +
-order.phone +
-"\n" +
-"取餐：" +
-order.pickupType +
-"\n\n" +
-"餐點：\n" +
-order.items +
-"\n\n" +
-"總金額：$" +
-order.total +
-"\n\n" +
-"狀態：" +
-order.status
-);
-}
-/* =====================================================
-OPEN POS
-===================================================== */
-function openPOS(){
-alert(
-"🍜 現場快速點餐 POS\n\n" +
-"下一階段將加入完整 POS 點餐介面。\n\n" +
-"可以直接選擇：\n" +
-"麵類／關東煮／小菜／湯類／其他"
-);
-}
-/* =====================================================
-STATS
-===================================================== */
-function showStats(){
-alert(
-"📊 統計功能開發中\n\n" +
-"下一階段加入：\n" +
-"今日／本週／本月營業額\n" +
-"熱門商品排行\n" +
-"訂單來源分析"
-);
-}
-/* =====================================================
-SETTINGS
-===================================================== */
-function showSettings(){
-alert(
-"⚙️ POS 設定\n\n" +
-"下一階段加入：\n" +
-"開店／關店\n" +
-"公告管理\n" +
-"營業時間\n" +
-"LINE 通知設定"
-);
-}
-/* =====================================================
-SCROLL ORDERS
-===================================================== */
-function scrollToOrders(){
-window.scrollTo({
-top:
-350,
-behavior:
-"smooth"
-});
-}
-/* =====================================================
-TOAST
-===================================================== */
-function showToast(message){
-const toast =
-document.getElementById(
-"toast"
-);
-toast.textContent =
-message;
-toast.style.display =
-"block";
-setTimeout(
-function(){
-toast.style.display =
-"none";
-},
-2500
-);
-}
-/* =====================================================
-AUTO REFRESH
-===================================================== */
-setInterval(
-function(){
-loadDashboard();
-loadOrders();
-},
-15000
-);
-/* =====================================================
-HTML ESCAPE
-===================================================== */
-function escapeHtml(text){
-return String(
-text || ""
-)
-.replace(
-/&/g,
-"&amp;"
-)
-.replace(
-/</g,
-"&lt;"
-)
-.replace(
-/>/g,
-"&gt;"
-)
-.replace(
-/"/g,
-"&quot;"
-)
-.replace(
-/'/g,
-"&#039;"
-);
-}
-/* =====================================================
-JS ESCAPE
-===================================================== */
-function escapeJs(text){
-return String(
-text || ""
-)
-.replace(
-/\\/g,
-"\\\\"
-)
-.replace(
-/'/g,
-"\\'"
-)
-.replace(
-/"/g,
-'\\"'
-)
-.replace(
-/\n/g,
-"\\n"
-)
-.replace(
-/\r/g,
-"\\r"
-);
+function escapeJs(
+  value
+) {
+  return String(
+    value ||
+    ""
+  )
+    .replace(
+      /\\/g,
+      "\\\\"
+    )
+    .replace(
+      /'/g,
+      "\\'"
+    )
+    .replace(
+      /\n/g,
+      "\\n"
+    )
+    .replace(
+      /\r/g,
+      "\\r"
+    );
 }
 </script>
 </body>
