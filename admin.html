@@ -9,691 +9,381 @@ content=“width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalab
 
 <title>初萊食麵｜POS 後台</title>
 <style>
-/* ==================================================
-   基本設定
-================================================== */
 * {
-  box-sizing:
-    border-box;
-  -webkit-tap-highlight-color:
-    transparent;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 body {
-  margin:
-    0;
-  padding:
-    0;
+  margin: 0;
+  background: #f2f3f5;
+  color: #222;
   font-family:
     -apple-system,
     BlinkMacSystemFont,
     "Noto Sans TC",
     "Microsoft JhengHei",
     sans-serif;
-  background:
-    #f2f3f5;
-  color:
-    #222;
 }
-/* ==================================================
-   Header
-================================================== */
 .header {
-  position:
-    sticky;
-  top:
-    0;
-  z-index:
-    100;
+  position: sticky;
+  top: 0;
+  z-index: 100;
   background:
     linear-gradient(
       135deg,
       #222,
-      #3b3b3b
+      #3d3d3d
     );
-  color:
-    white;
-  padding:
-    15px 18px;
-  display:
-    flex;
-  align-items:
-    center;
-  justify-content:
-    space-between;
+  color: white;
+  padding: 15px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   box-shadow:
     0 2px 10px
-    rgba(
-      0,
-      0,
-      0,
-      0.18
-    );
+    rgba(0,0,0,.18);
 }
 .brand {
-  font-size:
-    20px;
-  font-weight:
-    800;
+  font-size: 20px;
+  font-weight: 800;
 }
 .brand small {
-  display:
-    block;
-  font-size:
-    11px;
-  font-weight:
-    400;
-  opacity:
-    0.65;
-  margin-top:
-    3px;
+  display: block;
+  margin-top: 3px;
+  font-size: 11px;
+  font-weight: 400;
+  opacity: .65;
 }
 .header-right {
-  display:
-    flex;
-  gap:
-    8px;
+  display: flex;
+  gap: 8px;
 }
 .icon-btn {
-  width:
-    42px;
-  height:
-    42px;
-  border:
-    0;
-  border-radius:
-    12px;
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 12px;
   background:
-    rgba(
-      255,
-      255,
-      255,
-      0.12
-    );
-  color:
-    white;
-  font-size:
-    20px;
-  cursor:
-    pointer;
+    rgba(255,255,255,.12);
+  color: white;
+  font-size: 20px;
 }
-/* ==================================================
-   主容器
-================================================== */
 .container {
-  width:
-    100%;
-  max-width:
-    900px;
-  margin:
-    0 auto;
-  padding:
-    16px;
-  padding-bottom:
-    100px;
+  width: 100%;
+  max-width: 900px;
+  margin: auto;
+  padding: 16px;
+  padding-bottom: 100px;
 }
-/* ==================================================
-   狀態區
-================================================== */
 .status-card {
-  background:
-    white;
-  border-radius:
-    18px;
-  padding:
-    16px;
-  margin-bottom:
-    14px;
-  display:
-    flex;
-  justify-content:
-    space-between;
-  align-items:
-    center;
+  background: white;
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   box-shadow:
     0 2px 10px
-    rgba(
-      0,
-      0,
-      0,
-      0.06
-    );
+    rgba(0,0,0,.06);
 }
 .status-left {
-  display:
-    flex;
-  align-items:
-    center;
-  gap:
-    10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 .status-dot {
-  width:
-    12px;
-  height:
-    12px;
-  border-radius:
-    50%;
-  background:
-    #22c55e;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #22c55e;
   box-shadow:
     0 0 0 5px
-    rgba(
-      34,
-      197,
-      94,
-      0.12
-    );
+    rgba(34,197,94,.12);
 }
 .status-dot.closed {
-  background:
-    #ef4444;
+  background: #ef4444;
   box-shadow:
     0 0 0 5px
-    rgba(
-      239,
-      68,
-      68,
-      0.12
-    );
+    rgba(239,68,68,.12);
 }
 .status-text {
-  font-weight:
-    700;
+  font-weight: 700;
 }
 .status-sub {
-  font-size:
-    12px;
-  color:
-    #888;
-  margin-top:
-    3px;
+  margin-top: 3px;
+  color: #888;
+  font-size: 12px;
 }
 .notice {
-  margin-bottom:
-    16px;
-  background:
-    #fff8df;
-  border:
-    1px solid
-    #f0d77a;
-  color:
-    #735c00;
-  padding:
-    13px 15px;
-  border-radius:
-    14px;
-  font-size:
-    14px;
+  margin-bottom: 16px;
+  padding: 13px 15px;
+  border-radius: 14px;
+  background: #fff8df;
+  border: 1px solid #f0d77a;
+  color: #735c00;
+  font-size: 14px;
 }
-/* ==================================================
-   統計卡片
-================================================== */
 .stats {
-  display:
-    grid;
+  display: grid;
   grid-template-columns:
-    repeat(
-      3,
-      1fr
-    );
-  gap:
-    10px;
-  margin-bottom:
-    18px;
+    repeat(3,1fr);
+  gap: 10px;
+  margin-bottom: 18px;
 }
 .stat-card {
-  background:
-    white;
-  border-radius:
-    16px;
-  padding:
-    15px 10px;
+  background: white;
+  border-radius: 16px;
+  padding: 15px 10px;
+  text-align: center;
   box-shadow:
     0 2px 10px
-    rgba(
-      0,
-      0,
-      0,
-      0.05
-    );
-  text-align:
-    center;
+    rgba(0,0,0,.05);
 }
 .stat-title {
-  font-size:
-    12px;
-  color:
-    #888;
-  margin-bottom:
-    8px;
+  color: #888;
+  font-size: 12px;
+  margin-bottom: 8px;
 }
 .stat-value {
-  font-size:
-    22px;
-  font-weight:
-    800;
+  font-size: 22px;
+  font-weight: 800;
 }
-.stat-value.money {
-  font-size:
-    20px;
+.pending {
+  color: #d97706;
 }
-.stat-value.pending {
-  color:
-    #d97706;
-}
-/* ==================================================
-   訂單標題
-================================================== */
 .section-title {
-  display:
-    flex;
-  align-items:
-    center;
-  justify-content:
-    space-between;
-  margin:
-    20px 2px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px 2px 12px;
 }
 .section-title h2 {
-  margin:
-    0;
-  font-size:
-    20px;
+  margin: 0;
+  font-size: 20px;
 }
 .refresh-time {
-  color:
-    #999;
-  font-size:
-    11px;
+  color: #999;
+  font-size: 11px;
 }
-/* ==================================================
-   訂單卡片
-================================================== */
 .order-card {
-  background:
-    white;
-  border-radius:
-    18px;
-  margin-bottom:
-    14px;
-  overflow:
-    hidden;
+  background: white;
+  border-radius: 18px;
+  margin-bottom: 14px;
+  overflow: hidden;
   box-shadow:
     0 3px 12px
-    rgba(
-      0,
-      0,
-      0,
-      0.07
-    );
+    rgba(0,0,0,.07);
 }
 .order-top {
-  padding:
-    15px;
-  display:
-    flex;
-  justify-content:
-    space-between;
-  align-items:
-    flex-start;
-  border-bottom:
-    1px solid
-    #eee;
+  padding: 15px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  border-bottom: 1px solid #eee;
 }
 .order-number {
-  font-size:
-    17px;
-  font-weight:
-    800;
+  font-size: 17px;
+  font-weight: 800;
 }
 .order-time {
-  font-size:
-    12px;
-  color:
-    #999;
-  margin-top:
-    4px;
+  margin-top: 4px;
+  color: #999;
+  font-size: 12px;
 }
 .order-status {
-  padding:
-    6px 10px;
-  border-radius:
-    999px;
-  font-size:
-    12px;
-  font-weight:
-    700;
-  white-space:
-    nowrap;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
 }
 .status-new {
-  background:
-    #fff1f2;
-  color:
-    #e11d48;
+  background: #fff1f2;
+  color: #e11d48;
 }
 .status-accepted {
-  background:
-    #eff6ff;
-  color:
-    #2563eb;
+  background: #eff6ff;
+  color: #2563eb;
 }
 .status-making {
-  background:
-    #fff7ed;
-  color:
-    #ea580c;
+  background: #fff7ed;
+  color: #ea580c;
 }
 .status-ready {
-  background:
-    #ecfdf5;
-  color:
-    #059669;
+  background: #ecfdf5;
+  color: #059669;
 }
 .status-completed {
-  background:
-    #f3f4f6;
-  color:
-    #6b7280;
+  background: #f3f4f6;
+  color: #6b7280;
 }
 .status-cancelled {
-  background:
-    #fef2f2;
-  color:
-    #b91c1c;
+  background: #fef2f2;
+  color: #b91c1c;
 }
 .order-info {
-  padding:
-    14px 15px 5px;
+  padding: 14px 15px 5px;
 }
 .customer {
-  font-weight:
-    700;
-  margin-bottom:
-    5px;
+  margin-bottom: 5px;
+  font-weight: 700;
 }
 .customer-detail {
-  font-size:
-    13px;
-  color:
-    #666;
-  line-height:
-    1.7;
+  color: #666;
+  font-size: 13px;
+  line-height: 1.7;
 }
 .order-items {
-  margin:
-    12px 15px;
-  padding:
-    12px;
-  background:
-    #f7f7f7;
-  border-radius:
-    12px;
-  white-space:
-    pre-wrap;
-  font-size:
-    14px;
-  line-height:
-    1.7;
+  margin: 12px 15px;
+  padding: 12px;
+  border-radius: 12px;
+  background: #f7f7f7;
+  white-space: pre-wrap;
+  font-size: 14px;
+  line-height: 1.7;
 }
 .order-bottom {
-  padding:
-    12px 15px 15px;
-  display:
-    flex;
-  align-items:
-    center;
-  justify-content:
-    space-between;
+  padding: 12px 15px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .total {
-  font-size:
-    20px;
-  font-weight:
-    800;
+  font-size: 20px;
+  font-weight: 800;
 }
 .total span {
-  font-size:
-    12px;
-  color:
-    #888;
-  margin-right:
-    4px;
+  margin-right: 4px;
+  color: #888;
+  font-size: 12px;
 }
 .order-actions {
-  padding:
-    0 15px 15px;
-  display:
-    grid;
+  padding: 0 15px 15px;
+  display: grid;
   grid-template-columns:
-    repeat(
-      2,
-      1fr
-    );
-  gap:
-    8px;
+    repeat(2,1fr);
+  gap: 8px;
 }
 .action-btn {
-  border:
-    0;
-  min-height:
-    46px;
-  border-radius:
-    12px;
-  font-size:
-    14px;
-  font-weight:
-    700;
-  cursor:
-    pointer;
+  min-height: 46px;
+  border: 0;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
 }
 .btn-accept {
-  background:
-    #2563eb;
-  color:
-    white;
+  background: #2563eb;
+  color: white;
 }
 .btn-making {
-  background:
-    #f97316;
-  color:
-    white;
+  background: #f97316;
+  color: white;
 }
 .btn-ready {
-  background:
-    #10b981;
-  color:
-    white;
+  background: #10b981;
+  color: white;
 }
 .btn-complete {
-  background:
-    #374151;
-  color:
-    white;
+  background: #374151;
+  color: white;
 }
 .btn-cancel {
-  background:
-    #fee2e2;
-  color:
-    #b91c1c;
+  background: #fee2e2;
+  color: #b91c1c;
 }
 .action-btn:disabled {
-  opacity:
-    0.4;
-  cursor:
-    not-allowed;
+  opacity: .4;
 }
-/* ==================================================
-   空白
-================================================== */
 .empty {
-  background:
-    white;
-  border-radius:
-    18px;
-  padding:
-    50px 20px;
-  text-align:
-    center;
-  color:
-    #999;
+  padding: 50px 20px;
+  background: white;
+  border-radius: 18px;
+  text-align: center;
+  color: #999;
 }
 .empty-icon {
-  font-size:
-    45px;
-  margin-bottom:
-    10px;
+  margin-bottom: 10px;
+  font-size: 45px;
 }
-/* ==================================================
-   Loading
-================================================== */
+.error-box {
+  margin-bottom: 15px;
+  padding: 15px;
+  border-radius: 14px;
+  background: #fff1f2;
+  border: 1px solid #fecdd3;
+  color: #be123c;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.error-button {
+  margin-top: 12px;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 10px;
+  background: #be123c;
+  color: white;
+  font-weight: 700;
+}
 .loading {
-  position:
-    fixed;
-  inset:
-    0;
-  z-index:
-    999;
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 12px;
   background:
-    rgba(
-      255,
-      255,
-      255,
-      0.85
-    );
-  display:
-    flex;
-  justify-content:
-    center;
-  align-items:
-    center;
-  flex-direction:
-    column;
-  gap:
-    12px;
+    rgba(255,255,255,.9);
 }
 .spinner {
-  width:
-    40px;
-  height:
-    40px;
-  border:
-    4px solid
-    #ddd;
-  border-top-color:
-    #333;
-  border-radius:
-    50%;
+  width: 40px;
+  height: 40px;
+  border: 4px solid #ddd;
+  border-top-color: #333;
+  border-radius: 50%;
   animation:
-    spin
-    0.8s
-    linear
-    infinite;
+    spin .8s linear infinite;
 }
 @keyframes spin {
   to {
-    transform:
-      rotate(
-        360deg
-      );
+    transform: rotate(360deg);
   }
 }
 .hidden {
-  display:
-    none !important;
+  display: none !important;
 }
-/* ==================================================
-   Toast
-================================================== */
 .toast {
-  position:
-    fixed;
-  left:
-    50%;
-  bottom:
-    25px;
+  position: fixed;
+  left: 50%;
+  bottom: 25px;
+  z-index: 1000;
   transform:
-    translateX(
-      -50%
-    );
-  z-index:
-    1000;
-  background:
-    #222;
-  color:
-    white;
-  padding:
-    12px 18px;
-  border-radius:
-    999px;
-  font-size:
-    14px;
-  opacity:
-    0;
-  pointer-events:
-    none;
-  transition:
-    0.25s;
+    translateX(-50%);
+  padding: 12px 18px;
+  border-radius: 999px;
+  background: #222;
+  color: white;
+  font-size: 14px;
+  opacity: 0;
+  pointer-events: none;
+  transition: .25s;
 }
 .toast.show {
-  opacity:
-    1;
+  opacity: 1;
 }
-/* ==================================================
-   錯誤畫面
-================================================== */
-.error-box {
-  background:
-    #fff1f2;
-  border:
-    1px solid
-    #fecdd3;
-  color:
-    #be123c;
-  padding:
-    15px;
-  border-radius:
-    14px;
-  margin-bottom:
-    15px;
-  font-size:
-    14px;
-  line-height:
-    1.6;
-}
-/* ==================================================
-   桌面版
-================================================== */
-@media (
-  min-width:
-  700px
-) {
+@media (min-width:700px) {
   .container {
-    padding:
-      24px;
-  }
-  .stats {
-    gap:
-      15px;
-  }
-  .stat-card {
-    padding:
-      20px;
+    padding: 24px;
   }
   .order-actions {
     grid-template-columns:
-      repeat(
-        5,
-        1fr
-      );
+      repeat(5,1fr);
   }
 }
 </style>
 </head>
 <body>
-<!-- ==================================================
-     Header
-================================================== -->
 <header class="header">
   <div class="brand">
 初萊食麵
@@ -705,29 +395,22 @@ body {
 <button
   class="icon-btn"
   onclick="loadAll()"
-  title="重新整理"
 >
   🔄
 </button>
 <button
   class="icon-btn"
   onclick="showSettings()"
-  title="設定"
 >
   ⚙️
 </button>
   </div>
 </header>
-<!-- ==================================================
-     主內容
-================================================== -->
 <main class="container">
-  <!-- 錯誤 -->
   <div
     id="errorBox"
     class="error-box hidden"
   ></div>
-  <!-- 營業狀態 -->
   <div class="status-card">
 <div class="status-left">
   <div
@@ -739,7 +422,7 @@ body {
       id="shopStatus"
       class="status-text"
     >
-      讀取中...
+      連線中...
     </div>
     <div class="status-sub">
       初萊食麵目前營業狀態
@@ -747,12 +430,10 @@ body {
   </div>
 </div>
   </div>
-  <!-- 公告 -->
   <div
     id="notice"
     class="notice hidden"
   ></div>
-  <!-- 統計 -->
   <div class="stats">
 <div class="stat-card">
   <div class="stat-title">
@@ -760,7 +441,7 @@ body {
   </div>
   <div
     id="todayTotal"
-    class="stat-value money"
+    class="stat-value"
   >
     $0
   </div>
@@ -788,7 +469,6 @@ body {
   </div>
 </div>
   </div>
-  <!-- 訂單 -->
   <div class="section-title">
 <h2>
   📋 訂單管理
@@ -800,118 +480,185 @@ body {
   尚未更新
 </div>
   </div>
-  <div
-    id="orders"
-  ></div>
+  <div id="orders"></div>
 </main>
-<!-- ==================================================
-     Loading
-================================================== -->
 <div
   id="loading"
   class="loading"
 >
   <div class="spinner"></div>
-  <div>
-正在連接 POS 後端...
+  <div id="loadingText">
+    正在連接 POS 後端...
   </div>
 </div>
-<!-- Toast -->
 <div
   id="toast"
   class="toast"
 ></div>
 <script>
 /* ==================================================
-   ① API 設定
+   ① 最新 Apps Script URL
 ================================================== */
 const API_URL =
   "https://script.google.com/macros/s/AKfycbwFD8XzZCmF7AKly_L0LDqA5JoERcg0eex2PzQFU4n_aBWqw9GJsRV-4XcMM_GLET8MLw/exec";
 /* ==================================================
-   ② 系統資料
+   ② 系統變數
 ================================================== */
 let settings = {};
 let orders = [];
+let isLoading = false;
 /* ==================================================
-   ③ 啟動
+   ③ 頁面啟動
 ================================================== */
 document.addEventListener(
   "DOMContentLoaded",
   function() {
     loadAll();
     setInterval(
-      loadAll,
+      function() {
+        if (!isLoading) {
+          loadAll();
+        }
+      },
       10000
     );
   }
 );
 /* ==================================================
-   ④ 載入全部
+   ④ API 請求
+   8 秒逾時
+================================================== */
+async function apiFetch(
+  url
+) {
+  const controller =
+    new AbortController();
+  const timeout =
+    setTimeout(
+      function() {
+        controller.abort();
+      },
+      8000
+    );
+  try {
+    const response =
+      await fetch(
+        url,
+        {
+          method:
+            "GET",
+          cache:
+            "no-store",
+          signal:
+            controller.signal
+        }
+      );
+    clearTimeout(
+      timeout
+    );
+    if (!response.ok) {
+      throw new Error(
+        "HTTP " +
+        response.status
+      );
+    }
+    const text =
+      await response.text();
+    if (!text) {
+      throw new Error(
+        "後端沒有回傳資料"
+      );
+    }
+    let data;
+    try {
+      data =
+        JSON.parse(
+          text
+        );
+    } catch (error) {
+      throw new Error(
+        "後端回傳格式錯誤"
+      );
+    }
+    return data;
+  } catch (error) {
+    clearTimeout(
+      timeout
+    );
+    if (
+      error.name ===
+      "AbortError"
+    ) {
+      throw new Error(
+        "連線逾時，請檢查 Apps Script 部署權限"
+      );
+    }
+    throw error;
+  }
+}
+/* ==================================================
+   ⑤ 載入全部
 ================================================== */
 async function loadAll() {
-  showLoading();
+  if (isLoading) {
+    return;
+  }
+  isLoading = true;
+  showLoading(
+    "正在連接 POS 後端..."
+  );
+  hideError();
   try {
-    await Promise.all([
-      loadSettings(),
-      loadOrders(),
-      loadStats()
-    ]);
-    hideError();
-  } catch (
-    error
-  ) {
+    await loadSettings();
+    await loadOrders();
+    await loadStats();
+    document
+      .getElementById(
+        "refreshTime"
+      )
+      .textContent =
+      "更新：" +
+      new Date()
+        .toLocaleTimeString(
+          "zh-TW"
+        );
+  } catch (error) {
+    console.error(
+      error
+    );
     showError(
-      "❌ 無法連接 POS 後端<br><br>" +
-      "請確認 Apps Script Web App 已部署為「所有人可存取」。<br><br>" +
-      "錯誤：" +
-      error.message
+      "❌ POS 後端連線失敗<br><br>" +
+      error.message +
+      "<br><br>" +
+      "請確認：<br>" +
+      "① Apps Script 已重新部署<br>" +
+      "② 執行身分選擇「我」<br>" +
+      "③ 存取權限選擇「所有人」<br>" +
+      "④ Web App URL 使用最新版本",
+      true
     );
   }
   hideLoading();
-  document
-    .getElementById(
-      "refreshTime"
-    )
-    .textContent =
-    "更新：" +
-    new Date()
-      .toLocaleTimeString(
-        "zh-TW",
-        {
-          hour:
-            "2-digit",
-          minute:
-            "2-digit",
-          second:
-            "2-digit"
-        }
-      );
+  isLoading = false;
 }
 /* ==================================================
-   ⑤ 取得設定
+   ⑥ 讀取設定
 ================================================== */
 async function loadSettings() {
-  const response =
-    await fetch(
+  const data =
+    await apiFetch(
       API_URL +
       "?action=getSettings"
     );
   if (
-    !response.ok
-  ) {
-    throw new Error(
-      "設定 API HTTP " +
-      response.status
-    );
-  }
-  const data =
-    await response.json();
-  if (
     !data.success
   ) {
     throw new Error(
-      data.error ||
-      "設定 API 回傳失敗"
+      "設定 API：" +
+      (
+        data.error ||
+        "回傳失敗"
+      )
     );
   }
   settings =
@@ -920,7 +667,7 @@ async function loadSettings() {
   renderSettings();
 }
 /* ==================================================
-   ⑥ 顯示設定
+   ⑦ 顯示設定
 ================================================== */
 function renderSettings() {
   const status =
@@ -929,18 +676,17 @@ function renderSettings() {
   const notice =
     settings["公告"] ||
     "";
-  const statusText =
-    document
-      .getElementById(
-        "shopStatus"
-      );
-  const statusDot =
+  document
+    .getElementById(
+      "shopStatus"
+    )
+    .textContent =
+    status;
+  const dot =
     document
       .getElementById(
         "statusDot"
       );
-  statusText.textContent =
-    status;
   if (
     status.includes(
       "休息"
@@ -954,34 +700,28 @@ function renderSettings() {
       "關閉"
     )
   ) {
-    statusDot
-      .classList
-      .add(
-        "closed"
-      );
+    dot.classList.add(
+      "closed"
+    );
   } else {
-    statusDot
-      .classList
-      .remove(
-        "closed"
-      );
+    dot.classList.remove(
+      "closed"
+    );
   }
   const noticeBox =
     document
       .getElementById(
         "notice"
       );
-  if (
-    notice
-  ) {
+  if (notice) {
+    noticeBox.textContent =
+      "📢 " +
+      notice;
     noticeBox
       .classList
       .remove(
         "hidden"
       );
-    noticeBox.textContent =
-      "📢 " +
-      notice;
   } else {
     noticeBox
       .classList
@@ -991,30 +731,23 @@ function renderSettings() {
   }
 }
 /* ==================================================
-   ⑦ 取得訂單
+   ⑧ 讀取訂單
 ================================================== */
 async function loadOrders() {
-  const response =
-    await fetch(
+  const data =
+    await apiFetch(
       API_URL +
       "?action=getOrders"
     );
   if (
-    !response.ok
-  ) {
-    throw new Error(
-      "訂單 API HTTP " +
-      response.status
-    );
-  }
-  const data =
-    await response.json();
-  if (
     !data.success
   ) {
     throw new Error(
-      data.error ||
-      "訂單 API 回傳失敗"
+      "訂單 API：" +
+      (
+        data.error ||
+        "回傳失敗"
+      )
     );
   }
   orders =
@@ -1023,30 +756,23 @@ async function loadOrders() {
   renderOrders();
 }
 /* ==================================================
-   ⑧ 今日統計
+   ⑨ 讀取統計
 ================================================== */
 async function loadStats() {
-  const response =
-    await fetch(
+  const data =
+    await apiFetch(
       API_URL +
       "?action=getTodayStats"
     );
   if (
-    !response.ok
-  ) {
-    throw new Error(
-      "統計 API HTTP " +
-      response.status
-    );
-  }
-  const data =
-    await response.json();
-  if (
     !data.success
   ) {
     throw new Error(
-      data.error ||
-      "統計 API 回傳失敗"
+      "統計 API：" +
+      (
+        data.error ||
+        "回傳失敗"
+      )
     );
   }
   document
@@ -1075,19 +801,16 @@ async function loadStats() {
     0;
 }
 /* ==================================================
-   ⑨ 顯示訂單
+   ⑩ 顯示訂單
 ================================================== */
 function renderOrders() {
-  const container =
+  const box =
     document
       .getElementById(
         "orders"
       );
-  if (
-    !orders.length
-  ) {
-    container.innerHTML =
-      `
+  if (!orders.length) {
+    box.innerHTML = `
       <div class="empty">
         <div class="empty-icon">
           🍜
@@ -1097,27 +820,25 @@ function renderOrders() {
         </div>
         <div
           style="
-            font-size:12px;
             margin-top:6px;
+            font-size:12px;
           "
         >
           新訂單會自動出現在這裡
         </div>
       </div>
-      `;
+    `;
     return;
   }
-  container.innerHTML =
+  box.innerHTML =
     orders
       .map(
         renderOrder
       )
-      .join(
-        ""
-      );
+      .join("");
 }
 /* ==================================================
-   ⑩ 訂單卡片
+   ⑪ 訂單卡片
 ================================================== */
 function renderOrder(
   order
@@ -1125,28 +846,16 @@ function renderOrder(
   const status =
     order.status ||
     "新訂單";
-  const statusClass =
-    getStatusClass(
-      status
-    );
   return `
-  <div
-    class="order-card"
-  >
-    <div
-      class="order-top"
-    >
+  <div class="order-card">
+    <div class="order-top">
       <div>
-        <div
-          class="order-number"
-        >
+        <div class="order-number">
           #${escapeHtml(
             order.orderId
           )}
         </div>
-        <div
-          class="order-time"
-        >
+        <div class="order-time">
           ${escapeHtml(
             order.createdAt ||
             ""
@@ -1154,27 +863,26 @@ function renderOrder(
         </div>
       </div>
       <div
-        class="order-status ${statusClass}"
+        class="
+          order-status
+          ${getStatusClass(
+            status
+          )}
+        "
       >
         ${escapeHtml(
           status
         )}
       </div>
     </div>
-    <div
-      class="order-info"
-    >
-      <div
-        class="customer"
-      >
+    <div class="order-info">
+      <div class="customer">
         👤 ${escapeHtml(
           order.name ||
           "未提供姓名"
         )}
       </div>
-      <div
-        class="customer-detail"
-      >
+      <div class="customer-detail">
         📞 ${escapeHtml(
           order.phone ||
           "未提供電話"
@@ -1192,19 +900,9 @@ function renderOrder(
               )
             : ""
         }
-        ${
-          order.payment
-            ? "<br>💳 " +
-              escapeHtml(
-                order.payment
-              )
-            : ""
-        }
       </div>
     </div>
-    <div
-      class="order-items"
-    >
+    <div class="order-items">
       ${escapeHtml(
         order.items ||
         "未提供餐點"
@@ -1217,10 +915,10 @@ function renderOrder(
           style="
             padding:
               0 15px 10px;
-            font-size:
-              13px;
             color:
               #b45309;
+            font-size:
+              13px;
           "
         >
           📝 備註：
@@ -1231,12 +929,8 @@ function renderOrder(
         `
         : ""
     }
-    <div
-      class="order-bottom"
-    >
-      <div
-        class="total"
-      >
+    <div class="order-bottom">
+      <div class="total">
         <span>
           合計
         </span>
@@ -1247,9 +941,7 @@ function renderOrder(
         ).toLocaleString()}
       </div>
     </div>
-    <div
-      class="order-actions"
-    >
+    <div class="order-actions">
       <button
         class="action-btn btn-accept"
         onclick="
@@ -1260,12 +952,6 @@ function renderOrder(
             '已接單'
           )
         "
-        ${
-          status ===
-          "已接單"
-            ? "disabled"
-            : ""
-        }
       >
         📥 接單
       </button>
@@ -1279,12 +965,6 @@ function renderOrder(
             '製作中'
           )
         "
-        ${
-          status ===
-          "製作中"
-            ? "disabled"
-            : ""
-        }
       >
         👨‍🍳 製作中
       </button>
@@ -1298,12 +978,6 @@ function renderOrder(
             '可取餐'
           )
         "
-        ${
-          status ===
-          "可取餐"
-            ? "disabled"
-            : ""
-        }
       >
         🟢 可取餐
       </button>
@@ -1317,12 +991,6 @@ function renderOrder(
             '已完成'
           )
         "
-        ${
-          status ===
-          "已完成"
-            ? "disabled"
-            : ""
-        }
       >
         ✔️ 完成
       </button>
@@ -1336,12 +1004,6 @@ function renderOrder(
             '取消'
           )
         "
-        ${
-          status ===
-          "取消"
-            ? "disabled"
-            : ""
-        }
       >
         ❌ 取消
       </button>
@@ -1350,7 +1012,7 @@ function renderOrder(
   `;
 }
 /* ==================================================
-   ⑪ 更新訂單狀態
+   ⑫ 更新狀態
 ================================================== */
 async function updateStatus(
   orderId,
@@ -1367,7 +1029,9 @@ async function updateStatus(
   ) {
     return;
   }
-  showLoading();
+  showLoading(
+    "正在更新訂單..."
+  );
   try {
     const response =
       await fetch(
@@ -1401,80 +1065,67 @@ async function updateStatus(
       );
     }
     showToast(
-      "✅ 訂單已更新為「" +
+      "✅ 已更新為「" +
       status +
       "」"
     );
     await loadAll();
-  } catch (
-    error
-  ) {
+  } catch (error) {
     showError(
-      "更新訂單失敗：" +
+      "❌ 更新訂單失敗<br><br>" +
       error.message
     );
   }
   hideLoading();
 }
 /* ==================================================
-   ⑫ 狀態 CSS
-================================================== */
-function getStatusClass(
-  status
-) {
-  if (
-    status ===
-    "新訂單"
-  ) {
-    return "status-new";
-  }
-  if (
-    status ===
-    "已接單"
-  ) {
-    return "status-accepted";
-  }
-  if (
-    status ===
-    "製作中"
-  ) {
-    return "status-making";
-  }
-  if (
-    status ===
-    "可取餐"
-  ) {
-    return "status-ready";
-  }
-  if (
-    status ===
-    "已完成"
-  ) {
-    return "status-completed";
-  }
-  if (
-    status ===
-    "取消"
-  ) {
-    return "status-cancelled";
-  }
-  return "status-new";
-}
-/* ==================================================
-   ⑬ 設定提示
+   ⑬ 設定
 ================================================== */
 function showSettings() {
   alert(
     "⚙️ 系統設定\n\n" +
-    "目前設定統一由 Google Sheet「設定」管理。\n\n" +
-    "LINE Token、LINE Secret、店家 LINE User ID 不會顯示在這裡。\n\n" +
-    "下一階段可以加入手機 POS 設定中心。"
+    "LINE Token、LINE Secret、店家 LINE User ID\n" +
+    "目前統一放在 Google Sheet「設定」。\n\n" +
+    "下一階段會升級成手機 POS 設定中心。"
   );
 }
 /* ==================================================
-   ⑭ Loading
+   ⑭ 狀態 CSS
 ================================================== */
-function showLoading() {
+function getStatusClass(
+  status
+) {
+  const map = {
+    "新訂單":
+      "status-new",
+    "已接單":
+      "status-accepted",
+    "製作中":
+      "status-making",
+    "可取餐":
+      "status-ready",
+    "已完成":
+      "status-completed",
+    "取消":
+      "status-cancelled"
+  };
+  return (
+    map[status] ||
+    "status-new"
+  );
+}
+/* ==================================================
+   ⑮ Loading
+================================================== */
+function showLoading(
+  text
+) {
+  document
+    .getElementById(
+      "loadingText"
+    )
+    .textContent =
+    text;
   document
     .getElementById(
       "loading"
@@ -1495,7 +1146,49 @@ function hideLoading() {
     );
 }
 /* ==================================================
-   ⑮ Toast
+   ⑯ 錯誤
+================================================== */
+function showError(
+  message,
+  withButton = false
+) {
+  const box =
+    document
+      .getElementById(
+        "errorBox"
+      );
+  box.innerHTML =
+    message +
+    (
+      withButton
+        ? `
+          <br>
+          <button
+            class="error-button"
+            onclick="loadAll()"
+          >
+            🔄 重新連線
+          </button>
+        `
+        : ""
+    );
+  box.classList
+    .remove(
+      "hidden"
+    );
+}
+function hideError() {
+  document
+    .getElementById(
+      "errorBox"
+    )
+    .classList
+    .add(
+      "hidden"
+    );
+}
+/* ==================================================
+   ⑰ Toast
 ================================================== */
 let toastTimer;
 function showToast(
@@ -1527,35 +1220,7 @@ function showToast(
     );
 }
 /* ==================================================
-   ⑯ 錯誤
-================================================== */
-function showError(
-  message
-) {
-  const box =
-    document
-      .getElementById(
-        "errorBox"
-      );
-  box.innerHTML =
-    message;
-  box.classList
-    .remove(
-      "hidden"
-    );
-}
-function hideError() {
-  document
-    .getElementById(
-      "errorBox"
-    )
-    .classList
-    .add(
-      "hidden"
-    );
-}
-/* ==================================================
-   ⑰ HTML 安全
+   ⑱ HTML 安全
 ================================================== */
 function escapeHtml(
   value
