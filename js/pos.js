@@ -1,6 +1,7 @@
 /* =========================================
 初萊食麵
 POS 後台 V2
+餐點解析修正版
 ========================================= */
 
 
@@ -9,7 +10,7 @@ Google Apps Script API
 ========================================= */
 
 const SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbwFD8XzZCmF7AKly_L0LDqA5JoERcg0eex2PzQFU4n_aBWqw9GJsRV-4XcMM_GLET8MLw/exec";
+"https://script.google.com/macros/s/AKfycbwFD8XzZCmF7AKly_L0LDqA5JoERcg0eex2PzQFU4n_aBWqw9GJsRV-4XcMM_GLET8MLw/exec";
 
 
 /* =========================================
@@ -20,65 +21,55 @@ let allOrders = [];
 
 let currentFilter = "全部";
 
-let isLoading = false;
-
 
 /* =========================================
 DOM
 ========================================= */
 
 const ordersContainer =
-  document.getElementById(
+document.getElementById(
     "orders-container"
-  );
-
+);
 
 const todayOrderCount =
-  document.getElementById(
+document.getElementById(
     "today-order-count"
-  );
-
+);
 
 const todayTotal =
-  document.getElementById(
+document.getElementById(
     "today-total"
-  );
-
+);
 
 const pendingCount =
-  document.getElementById(
+document.getElementById(
     "pending-count"
-  );
-
+);
 
 const systemStatus =
-  document.getElementById(
+document.getElementById(
     "system-status"
-  );
-
+);
 
 const refreshBtn =
-  document.getElementById(
+document.getElementById(
     "refresh-btn"
-  );
-
+);
 
 const orderModal =
-  document.getElementById(
+document.getElementById(
     "order-modal"
-  );
-
+);
 
 const orderDetail =
-  document.getElementById(
+document.getElementById(
     "order-detail"
-  );
-
+);
 
 const closeModal =
-  document.getElementById(
+document.getElementById(
     "close-modal"
-  );
+);
 
 
 /* =========================================
@@ -87,34 +78,19 @@ HTML 防注入
 
 function escapeHTML(text) {
 
-  return String(
-    text || ""
-  )
+    if (
+        text === null ||
+        text === undefined
+    ) {
+        return "";
+    }
 
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-
-    .replace(
-      /</g,
-      "&lt;"
-    )
-
-    .replace(
-      />/g,
-      "&gt;"
-    )
-
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-
-    .replace(
-      /'/g,
-      "&#039;"
-    );
+    return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 
 }
 
@@ -125,291 +101,80 @@ function escapeHTML(text) {
 
 async function loadOrders() {
 
-  if (isLoading) {
+    try {
 
-    return;
+        setSystemStatus(
+            "🔄 正在更新訂單..."
+        );
 
-  }
+        const response =
+            await fetch(
+                SCRIPT_URL +
+                "?action=getOrders&_=" +
+                Date.now(),
+                {
+                    method: "GET",
+                    cache: "no-store"
+                }
+            );
 
+        if (!response.ok) {
 
-  isLoading = true;
-
-
-  try {
-
-    setSystemStatus(
-      "🔄 正在連線並取得訂單..."
-    );
-
-
-    const response =
-      await fetch(
-
-        SCRIPT_URL +
-
-        "?action=getOrders&_=" +
-
-        Date.now(),
-
-        {
-
-          method:
-            "GET",
-
-          cache:
-            "no-store",
-
-          redirect:
-            "follow"
+            throw new Error(
+                "API HTTP 錯誤：" +
+                response.status
+            );
 
         }
 
-      );
-
-
-    if (
-      !response.ok
-    ) {
-
-      throw new Error(
-
-        "HTTP " +
-        response.status
-
-      );
-
-    }
-
-
-    const result =
-      await response.json();
-
-
-    if (
-      !result.success
-    ) {
-
-      throw new Error(
-
-        result.error ||
-
-        "取得訂單失敗"
-
-      );
-
-    }
-
-
-    allOrders =
-
-      Array.isArray(
-        result.orders
-      )
-
-        ?
-
-      result.orders
-
-        :
-
-      [];
-
-
-    renderOrders();
-
-
-    await loadTodayStats();
-
-
-    setSystemStatus(
-
-      "🟢 已連線｜訂單 " +
-
-      allOrders.length +
-
-      " 筆｜最後更新 " +
-
-      formatTime(
-        new Date()
-      )
-
-    );
-
-  }
-
-  catch (error) {
-
-    console.error(
-
-      "POS 取得訂單失敗：",
-
-      error
-
-    );
-
-
-    setSystemStatus(
-
-      "🔴 連線失敗：" +
-
-      error.message
-
-    );
-
-
-    if (
-      ordersContainer
-    ) {
-
-      ordersContainer.innerHTML = `
-
-        <div class="empty-orders">
-
-          🔴 無法取得訂單
-
-          <br><br>
-
-          <small>
-
-            ${escapeHTML(
-              error.message
-            )}
-
-          </small>
-
-          <br><br>
-
-          <button
-            type="button"
-            onclick="loadOrders()">
-
-            🔄 重新連線
-
-          </button>
-
-        </div>
-
-      `;
-
-    }
-
-  }
-
-  finally {
-
-    isLoading = false;
-
-  }
-
-}
-
-
-/* =========================================
-取得今日統計
-========================================= */
-
-async function loadTodayStats() {
-
-  try {
-
-    const response =
-      await fetch(
-
-        SCRIPT_URL +
-
-        "?action=getTodayStats&_=" +
-
-        Date.now(),
-
-        {
-
-          method:
-            "GET",
-
-          cache:
-            "no-store"
+        const result =
+            await response.json();
+
+        if (
+            !result.success
+        ) {
+
+            throw new Error(
+                result.error ||
+                "取得訂單失敗"
+            );
 
         }
 
-      );
+        allOrders =
+            Array.isArray(
+                result.orders
+            )
+                ?
+            result.orders
+                :
+            [];
 
+        renderOrders();
 
-    const result =
-      await response.json();
+        updateTodayStats();
 
-
-    if (
-      !result.success
-    ) {
-
-      throw new Error(
-
-        result.error ||
-
-        "統計取得失敗"
-
-      );
-
-    }
-
-
-    if (
-      todayOrderCount
-    ) {
-
-      todayOrderCount.textContent =
-
-        Number(
-          result.orderCount ||
-          0
+        setSystemStatus(
+            "🟢 已連線｜最後更新 " +
+            formatTime(
+                new Date()
+            )
         );
 
     }
+    catch (error) {
 
+        console.error(
+            "取得訂單失敗：",
+            error
+        );
 
-    if (
-      todayTotal
-    ) {
-
-      todayTotal.textContent =
-
-        "NT$" +
-
-        Number(
-          result.total ||
-          0
-        )
-          .toLocaleString();
-
-    }
-
-
-    if (
-      pendingCount
-    ) {
-
-      pendingCount.textContent =
-
-        Number(
-          result.pendingCount ||
-          0
+        setSystemStatus(
+            "🔴 連線失敗：" +
+            error.message
         );
 
     }
-
-  }
-
-  catch (error) {
-
-    console.error(
-
-      "取得今日統計失敗：",
-
-      error
-
-    );
-
-  }
 
 }
 
@@ -418,16 +183,18 @@ async function loadTodayStats() {
 系統狀態
 ========================================= */
 
-function setSystemStatus(message) {
+function setSystemStatus(
+    message
+) {
 
-  if (
-    systemStatus
-  ) {
+    if (
+        systemStatus
+    ) {
 
-    systemStatus.textContent =
-      message;
+        systemStatus.textContent =
+            message;
 
-  }
+    }
 
 }
 
@@ -436,82 +203,407 @@ function setSystemStatus(message) {
 格式化時間
 ========================================= */
 
-function formatTime(date) {
+function formatTime(
+    date
+) {
 
-  return date.toLocaleTimeString(
-
-    "zh-TW",
-
-    {
-
-      hour:
-        "2-digit",
-
-      minute:
-        "2-digit",
-
-      second:
-        "2-digit"
-
-    }
-
-  );
+    return date.toLocaleTimeString(
+        "zh-TW",
+        {
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit"
+        }
+    );
 
 }
 
 
 /* =========================================
-解析訂單內容
+⭐ 核心修正版
+解析餐點資料
 ========================================= */
 
 function parseItems(items) {
 
-  if (
-    Array.isArray(items)
-  ) {
+    /*
+    ① 已經是陣列
+    */
 
-    return items;
+    if (
+        Array.isArray(items)
+    ) {
 
-  }
-
-
-  if (
-    typeof items ===
-    "string"
-  ) {
-
-    try {
-
-      const parsed =
-        JSON.parse(items);
-
-
-      if (
-        Array.isArray(parsed)
-      ) {
-
-        return parsed;
-
-      }
+        return normalizeItems(
+            items
+        );
 
     }
 
-    catch (error) {
 
-      console.error(
+    /*
+    ② 沒有資料
+    */
 
-        "訂單內容 JSON 解析失敗：",
+    if (
+        items === null ||
+        items === undefined ||
+        items === ""
+    ) {
 
-        error
-
-      );
+        return [];
 
     }
 
-  }
+
+    /*
+    ③ 如果是物件
+    */
+
+    if (
+        typeof items ===
+        "object"
+    ) {
+
+        /*
+        有些資料可能是：
+
+        {
+            items: [...]
+        }
+
+        */
+
+        if (
+            Array.isArray(
+                items.items
+            )
+        ) {
+
+            return normalizeItems(
+                items.items
+            );
+
+        }
+
+        /*
+        單一商品物件
+        */
+
+        if (
+            items.name
+        ) {
+
+            return normalizeItems([
+                items
+            ]);
+
+        }
+
+    }
 
 
-  return [];
+    /*
+    ④ 字串格式
+    */
+
+    if (
+        typeof items ===
+        "string"
+    ) {
+
+        let text =
+            items.trim();
+
+
+        /*
+        嘗試 JSON.parse
+        */
+
+        try {
+
+            const parsed =
+                JSON.parse(
+                    text
+                );
+
+
+            /*
+            JSON 陣列
+            */
+
+            if (
+                Array.isArray(
+                    parsed
+                )
+            ) {
+
+                return normalizeItems(
+                    parsed
+                );
+
+            }
+
+
+            /*
+            JSON 物件內含 items
+            */
+
+            if (
+                parsed &&
+                Array.isArray(
+                    parsed.items
+                )
+            ) {
+
+                return normalizeItems(
+                    parsed.items
+                );
+
+            }
+
+
+            /*
+            JSON 單一商品
+            */
+
+            if (
+                parsed &&
+                parsed.name
+            ) {
+
+                return normalizeItems([
+                    parsed
+                ]);
+
+            }
+
+        }
+        catch (
+            error
+        ) {
+
+            console.warn(
+                "JSON 餐點解析失敗，嘗試文字格式：",
+                text
+            );
+
+        }
+
+
+        /*
+        ⑤ 如果是舊格式文字
+        例如：
+
+        肉燥乾麵（小） x 1
+        水餃 x 2
+
+        */
+
+        return parseLegacyTextItems(
+            text
+        );
+
+    }
+
+
+    return [];
+
+}
+
+
+/* =========================================
+標準化餐點
+========================================= */
+
+function normalizeItems(
+    items
+) {
+
+    if (
+        !Array.isArray(
+            items
+        )
+    ) {
+
+        return [];
+
+    }
+
+    return items
+        .map(
+            function(item) {
+
+                if (
+                    typeof item ===
+                    "string"
+                ) {
+
+                    return {
+                        name:
+                            item,
+                        qty:
+                            1,
+                        price:
+                            0,
+                        options:
+                            {}
+                    };
+
+                }
+
+                if (
+                    !item ||
+                    typeof item !==
+                    "object"
+                ) {
+
+                    return null;
+
+                }
+
+                return {
+
+                    id:
+                        item.id ||
+                        "",
+
+                    name:
+                        item.name ||
+                        item.productName ||
+                        item.title ||
+                        "餐點",
+
+                    qty:
+                        Number(
+                            item.qty ||
+                            item.quantity ||
+                            1
+                        ),
+
+                    price:
+                        Number(
+                            item.price ||
+                            item.unitPrice ||
+                            0
+                        ),
+
+                    options:
+                        item.options ||
+                        item.custom ||
+                        {}
+
+                };
+
+            }
+        )
+        .filter(
+            function(item) {
+
+                return (
+                    item !== null
+                );
+
+            }
+        );
+
+}
+
+
+/* =========================================
+舊文字格式解析
+========================================= */
+
+function parseLegacyTextItems(
+    text
+) {
+
+    if (
+        !text
+    ) {
+
+        return [];
+
+    }
+
+    /*
+    先處理常見分隔符號
+    */
+
+    const lines =
+        text
+            .split(
+                /\n|,\s*(?=[^\d])|、/
+            )
+            .map(
+                function(line) {
+                    return line.trim();
+                }
+            )
+            .filter(
+                function(line) {
+                    return line !== "";
+                }
+            );
+
+
+    return lines.map(
+        function(line) {
+
+            let name =
+                line;
+
+            let qty =
+                1;
+
+
+            /*
+            支援：
+
+            商品 x 2
+            商品 × 2
+            商品 * 2
+            */
+
+            const match =
+                line.match(
+                    /(.+?)\s*[xX×＊*]\s*(\d+)\s*$/
+                );
+
+
+            if (
+                match
+            ) {
+
+                name =
+                    match[1].trim();
+
+                qty =
+                    Number(
+                        match[2]
+                    );
+
+            }
+
+
+            return {
+
+                name:
+                    name,
+
+                qty:
+                    qty,
+
+                price:
+                    0,
+
+                options:
+                    {}
+
+            };
+
+        }
+    );
 
 }
 
@@ -520,143 +612,320 @@ function parseItems(items) {
 客製化文字
 ========================================= */
 
-function getOptionsText(options) {
-
-  if (
-    !options
-  ) {
-
-    return "";
-
-  }
-
-
-  const list = [];
-
-
-  if (
-    options.noodle
-  ) {
-
-    list.push(
-
-      "麵體：" +
-      options.noodle
-
-    );
-
-  }
-
-
-  if (
-    options.spicy
-  ) {
-
-    list.push(
-
-      "辣度：" +
-      options.spicy
-
-    );
-
-  }
-
-
-  if (
-    options.vegetable ===
-    false
-  ) {
-
-    list.push(
-      "不加菜"
-    );
-
-  }
-
-
-  if (
-    options.onion ===
-    false
-  ) {
-
-    list.push(
-      "不加蔥"
-    );
-
-  }
-
-
-  if (
-    options.sauce
-  ) {
+function getOptionsText(
+    options
+) {
 
     if (
-      Array.isArray(
-        options.sauce
-      )
+        !options
     ) {
 
-      list.push(
-
-        "醬料：" +
-
-        options.sauce.join(
-          "、"
-        )
-
-      );
+        return "";
 
     }
 
-    else {
 
-      list.push(
+    /*
+    如果 options 是字串
+    */
 
-        "醬料：" +
+    if (
+        typeof options ===
+        "string"
+    ) {
 
+        return options;
+
+    }
+
+
+    const list = [];
+
+
+    /*
+    麵體
+    */
+
+    if (
+        options.noodle
+    ) {
+
+        list.push(
+            "麵體：" +
+            options.noodle
+        );
+
+    }
+
+
+    /*
+    辣度
+    */
+
+    if (
+        options.spicy
+    ) {
+
+        list.push(
+            "辣度：" +
+            options.spicy
+        );
+
+    }
+
+
+    /*
+    菜
+    */
+
+    if (
+        options.vegetable ===
+        false
+    ) {
+
+        list.push(
+            "不加菜"
+        );
+
+    }
+
+
+    /*
+    蔥
+    */
+
+    if (
+        options.onion ===
+        false
+    ) {
+
+        list.push(
+            "不加蔥"
+        );
+
+    }
+
+
+    /*
+    醬料
+    */
+
+    if (
         options.sauce
+    ) {
 
-      );
+        if (
+            Array.isArray(
+                options.sauce
+            )
+        ) {
+
+            list.push(
+                "醬料：" +
+                options.sauce.join(
+                    "、"
+                )
+            );
+
+        }
+        else {
+
+            list.push(
+                "醬料：" +
+                options.sauce
+            );
+
+        }
 
     }
 
-  }
+
+    /*
+    其他客製選項
+    */
+
+    if (
+        options.addon
+    ) {
+
+        list.push(
+            "加料：" +
+            options.addon
+        );
+
+    }
 
 
-  return list.join(
-    "、"
-  );
+    if (
+        options.note
+    ) {
+
+        list.push(
+            options.note
+        );
+
+    }
+
+
+    return list.join(
+        "、"
+    );
 
 }
 
 
 /* =========================================
-排序
+今日統計
 ========================================= */
 
-function sortOrders(orders) {
+function updateTodayStats() {
 
-  return orders.sort(
+    const today =
+        new Date();
 
-    function(a, b) {
+    const todayString =
+        today.toLocaleDateString(
+            "zh-TW"
+        );
 
-      return (
+    let orderCount =
+        0;
 
-        new Date(
-          b.createdAt
-        )
+    let total =
+        0;
 
-        -
+    let pending =
+        0;
 
-        new Date(
-          a.createdAt
-        )
 
-      );
+    allOrders.forEach(
+        function(order) {
+
+            if (
+                !order.createdAt
+            ) {
+
+                return;
+
+            }
+
+
+            const orderDate =
+                new Date(
+                    order.createdAt
+                );
+
+
+            if (
+                isNaN(
+                    orderDate.getTime()
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            const orderDateString =
+                orderDate
+                    .toLocaleDateString(
+                        "zh-TW"
+                    );
+
+
+            if (
+                orderDateString !==
+                todayString
+            ) {
+
+                return;
+
+            }
+
+
+            orderCount++;
+
+
+            total +=
+                Number(
+                    order.total ||
+                    0
+                );
+
+
+            if (
+                order.status !==
+                "已完成"
+                &&
+                order.status !==
+                "取消"
+            ) {
+
+                pending++;
+
+            }
+
+        }
+    );
+
+
+    if (
+        todayOrderCount
+    ) {
+
+        todayOrderCount.textContent =
+            orderCount;
 
     }
 
-  );
+
+    if (
+        todayTotal
+    ) {
+
+        todayTotal.textContent =
+            "NT$" +
+            total.toLocaleString();
+
+    }
+
+
+    if (
+        pendingCount
+    ) {
+
+        pendingCount.textContent =
+            pending;
+
+    }
+
+}
+
+
+/* =========================================
+訂單排序
+========================================= */
+
+function sortOrders(
+    orders
+) {
+
+    return orders.sort(
+        function(a, b) {
+
+            return (
+                new Date(
+                    b.createdAt
+                )
+                -
+                new Date(
+                    a.createdAt
+                )
+            );
+
+        }
+    );
 
 }
 
@@ -667,88 +936,72 @@ function sortOrders(orders) {
 
 function renderOrders() {
 
-  if (
-    !ordersContainer
-  ) {
+    if (
+        !ordersContainer
+    ) {
 
-    return;
+        return;
 
-  }
+    }
 
 
-  let orders =
+    let orders =
+        currentFilter ===
+        "全部"
 
-    currentFilter ===
-    "全部"
+            ?
 
-      ?
+        allOrders
 
-    allOrders
+            :
 
-      :
+        allOrders.filter(
+            function(order) {
 
-    allOrders.filter(
+                return (
+                    order.status ===
+                    currentFilter
+                );
 
-      function(order) {
-
-        return (
-
-          order.status ===
-          currentFilter
-
+            }
         );
 
-      }
 
-    );
-
-
-  orders =
-    sortOrders(
-      orders
-    );
+    orders =
+        sortOrders(
+            orders
+        );
 
 
-  if (
-    orders.length ===
-    0
-  ) {
+    if (
+        orders.length ===
+        0
+    ) {
 
-    ordersContainer.innerHTML = `
+        ordersContainer.innerHTML = `
+            <div class="empty-orders">
+                📭 目前沒有符合條件的訂單
+            </div>
+        `;
 
-      <div class="empty-orders">
+        return;
 
-        📭 目前沒有符合條件的訂單
-
-      </div>
-
-    `;
-
-    return;
-
-  }
+    }
 
 
-  ordersContainer.innerHTML =
+    ordersContainer.innerHTML =
+        orders.map(
+            function(order) {
 
-    orders
+                return renderOrderCard(
+                    order
+                );
 
-      .map(
-
-        function(order) {
-
-          return renderOrderCard(
-            order
-          );
-
-        }
-
-      )
-
-      .join("");
+            }
+        ).join("");
 
 
-  bindOrderButtons();
+    bindOrderButtons();
 
 }
 
@@ -757,422 +1010,382 @@ function renderOrders() {
 訂單卡片
 ========================================= */
 
-function renderOrderCard(order) {
+function renderOrderCard(
+    order
+) {
 
-  const statusClass =
-    getStatusClass(
-      order.status
-    );
-
-
-  const items =
-    parseItems(
-      order.items
-    );
+    const statusClass =
+        getStatusClass(
+            order.status
+        );
 
 
-  const itemsHTML =
-
-    items.length > 0
-
-      ?
-
-    items
-
-      .map(
-
-        function(item) {
-
-          const optionsText =
-            getOptionsText(
-              item.options
-            );
+    const items =
+        parseItems(
+            order.items
+        );
 
 
-          return `
+    let itemsHTML =
+        "";
 
-            <div class="order-item">
 
-              <div>
+    if (
+        items.length >
+        0
+    ) {
 
-                <div class="item-name">
+        itemsHTML =
+            items.map(
+                function(item) {
 
-                  ${escapeHTML(
-                    item.name ||
-                    "餐點"
-                  )}
+                    const optionsText =
+                        getOptionsText(
+                            item.options
+                        );
 
-                  ×
 
-                  ${Number(
-                    item.qty ||
-                    1
-                  )}
+                    const qty =
+                        Number(
+                            item.qty ||
+                            1
+                        );
+
+
+                    const price =
+                        Number(
+                            item.price ||
+                            0
+                        );
+
+
+                    return `
+                        <div class="order-item">
+
+                            <div>
+
+                                <div class="item-name">
+
+                                    ${escapeHTML(
+                                        item.name ||
+                                        "餐點"
+                                    )}
+
+                                    ×
+
+                                    ${qty}
+
+                                </div>
+
+
+                                ${
+                                    optionsText
+                                        ?
+
+                                    `<div class="item-options">
+                                        ↳ ${escapeHTML(
+                                            optionsText
+                                        )}
+                                    </div>`
+
+                                        :
+
+                                    ""
+                                }
+
+                            </div>
+
+
+                            <div class="item-price">
+
+                                NT$${(
+                                    price *
+                                    qty
+                                ).toLocaleString()}
+
+                            </div>
+
+                        </div>
+                    `;
+
+                }
+            ).join("");
+
+    }
+
+    else {
+
+        itemsHTML = `
+            <div class="item-options">
+                🍜 目前沒有可解析的餐點資料
+            </div>
+        `;
+
+    }
+
+
+    const nextStatus =
+        getNextStatus(
+            order.status
+        );
+
+
+    return `
+
+        <article class="order-card">
+
+
+            <div class="order-card-header">
+
+                <div>
+
+                    <div class="order-id">
+
+                        🆔 ${escapeHTML(
+                            order.orderId
+                        )}
+
+                    </div>
+
+
+                    <div class="order-time">
+
+                        ⏰ ${escapeHTML(
+                            order.createdAt ||
+                            ""
+                        )}
+
+                    </div>
 
                 </div>
 
 
-                ${
-                  optionsText
+                <span class="order-status ${statusClass}">
 
-                    ?
-
-                  `
-
-                  <div class="item-options">
-
-                    ${escapeHTML(
-                      optionsText
+                    ${getStatusIcon(
+                        order.status
                     )}
 
-                  </div>
+                    ${escapeHTML(
+                        order.status ||
+                        "新訂單"
+                    )}
 
-                  `
+                </span>
 
-                    :
+            </div>
 
-                  ""
 
+
+            <div class="order-customer">
+
+                <div class="customer-name">
+
+                    👤 ${escapeHTML(
+                        order.name ||
+                        "現場客人"
+                    )}
+
+                </div>
+
+
+                <div class="customer-info">
+
+                    📱 ${escapeHTML(
+                        order.phone ||
+                        "未提供"
+                    )}
+
+                    <br>
+
+                    🍽 取餐方式：
+
+                    ${escapeHTML(
+                        order.pickupType ||
+                        "外帶"
+                    )}
+
+                    ${
+                        order.pickupTime
+
+                            ?
+
+                        `<br>
+                        ⏰ 取餐時間：
+                        ${escapeHTML(
+                            order.pickupTime
+                        )}`
+
+                            :
+
+                        ""
+                    }
+
+                    ${
+                        order.payment
+
+                            ?
+
+                        `<br>
+                        💳 付款方式：
+                        ${escapeHTML(
+                            order.payment
+                        )}`
+
+                            :
+
+                        ""
+                    }
+
+                </div>
+
+            </div>
+
+
+
+            <div class="order-items">
+
+                ${itemsHTML}
+
+            </div>
+
+
+
+            <div class="order-total">
+
+                <span>
+
+                    💰 合計
+
+                </span>
+
+
+                <strong>
+
+                    NT$${Number(
+                        order.total ||
+                        0
+                    ).toLocaleString()}
+
+                </strong>
+
+            </div>
+
+
+
+            <div class="order-actions">
+
+
+                ${
+                    nextStatus
+
+                        ?
+
+                    `
+
+                    <button
+
+                        type="button"
+
+                        class="status-action-btn"
+
+                        data-order-id="${escapeHTML(
+                            order.orderId
+                        )}"
+
+                        data-next-status="${escapeHTML(
+                            nextStatus
+                        )}"
+
+                    >
+
+                        ${getStatusIcon(
+                            nextStatus
+                        )}
+
+                        ${nextStatus}
+
+                    </button>
+
+                    `
+
+                        :
+
+                    `
+
+                    <button
+
+                        type="button"
+
+                        class="status-action-btn"
+
+                        disabled
+
+                    >
+
+                        已完成
+
+                    </button>
+
+                    `
                 }
 
-              </div>
 
 
-              <div class="item-price">
+                <button
 
-                NT$${(
+                    type="button"
 
-                  Number(
-                    item.price ||
-                    0
-                  )
+                    class="status-action-btn cancel-order-btn"
 
-                  *
+                    data-order-id="${escapeHTML(
+                        order.orderId
+                    )}"
 
-                  Number(
-                    item.qty ||
-                    1
-                  )
+                    ${
+                        order.status ===
+                        "已完成"
 
-                ).toLocaleString()}
+                            ?
 
-              </div>
+                        "disabled"
+
+                            :
+
+                        ""
+                    }
+
+                >
+
+                    ❌ 取消訂單
+
+                </button>
+
+
+
+                <button
+
+                    type="button"
+
+                    class="detail-btn"
+
+                    data-order-id="${escapeHTML(
+                        order.orderId
+                    )}"
+
+                >
+
+                    📋 查看完整訂單
+
+                </button>
 
 
             </div>
 
-          `;
 
-        }
-
-      )
-
-      .join("")
-
-
-      :
-
-
-    `
-
-      <div class="item-options">
-
-        🍜 無法解析餐點資料
-
-      </div>
+        </article>
 
     `;
-
-
-  const nextStatus =
-    getNextStatus(
-      order.status
-    );
-
-
-  return `
-
-    <article class="order-card">
-
-
-      <div class="order-card-header">
-
-
-        <div>
-
-          <div class="order-id">
-
-            🆔
-
-            ${escapeHTML(
-              order.orderId
-            )}
-
-          </div>
-
-
-          <div class="order-time">
-
-            ⏰
-
-            ${escapeHTML(
-              order.createdAt ||
-              ""
-            )}
-
-          </div>
-
-        </div>
-
-
-        <span
-          class="order-status ${statusClass}">
-
-          ${getStatusIcon(
-            order.status
-          )}
-
-          ${escapeHTML(
-            order.status ||
-            "新訂單"
-          )}
-
-        </span>
-
-
-      </div>
-
-
-
-      <div class="order-customer">
-
-
-        <div class="customer-name">
-
-          👤
-
-          ${escapeHTML(
-            order.name ||
-            "現場客人"
-          )}
-
-        </div>
-
-
-        <div class="customer-info">
-
-          📱
-
-          ${escapeHTML(
-            order.phone ||
-            "未提供"
-          )}
-
-          <br>
-
-
-          🍽 取餐方式：
-
-          ${escapeHTML(
-            order.pickupType ||
-            "外帶"
-          )}
-
-
-          ${
-            order.pickupTime
-
-              ?
-
-            `
-
-              <br>
-
-              ⏰ 取餐時間：
-
-              ${escapeHTML(
-                order.pickupTime
-              )}
-
-            `
-
-              :
-
-            ""
-
-          }
-
-
-          ${
-            order.payment
-
-              ?
-
-            `
-
-              <br>
-
-              💳 付款方式：
-
-              ${escapeHTML(
-                order.payment
-              )}
-
-            `
-
-              :
-
-            ""
-
-          }
-
-
-        </div>
-
-
-      </div>
-
-
-
-      <div class="order-items">
-
-        ${itemsHTML}
-
-      </div>
-
-
-
-      <div class="order-total">
-
-
-        <span>
-
-          💰 合計
-
-        </span>
-
-
-        <strong>
-
-          NT$${Number(
-            order.total ||
-            0
-          ).toLocaleString()}
-
-        </strong>
-
-
-      </div>
-
-
-
-      <div class="order-actions">
-
-
-        ${
-          nextStatus
-
-            ?
-
-          `
-
-            <button
-
-              type="button"
-
-              class="status-action-btn"
-
-              data-order-id="${escapeHTML(
-                order.orderId
-              )}"
-
-              data-next-status="${escapeHTML(
-                nextStatus
-              )}">
-
-              ${getStatusIcon(
-                nextStatus
-              )}
-
-              ${nextStatus}
-
-            </button>
-
-          `
-
-            :
-
-          `
-
-            <button
-
-              type="button"
-
-              class="status-action-btn"
-
-              disabled>
-
-              已完成
-
-            </button>
-
-          `
-
-        }
-
-
-
-        <button
-
-          type="button"
-
-          class="status-action-btn cancel-order-btn"
-
-          data-order-id="${escapeHTML(
-            order.orderId
-          )}"
-
-          ${
-            order.status ===
-            "已完成"
-
-              ?
-
-            "disabled"
-
-              :
-
-            ""
-
-          }>
-
-          ❌ 取消訂單
-
-        </button>
-
-
-
-        <button
-
-          type="button"
-
-          class="detail-btn"
-
-          data-order-id="${escapeHTML(
-            order.orderId
-          )}">
-
-          📋 查看完整訂單
-
-        </button>
-
-
-      </div>
-
-
-    </article>
-
-  `;
 
 }
 
@@ -1181,40 +1394,44 @@ function renderOrderCard(order) {
 狀態 Class
 ========================================= */
 
-function getStatusClass(status) {
+function getStatusClass(
+    status
+) {
 
-  const map = {
+    const map = {
 
-    "新訂單":
-      "status-new",
+        "新訂單":
+            "status-new",
 
-    "已接單":
-      "status-accepted",
+        "已接單":
+            "status-accepted",
 
-    "製作中":
-      "status-making",
+        "製作中":
+            "status-making",
 
-    "可取餐":
-      "status-ready",
+        "可取餐":
+            "status-ready",
 
-    "已完成":
-      "status-completed",
+        "已完成":
+            "status-completed",
 
-    "取消":
-      "status-cancelled"
+        "取消":
+            "status-cancelled"
 
-  };
+    };
 
 
-  return (
+    return (
 
-    map[status]
+        map[
+            status
+        ]
 
-    ||
+        ||
 
-    "status-new"
+        "status-new"
 
-  );
+    );
 
 }
 
@@ -1223,40 +1440,44 @@ function getStatusClass(status) {
 狀態 Icon
 ========================================= */
 
-function getStatusIcon(status) {
+function getStatusIcon(
+    status
+) {
 
-  const map = {
+    const map = {
 
-    "新訂單":
-      "🔴",
+        "新訂單":
+            "🔴",
 
-    "已接單":
-      "🟡",
+        "已接單":
+            "🟡",
 
-    "製作中":
-      "🟠",
+        "製作中":
+            "🟠",
 
-    "可取餐":
-      "🟢",
+        "可取餐":
+            "🟢",
 
-    "已完成":
-      "✅",
+        "已完成":
+            "✅",
 
-    "取消":
-      "❌"
+        "取消":
+            "❌"
 
-  };
+    };
 
 
-  return (
+    return (
 
-    map[status]
+        map[
+            status
+        ]
 
-    ||
+        ||
 
-    "📋"
+        "📋"
 
-  );
+    );
 
 }
 
@@ -1265,34 +1486,38 @@ function getStatusIcon(status) {
 下一個狀態
 ========================================= */
 
-function getNextStatus(status) {
+function getNextStatus(
+    status
+) {
 
-  const flow = {
+    const flow = {
 
-    "新訂單":
-      "已接單",
+        "新訂單":
+            "已接單",
 
-    "已接單":
-      "製作中",
+        "已接單":
+            "製作中",
 
-    "製作中":
-      "可取餐",
+        "製作中":
+            "可取餐",
 
-    "可取餐":
-      "已完成"
+        "可取餐":
+            "已完成"
 
-  };
+    };
 
 
-  return (
+    return (
 
-    flow[status]
+        flow[
+            status
+        ]
 
-    ||
+        ||
 
-    null
+        null
 
-  );
+    );
 
 }
 
@@ -1304,156 +1529,104 @@ function getNextStatus(status) {
 function bindOrderButtons() {
 
 
-  document
+    document
+        .querySelectorAll(
+            ".status-action-btn:not(.cancel-order-btn)"
+        )
+        .forEach(
+            function(button) {
 
-    .querySelectorAll(
+                button.addEventListener(
+                    "click",
+                    function() {
 
-      ".status-action-btn:not(.cancel-order-btn)"
-
-    )
-
-    .forEach(
-
-      function(button) {
-
-
-        button.addEventListener(
-
-          "click",
-
-          function() {
+                        const orderId =
+                            this.dataset.orderId;
 
 
-            const orderId =
-
-              this.dataset.orderId;
-
-
-            const nextStatus =
-
-              this.dataset.nextStatus;
+                        const nextStatus =
+                            this.dataset.nextStatus;
 
 
-            updateOrderStatus(
+                        updateOrderStatus(
 
-              orderId,
+                            orderId,
 
-              nextStatus
+                            nextStatus
 
-            );
+                        );
 
-
-          }
-
-        );
-
-
-      }
-
-    );
-
-
-
-  document
-
-    .querySelectorAll(
-
-      ".cancel-order-btn"
-
-    )
-
-    .forEach(
-
-      function(button) {
-
-
-        button.addEventListener(
-
-          "click",
-
-          function() {
-
-
-            const orderId =
-
-              this.dataset.orderId;
-
-
-            if (
-
-              confirm(
-
-                "確定要取消這筆訂單嗎？"
-
-              )
-
-            ) {
-
-
-              updateOrderStatus(
-
-                orderId,
-
-                "取消"
-
-              );
-
+                    }
+                );
 
             }
-
-
-          }
-
         );
 
 
-      }
 
-    );
+    document
+        .querySelectorAll(
+            ".cancel-order-btn"
+        )
+        .forEach(
+            function(button) {
 
+                button.addEventListener(
+                    "click",
+                    function() {
 
-
-  document
-
-    .querySelectorAll(
-
-      ".detail-btn"
-
-    )
-
-    .forEach(
-
-      function(button) {
+                        const orderId =
+                            this.dataset.orderId;
 
 
-        button.addEventListener(
+                        if (
+                            confirm(
+                                "確定要取消這筆訂單嗎？"
+                            )
+                        ) {
 
-          "click",
+                            updateOrderStatus(
 
-          function() {
+                                orderId,
 
+                                "取消"
 
-            const orderId =
+                            );
 
-              this.dataset.orderId;
+                        }
 
+                    }
+                );
 
-            openOrderDetail(
-
-              orderId
-
-            );
-
-
-          }
-
+            }
         );
 
 
-      }
 
-    );
+    document
+        .querySelectorAll(
+            ".detail-btn"
+        )
+        .forEach(
+            function(button) {
 
+                button.addEventListener(
+                    "click",
+                    function() {
+
+                        const orderId =
+                            this.dataset.orderId;
+
+
+                        openOrderDetail(
+                            orderId
+                        );
+
+                    }
+                );
+
+            }
+        );
 
 }
 
@@ -1464,502 +1637,430 @@ function bindOrderButtons() {
 
 async function updateOrderStatus(
 
-  orderId,
+    orderId,
 
-  status
+    status
 
 ) {
 
+    try {
 
-  try {
-
-
-    setSystemStatus(
-
-      "🔄 正在更新訂單狀態..."
-
-    );
+        setSystemStatus(
+            "🔄 正在更新訂單..."
+        );
 
 
-    const response =
+        const response =
+            await fetch(
 
-      await fetch(
+                SCRIPT_URL,
 
-        SCRIPT_URL,
+                {
 
-        {
+                    method:
+                        "POST",
 
-          method:
-            "POST",
+                    headers: {
 
-          headers: {
+                        "Content-Type":
+                            "text/plain;charset=utf-8"
 
-            "Content-Type":
-              "text/plain;charset=utf-8"
+                    },
 
-          },
+                    body:
 
-          body:
+                        JSON.stringify({
 
-            JSON.stringify({
+                            action:
+                                "updateOrderStatus",
 
-              action:
-                "updateOrderStatus",
+                            orderId:
+                                orderId,
 
-              orderId:
-                orderId,
+                            status:
+                                status
 
-              status:
-                status
+                        })
 
-            })
+                }
+
+            );
+
+
+        const result =
+            await response.json();
+
+
+        if (
+            !result.success
+        ) {
+
+            throw new Error(
+
+                result.error ||
+
+                "更新失敗"
+
+            );
 
         }
 
-      );
+
+        setSystemStatus(
+
+            "🟢 訂單狀態已更新：" +
+
+            status
+
+        );
 
 
-    const result =
-
-      await response.json();
-
-
-    if (
-      !result.success
-    ) {
-
-
-      throw new Error(
-
-        result.error ||
-
-        "更新失敗"
-
-      );
-
+        await loadOrders();
 
     }
+    catch (
+        error
+    ) {
+
+        console.error(
+            error
+        );
 
 
-    setSystemStatus(
+        alert(
 
-      "🟢 訂單狀態已更新：" +
+            "更新訂單失敗：\n" +
 
-      status
+            error.message
 
-    );
-
-
-    await loadOrders();
+        );
 
 
-  }
+        setSystemStatus(
 
-  catch (error) {
+            "🔴 更新失敗"
 
+        );
 
-    console.error(
-      error
-    );
-
-
-    alert(
-
-      "更新訂單失敗：\n" +
-
-      error.message
-
-    );
-
-
-    setSystemStatus(
-
-      "🔴 更新失敗"
-
-    );
-
-
-  }
+    }
 
 }
 
 
 /* =========================================
-查看完整訂單
+查看訂單詳細
 ========================================= */
 
-function openOrderDetail(orderId) {
+function openOrderDetail(
+    orderId
+) {
 
+    const order =
+        allOrders.find(
+            function(item) {
 
-  const order =
+                return (
 
-    allOrders.find(
+                    String(
+                        item.orderId
+                    )
 
-      function(item) {
+                    ===
 
+                    String(
+                        orderId
+                    )
 
-        return (
+                );
 
-          String(
-            item.orderId
-          )
-
-          ===
-
-          String(
-            orderId
-          )
-
+            }
         );
 
 
-      }
+    if (
+        !order
+    ) {
 
-    );
+        return;
 
+    }
 
-  if (
-    !order
-  ) {
 
+    const items =
+        parseItems(
+            order.items
+        );
 
-    return;
 
+    let itemsHTML =
+        "";
 
-  }
 
+    if (
+        items.length >
+        0
+    ) {
 
-  const items =
+        itemsHTML =
+            items.map(
+                function(item) {
 
-    parseItems(
+                    const optionsText =
+                        getOptionsText(
+                            item.options
+                        );
 
-      order.items
 
-    );
+                    const qty =
+                        Number(
+                            item.qty ||
+                            1
+                        );
 
 
-  const itemsHTML =
+                    const price =
+                        Number(
+                            item.price ||
+                            0
+                        );
 
-    items
 
-      .map(
+                    return `
 
-        function(item) {
+                        <div
 
+                            style="
 
-          const optionsText =
+                                padding:12px 0;
 
-            getOptionsText(
+                                border-bottom:1px solid #eee;
 
-              item.options
+                            "
 
-            );
+                        >
 
+                            <strong>
 
-          return `
+                                ${escapeHTML(
+                                    item.name ||
+                                    "餐點"
+                                )}
 
-            <div
+                                ×
 
-              style="
+                                ${qty}
 
-                padding:12px 0;
+                            </strong>
 
-                border-bottom:1px solid #eee;
 
-              ">
+                            ${
 
+                                optionsText
 
-              <strong>
+                                    ?
 
+                                `
 
-                ${escapeHTML(
+                                <div
 
-                  item.name ||
+                                    style="
 
-                  "餐點"
+                                        margin-top:5px;
 
-                )}
+                                        font-size:13px;
 
+                                        color:#777;
 
-                ×
+                                    "
 
+                                >
 
-                ${Number(
+                                    ↳ ${escapeHTML(
+                                        optionsText
+                                    )}
 
-                  item.qty ||
+                                </div>
 
-                  1
+                                `
 
-                )}
+                                    :
 
+                                ""
 
-              </strong>
+                            }
 
 
-              ${
+                            <div
 
-                optionsText
+                                style="
 
-                  ?
+                                    margin-top:5px;
 
-                `
+                                "
 
-                  <div
+                            >
 
-                    style="
+                                NT$${(
 
-                      margin-top:5px;
+                                    price *
 
-                      font-size:13px;
+                                    qty
 
-                      color:#777;
+                                ).toLocaleString()}
 
-                    ">
+                            </div>
 
 
-                    ${escapeHTML(
+                        </div>
 
-                      optionsText
+                    `;
 
-                    )}
+                }
+            ).join("");
 
+    }
+    else {
 
-                  </div>
+        itemsHTML = `
 
-                `
+            <div>
 
-                  :
-
-                ""
-
-              }
-
-
-              <div
-
-                style="
-
-                  margin-top:5px;
-
-                ">
-
-
-                NT$${(
-
-                  Number(
-
-                    item.price ||
-
-                    0
-
-                  )
-
-                  *
-
-                  Number(
-
-                    item.qty ||
-
-                    1
-
-                  )
-
-                ).toLocaleString()}
-
-
-              </div>
-
+                🍜 目前沒有可解析的餐點資料
 
             </div>
 
-          `;
-
-
-        }
-
-      )
-
-      .join("");
-
-
-  orderDetail.innerHTML = `
-
-    <h2>
-
-      📋 訂單詳細
-
-    </h2>
-
-
-    <p>
-
-      🆔 ${escapeHTML(
-
-        order.orderId
-
-      )}
-
-    </p>
-
-
-    <p>
-
-      👤 ${escapeHTML(
-
-        order.name ||
-
-        "現場客人"
-
-      )}
-
-    </p>
-
-
-    <p>
-
-      📱 ${escapeHTML(
-
-        order.phone ||
-
-        "未提供"
-
-      )}
-
-    </p>
-
-
-    <p>
-
-      🍽 ${escapeHTML(
-
-        order.pickupType ||
-
-        "外帶"
-
-      )}
-
-    </p>
-
-
-    ${
-
-      order.pickupTime
-
-        ?
-
-      `
-
-        <p>
-
-          ⏰ 取餐時間：
-
-          ${escapeHTML(
-
-            order.pickupTime
-
-          )}
-
-        </p>
-
-      `
-
-        :
-
-      ""
+        `;
 
     }
 
 
-    ${
+    orderDetail.innerHTML = `
 
-      order.note
+        <h2>
 
-        ?
+            📋 訂單詳細
 
-      `
+        </h2>
+
 
         <p>
 
-          📝 備註：
+            🆔 ${escapeHTML(
+                order.orderId
+            )}
 
-          ${escapeHTML(
+        </p>
 
+
+        <p>
+
+            👤 ${escapeHTML(
+                order.name ||
+                "現場客人"
+            )}
+
+        </p>
+
+
+        <p>
+
+            📱 ${escapeHTML(
+                order.phone ||
+                "未提供"
+            )}
+
+        </p>
+
+
+        <p>
+
+            🍽 ${escapeHTML(
+                order.pickupType ||
+                "外帶"
+            )}
+
+        </p>
+
+
+        ${
             order.note
 
-          )}
+                ?
 
-        </p>
+            `<p>
 
-      `
+                📝 備註：
 
-        :
+                ${escapeHTML(
+                    order.note
+                )}
 
-      ""
+            </p>`
 
-    }
+                :
 
-
-    <hr>
-
-
-    <h3>
-
-      🍜 餐點
-
-    </h3>
+            ""
+        }
 
 
-    ${itemsHTML}
+        <hr>
 
 
-    <div
+        <h3>
 
-      style="
+            🍜 餐點
 
-        display:flex;
-
-        justify-content:space-between;
-
-        margin-top:20px;
-
-        font-size:20px;
-
-        font-weight:bold;
-
-      ">
+        </h3>
 
 
-      <span>
-
-        合計
-
-      </span>
+        ${itemsHTML}
 
 
-      <span>
+        <div
 
-        NT$${Number(
+            style="
 
-          order.total ||
+                display:flex;
 
-          0
+                justify-content:space-between;
 
-        ).toLocaleString()}
+                margin-top:20px;
 
-      </span>
+                font-size:20px;
+
+                font-weight:bold;
+
+            "
+
+        >
+
+            <span>
+
+                合計
+
+            </span>
 
 
-    </div>
+            <span>
 
-  `;
+                NT$${Number(
+
+                    order.total ||
+
+                    0
+
+                ).toLocaleString()}
+
+            </span>
+
+        </div>
+
+    `;
 
 
-  orderModal.classList.add(
-
-    "show"
-
-  );
-
+    orderModal.classList.add(
+        "show"
+    );
 
 }
 
@@ -1969,67 +2070,57 @@ function openOrderDetail(orderId) {
 ========================================= */
 
 if (
-  closeModal
+    closeModal
 ) {
 
+    closeModal.addEventListener(
 
-  closeModal.addEventListener(
+        "click",
 
-    "click",
+        function() {
 
-    function() {
+            orderModal.classList.remove(
 
+                "show"
 
-      orderModal.classList.remove(
+            );
 
-        "show"
+        }
 
-      );
-
-
-    }
-
-  );
-
+    );
 
 }
 
 
 if (
-  orderModal
+    orderModal
 ) {
 
+    orderModal.addEventListener(
 
-  orderModal.addEventListener(
+        "click",
 
-    "click",
+        function(event) {
 
-    function(event) {
+            if (
 
+                event.target ===
 
-      if (
+                orderModal
 
-        event.target ===
+            ) {
 
-        orderModal
+                orderModal.classList.remove(
 
-      ) {
+                    "show"
 
+                );
 
-        orderModal.classList.remove(
+            }
 
-          "show"
+        }
 
-        );
-
-
-      }
-
-
-    }
-
-  );
-
+    );
 
 }
 
@@ -2039,73 +2130,59 @@ if (
 ========================================= */
 
 document
+    .querySelectorAll(
+        ".filter-btn"
+    )
+    .forEach(
 
-  .querySelectorAll(
+        function(button) {
 
-    ".filter-btn"
+            button.addEventListener(
 
-  )
+                "click",
 
-  .forEach(
+                function() {
 
-    function(button) {
+                    document
+                        .querySelectorAll(
+                            ".filter-btn"
+                        )
+                        .forEach(
 
+                            function(btn) {
 
-      button.addEventListener(
+                                btn.classList.remove(
 
-        "click",
+                                    "active"
 
-        function() {
+                                );
 
+                            }
 
-          document
-
-            .querySelectorAll(
-
-              ".filter-btn"
-
-            )
-
-            .forEach(
-
-              function(btn) {
-
-
-                btn.classList.remove(
-
-                  "active"
-
-                );
+                        );
 
 
-              }
+                    this.classList.add(
+
+                        "active"
+
+                    );
+
+
+                    currentFilter =
+
+                        this.dataset.filter;
+
+
+                    renderOrders();
+
+                }
 
             );
 
-
-          this.classList.add(
-
-            "active"
-
-          );
-
-
-          currentFilter =
-
-            this.dataset.filter;
-
-
-          renderOrders();
-
-
         }
 
-      );
-
-
-    }
-
-  );
+    );
 
 
 /* =========================================
@@ -2113,24 +2190,20 @@ document
 ========================================= */
 
 if (
-  refreshBtn
+    refreshBtn
 ) {
 
+    refreshBtn.addEventListener(
 
-  refreshBtn.addEventListener(
+        "click",
 
-    "click",
+        function() {
 
-    function() {
+            loadOrders();
 
+        }
 
-      loadOrders();
-
-
-    }
-
-  );
-
+    );
 
 }
 
@@ -2141,15 +2214,13 @@ if (
 
 setInterval(
 
-  function() {
+    function() {
 
+        loadOrders();
 
-    loadOrders();
+    },
 
-
-  },
-
-  10000
+    10000
 
 );
 
@@ -2163,6 +2234,6 @@ loadOrders();
 
 console.log(
 
-  "🍜 初萊食麵 POS 後台 V2 已載入"
+    "🍜 初萊食麵 POS 後台 V2 已載入"
 
 );
