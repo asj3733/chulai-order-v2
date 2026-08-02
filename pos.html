@@ -1,142 +1,262 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
+
 <head>
+
 <meta charset="UTF-8">
-<title>初萊食麵｜POS 後台</title>
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+<title>
+    初萊食麵｜POS 後台
+</title>
+
 <link
     rel="stylesheet"
     href="css/pos.css">
+
 </head>
+
+
 <body>
+
+
 <!-- =========================================
-     頁首
+頁首
 ========================================= -->
+
 <header class="pos-header">
-<div>
-    <h1>
-        🍜 初萊食麵
-    </h1>
-    <p>
-        店家 POS 後台
-    </p>
-</div>
-<button
-    id="refresh-btn"
-    type="button">
-    🔄 更新
-</button>
+
+    <div>
+
+        <h1>
+            🍜 初萊食麵
+        </h1>
+
+        <p>
+            店家 POS 後台
+        </p>
+
+    </div>
+
+
+    <button
+        id="refresh-btn"
+        type="button">
+
+        🔄 更新
+
+    </button>
+
 </header>
+
+
+
 <!-- =========================================
-     系統狀態
+系統狀態
 ========================================= -->
+
 <div
     id="system-status"
     class="system-status">
-🟢 系統連線中...
+
+    🔄 正在連線 POS 系統...
+
 </div>
+
+
+
 <!-- =========================================
-     今日統計
+今日統計
 ========================================= -->
+
 <section class="stats-grid">
-<div class="stat-card">
-    <span>
-        📋 今日訂單
-    </span>
-    <strong id="today-order-count">
-        0
-    </strong>
-    <small>
-        筆
-    </small>
-</div>
-<div class="stat-card">
-    <span>
-        💰 今日營業額
-    </span>
-    <strong id="today-total">
-        NT$0
-    </strong>
-</div>
-<div class="stat-card">
-    <span>
-        🔴 待處理
-    </span>
-    <strong id="pending-count">
-        0
-    </strong>
-    <small>
-        筆
-    </small>
-</div>
-</section>
-<!-- =========================================
-     訂單篩選
-========================================= -->
-<section class="filter-section">
-<button
-    class="filter-btn active"
-    data-filter="全部">
-    全部
-</button>
-<button
-    class="filter-btn"
-    data-filter="新訂單">
-    🔴 新訂單
-</button>
-<button
-    class="filter-btn"
-    data-filter="已接單">
-    🟡 已接單
-</button>
-<button
-    class="filter-btn"
-    data-filter="製作中">
-    🟠 製作中
-</button>
-<button
-    class="filter-btn"
-    data-filter="可取餐">
-    🟢 可取餐
-</button>
-<button
-    class="filter-btn"
-    data-filter="已完成">
-    ✅ 已完成
-</button>
-</section>
-<!-- =========================================
-     訂單列表
-========================================= -->
-<main>
-<div
-    id="orders-container"
-    class="orders-container">
-    <div class="loading">
-        🔄 正在載入訂單...
+
+
+    <div class="stat-card">
+
+        <span>
+            📋 今日訂單
+        </span>
+
+        <strong id="today-order-count">
+            0
+        </strong>
+
+        <small>
+            筆
+        </small>
+
     </div>
-</div>
-</main>
+
+
+
+    <div class="stat-card">
+
+        <span>
+            💰 今日營業額
+        </span>
+
+        <strong id="today-total">
+            NT$0
+        </strong>
+
+    </div>
+
+
+
+    <div class="stat-card">
+
+        <span>
+            🔴 待處理
+        </span>
+
+        <strong id="pending-count">
+            0
+        </strong>
+
+        <small>
+            筆
+        </small>
+
+    </div>
+
+
+</section>
+
+
+
 <!-- =========================================
-     訂單詳細視窗
+訂單篩選
 ========================================= -->
+
+<section class="filter-section">
+
+
+    <button
+        class="filter-btn active"
+        data-filter="全部">
+
+        全部
+
+    </button>
+
+
+    <button
+        class="filter-btn"
+        data-filter="新訂單">
+
+        🔴 新訂單
+
+    </button>
+
+
+    <button
+        class="filter-btn"
+        data-filter="已接單">
+
+        🟡 已接單
+
+    </button>
+
+
+    <button
+        class="filter-btn"
+        data-filter="製作中">
+
+        🟠 製作中
+
+    </button>
+
+
+    <button
+        class="filter-btn"
+        data-filter="可取餐">
+
+        🟢 可取餐
+
+    </button>
+
+
+    <button
+        class="filter-btn"
+        data-filter="已完成">
+
+        ✅ 已完成
+
+    </button>
+
+
+</section>
+
+
+
+<!-- =========================================
+訂單列表
+========================================= -->
+
+<main>
+
+    <div
+        id="orders-container"
+        class="orders-container">
+
+        <div class="loading">
+
+            🔄 正在連線並載入訂單...
+
+        </div>
+
+    </div>
+
+</main>
+
+
+
+<!-- =========================================
+訂單詳細視窗
+========================================= -->
+
 <div
     id="order-modal"
     class="modal">
-<div class="modal-box">
-    <button
-        id="close-modal"
-        class="close-modal"
-        type="button">
-        ✕
-    </button>
-    <div
-        id="order-detail">
+
+
+    <div class="modal-box">
+
+
+        <button
+            id="close-modal"
+            class="close-modal"
+            type="button">
+
+            ✕
+
+        </button>
+
+
+        <div
+            id="order-detail">
+
+        </div>
+
+
     </div>
+
+
 </div>
-</div>
+
+
+
 <!-- =========================================
-     JS
+JS
 ========================================= -->
+
 <script src="js/pos.js"></script>
+
+
 </body>
+
 </html>
