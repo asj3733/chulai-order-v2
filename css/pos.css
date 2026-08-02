@@ -1,689 +1,1220 @@
-/* =========================================
-初萊食麵
-POS 後台 V1
-========================================= */
-
-/* =========================================
-基本
-========================================= */
+/* ==================================================
+初萊食麵｜POS 3.0
+手機優先版
+================================================== */
 
 * {
-    box-sizing:
-    border-box;
-
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Noto Sans TC",
+        "Microsoft JhengHei",
+        sans-serif;
 
-margin:
-    0;
-padding:
-    0;
-padding-bottom:
-    30px;
-font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "Noto Sans TC",
-    "Microsoft JhengHei",
-    sans-serif;
-background:
-    #f3f3f3;
-color:
-    #333;
+    background: #f4f4f4;
+    color: #222;
 
+    min-height: 100vh;
 }
 
-/* =========================================
+
+/* ==================================================
 Header
-========================================= */
+================================================== */
 
 .pos-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
 
-position:
-    sticky;
-top:
-    0;
-z-index:
-    100;
-display:
-    flex;
-justify-content:
-    space-between;
-align-items:
-    center;
-padding:
-    16px;
-background:
-    #222;
-color:
-    #fff;
-box-shadow:
-    0 2px 10px
-    rgba(0,0,0,.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
+    padding: 14px 18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #111111,
+            #292929
+        );
+
+    color: #ffffff;
+
+    box-shadow:
+        0 3px 12px
+        rgba(0, 0, 0, 0.18);
 }
 
-.pos-header h1 {
 
-margin:
-    0;
-font-size:
-    22px;
-
+.brand-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.pos-header p {
 
-margin:
-    4px 0 0;
-font-size:
-    13px;
-opacity:
-    .7;
+.brand-icon {
+    width: 46px;
+    height: 46px;
 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: #d4af37;
+
+    font-size: 24px;
 }
 
-#refresh-btn {
 
-border:
-    0;
-border-radius:
-    10px;
-padding:
-    10px 15px;
-background:
-    #d4af37;
-color:
-    #222;
-font-weight:
-    bold;
-cursor:
-    pointer;
-
+.brand-area h1 {
+    font-size: 21px;
+    font-weight: 800;
 }
 
-/* =========================================
+
+.brand-area p {
+    margin-top: 3px;
+
+    color: #cccccc;
+
+    font-size: 12px;
+}
+
+
+.refresh-btn {
+    border: none;
+
+    padding: 10px 14px;
+
+    border-radius: 10px;
+
+    background: #d4af37;
+
+    color: #111111;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s,
+        opacity 0.15s;
+}
+
+
+.refresh-btn:active {
+    transform: scale(0.94);
+    opacity: 0.8;
+}
+
+
+/* ==================================================
 系統狀態
-========================================= */
+================================================== */
 
 .system-status {
+    padding: 10px 16px;
 
-margin:
-    12px;
-padding:
-    10px 14px;
-border-radius:
-    10px;
-background:
-    #fff;
-font-size:
-    13px;
-text-align:
-    center;
+    background: #ffffff;
 
+    border-bottom:
+        1px solid #e5e5e5;
+
+    color: #666666;
+
+    font-size: 13px;
+
+    text-align: center;
 }
 
-/* =========================================
+
+/* ==================================================
 統計
-========================================= */
+================================================== */
 
 .stats-grid {
+    display: grid;
 
-display:
-    grid;
-grid-template-columns:
-    repeat(3, 1fr);
-gap:
-    10px;
-padding:
-    0 12px 12px;
+    grid-template-columns:
+        repeat(3, 1fr);
 
+    gap: 10px;
+
+    padding: 14px;
 }
+
 
 .stat-card {
+    display: flex;
+    align-items: center;
 
-padding:
-    14px 8px;
-border-radius:
-    14px;
-background:
-    #fff;
-text-align:
-    center;
-box-shadow:
-    0 2px 8px
-    rgba(0,0,0,.06);
+    gap: 9px;
 
+    padding: 13px 10px;
+
+    background: #ffffff;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 2px 8px
+        rgba(0, 0, 0, 0.06);
 }
 
-.stat-card span {
 
-display:
-    block;
-font-size:
-    12px;
-color:
-    #777;
-
+.stat-icon {
+    font-size: 23px;
 }
 
-.stat-card strong {
 
-display:
-    block;
-margin:
-    6px 0;
-font-size:
-    20px;
-
+.stat-info {
+    min-width: 0;
 }
 
-.stat-card small {
 
-font-size:
-    12px;
-color:
-    #777;
+.stat-info span {
+    display: block;
 
+    color: #777777;
+
+    font-size: 11px;
+
+    white-space: nowrap;
 }
 
-/* =========================================
-篩選
-========================================= */
+
+.stat-info strong {
+    display: block;
+
+    margin-top: 3px;
+
+    color: #222222;
+
+    font-size: 19px;
+
+    font-weight: 800;
+
+    white-space: nowrap;
+}
+
+
+.stat-info small {
+    color: #888888;
+
+    font-size: 10px;
+}
+
+
+/* ==================================================
+Filter
+================================================== */
 
 .filter-section {
+    display: flex;
 
-display:
-    flex;
-gap:
-    8px;
-padding:
-    4px 12px 14px;
-overflow-x:
-    auto;
+    gap: 8px;
 
+    padding:
+        4px 14px 14px;
+
+    overflow-x: auto;
+
+    scrollbar-width: none;
 }
+
+
+.filter-section::-webkit-scrollbar {
+    display: none;
+}
+
 
 .filter-btn {
+    flex:
+        0 0 auto;
 
-flex:
-    0 0 auto;
-border:
-    1px solid
-    #ddd;
-border-radius:
-    999px;
-padding:
-    9px 14px;
-background:
-    #fff;
-color:
-    #555;
-font-size:
-    13px;
-cursor:
-    pointer;
+    border:
+        1px solid #dddddd;
 
+    padding:
+        9px 14px;
+
+    border-radius:
+        999px;
+
+    background:
+        #ffffff;
+
+    color:
+        #555555;
+
+    font-size:
+        13px;
+
+    font-weight:
+        600;
+
+    cursor:
+        pointer;
+
+    white-space:
+        nowrap;
+
+    transition:
+        0.15s;
 }
+
 
 .filter-btn.active {
+    background:
+        #111111;
 
-background:
-    #222;
-color:
-    #fff;
-border-color:
-    #222;
+    border-color:
+        #111111;
+
+    color:
+        #ffffff;
+}
+
+
+.filter-btn:active {
+    transform:
+        scale(0.95);
+}
+
+
+/* ==================================================
+Main
+================================================== */
+
+.main-content {
+    max-width:
+        900px;
+
+    margin:
+        0 auto;
+
+    padding:
+        0 14px 80px;
+}
+
+
+.section-title {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    margin:
+        4px 0 14px;
+}
+
+
+.section-title h2 {
+    font-size:
+        19px;
+}
+
+
+.section-title p {
+    margin-top:
+        3px;
+
+    color:
+        #888888;
+
+    font-size:
+        12px;
+}
+
+
+.live-indicator {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        5px;
+
+    color:
+        #2e8b57;
+
+    font-size:
+        12px;
+
+    font-weight:
+        600;
+}
+
+
+.live-indicator span {
+    width:
+        8px;
+
+    height:
+        8px;
+
+    border-radius:
+        50%;
+
+    background:
+        #2e8b57;
+
+    animation:
+        livePulse 1.5s infinite;
+}
+
+
+@keyframes livePulse {
+
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.35;
+    }
+
+    100% {
+        opacity: 1;
+    }
 
 }
 
-/* =========================================
-訂單區
-========================================= */
 
-.orders-container {
+/* ==================================================
+Loading
+================================================== */
 
-padding:
-    0 12px;
+.loading-card {
+    padding:
+        50px 20px;
+
+    background:
+        #ffffff;
+
+    border-radius:
+        16px;
+
+    text-align:
+        center;
+
+    box-shadow:
+        0 2px 10px
+        rgba(0, 0, 0, 0.05);
+}
+
+
+.loading-icon {
+    font-size:
+        35px;
+
+    animation:
+        loadingRotate 1.2s linear infinite;
+}
+
+
+@keyframes loadingRotate {
+
+    from {
+        transform:
+            rotate(0deg);
+    }
+
+    to {
+        transform:
+            rotate(360deg);
+    }
 
 }
 
-.loading,
+
+.loading-card p {
+    margin-top:
+        12px;
+
+    font-weight:
+        700;
+}
+
+
+.loading-card small {
+    display:
+        block;
+
+    margin-top:
+        5px;
+
+    color:
+        #999999;
+}
+
+
+/* ==================================================
+Empty
+================================================== */
+
 .empty-orders {
+    padding:
+        50px 20px;
 
-padding:
-    40px 20px;
-text-align:
-    center;
-color:
-    #888;
+    background:
+        #ffffff;
 
+    border-radius:
+        16px;
+
+    color:
+        #888888;
+
+    text-align:
+        center;
 }
 
-/* =========================================
-訂單卡片
-========================================= */
+
+/* ==================================================
+Order Card
+================================================== */
 
 .order-card {
+    margin-bottom:
+        14px;
 
-margin-bottom:
-    14px;
-border-radius:
-    16px;
-background:
-    #fff;
-overflow:
-    hidden;
-box-shadow:
-    0 3px 12px
-    rgba(0,0,0,.08);
+    padding:
+        16px;
 
+    background:
+        #ffffff;
+
+    border-radius:
+        16px;
+
+    box-shadow:
+        0 3px 12px
+        rgba(0, 0, 0, 0.07);
+
+    overflow:
+        hidden;
 }
+
+
+/* ==================================================
+Order Header
+================================================== */
 
 .order-card-header {
+    display:
+        flex;
 
-display:
-    flex;
-justify-content:
-    space-between;
-align-items:
-    center;
-padding:
-    14px;
-background:
-    #fafafa;
-border-bottom:
-    1px solid
-    #eee;
+    align-items:
+        flex-start;
 
+    justify-content:
+        space-between;
+
+    gap:
+        10px;
+
+    padding-bottom:
+        12px;
+
+    border-bottom:
+        1px solid #eeeeee;
 }
+
 
 .order-id {
+    font-size:
+        13px;
 
-font-weight:
-    bold;
-font-size:
-    14px;
+    font-weight:
+        800;
 
+    word-break:
+        break-all;
 }
+
 
 .order-time {
+    margin-top:
+        5px;
 
-margin-top:
-    4px;
-font-size:
-    12px;
-color:
-    #888;
+    color:
+        #888888;
 
+    font-size:
+        12px;
 }
 
-/* =========================================
-狀態
-========================================= */
 
 .order-status {
+    flex:
+        0 0 auto;
 
-display:
-    inline-block;
-padding:
-    6px 10px;
-border-radius:
-    999px;
-font-size:
-    12px;
-font-weight:
-    bold;
+    padding:
+        7px 10px;
 
+    border-radius:
+        999px;
+
+    font-size:
+        12px;
+
+    font-weight:
+        800;
+
+    white-space:
+        nowrap;
 }
+
+
+/* ==================================================
+Status
+================================================== */
 
 .status-new {
+    background:
+        #ffe5e5;
 
-background:
-    #ffe0e0;
-color:
-    #c62828;
-
+    color:
+        #d62828;
 }
+
 
 .status-accepted {
+    background:
+        #fff4cc;
 
-background:
-    #fff3cd;
-color:
-    #856404;
-
+    color:
+        #a87500;
 }
+
 
 .status-making {
+    background:
+        #ffe8d1;
 
-background:
-    #ffe8d1;
-color:
-    #b45309;
-
+    color:
+        #c45b00;
 }
+
 
 .status-ready {
+    background:
+        #dff7e8;
 
-background:
-    #dff7e7;
-color:
-    #16803c;
-
+    color:
+        #198754;
 }
+
 
 .status-completed {
+    background:
+        #e8e8e8;
 
-background:
-    #e8e8e8;
-color:
-    #555;
-
+    color:
+        #555555;
 }
+
 
 .status-cancelled {
+    background:
+        #eeeeee;
 
-background:
-    #f1dede;
-color:
-    #9b2226;
-
+    color:
+        #999999;
 }
 
-/* =========================================
-顧客資訊
-========================================= */
+
+/* ==================================================
+Customer
+================================================== */
 
 .order-customer {
-
-padding:
-    14px;
-border-bottom:
-    1px solid
-    #eee;
-
+    padding:
+        13px 0;
 }
+
 
 .customer-name {
+    font-size:
+        16px;
 
-font-size:
-    18px;
-font-weight:
-    bold;
-
+    font-weight:
+        800;
 }
+
 
 .customer-info {
+    margin-top:
+        7px;
 
-margin-top:
-    6px;
-font-size:
-    13px;
-color:
-    #666;
-line-height:
-    1.8;
+    color:
+        #666666;
 
+    font-size:
+        13px;
+
+    line-height:
+        1.8;
 }
 
-/* =========================================
-餐點
-========================================= */
+
+/* ==================================================
+Items
+================================================== */
 
 .order-items {
+    padding:
+        4px 0;
 
-padding:
-    14px;
+    border-top:
+        1px solid #eeeeee;
 
+    border-bottom:
+        1px solid #eeeeee;
 }
+
 
 .order-item {
+    display:
+        flex;
 
-display:
-    flex;
-justify-content:
-    space-between;
-gap:
-    10px;
-padding:
-    9px 0;
-border-bottom:
-    1px dashed
-    #ddd;
+    align-items:
+        flex-start;
 
+    justify-content:
+        space-between;
+
+    gap:
+        12px;
+
+    padding:
+        12px 0;
 }
 
-.order-item:last-child {
-
-border-bottom:
-    0;
-
-}
 
 .item-name {
+    font-size:
+        15px;
 
-font-weight:
-    600;
+    font-weight:
+        700;
 
+    line-height:
+        1.5;
 }
+
 
 .item-options {
+    margin-top:
+        4px;
 
-margin-top:
-    4px;
-font-size:
-    12px;
-color:
-    #777;
+    color:
+        #888888;
 
+    font-size:
+        12px;
+
+    line-height:
+        1.5;
 }
+
 
 .item-price {
+    flex:
+        0 0 auto;
 
-white-space:
-    nowrap;
-font-weight:
-    bold;
+    font-size:
+        14px;
 
+    font-weight:
+        700;
+
+    white-space:
+        nowrap;
 }
 
-/* =========================================
-金額
-========================================= */
+
+/* ==================================================
+Total
+================================================== */
 
 .order-total {
+    display:
+        flex;
 
-display:
-    flex;
-justify-content:
-    space-between;
-padding:
-    14px;
-background:
-    #fafafa;
-font-size:
-    16px;
+    align-items:
+        center;
 
+    justify-content:
+        space-between;
+
+    padding:
+        14px 0 12px;
 }
+
+
+.order-total span {
+    color:
+        #666666;
+
+    font-size:
+        14px;
+}
+
 
 .order-total strong {
+    color:
+        #111111;
 
-font-size:
-    20px;
+    font-size:
+        21px;
 
+    font-weight:
+        900;
 }
 
-/* =========================================
-操作按鈕
-========================================= */
+
+/* ==================================================
+Actions
+================================================== */
 
 .order-actions {
+    display:
+        grid;
 
-display:
-    grid;
-grid-template-columns:
-    1fr 1fr;
-gap:
-    8px;
-padding:
-    12px;
+    grid-template-columns:
+        1fr 1fr;
 
+    gap:
+        8px;
 }
+
+
+.status-action-btn,
+.detail-btn {
+    min-height:
+        44px;
+
+    border:
+        none;
+
+    border-radius:
+        10px;
+
+    font-size:
+        13px;
+
+    font-weight:
+        700;
+
+    cursor:
+        pointer;
+
+    transition:
+        transform 0.15s,
+        opacity 0.15s;
+}
+
 
 .status-action-btn {
+    background:
+        #111111;
 
-border:
-    0;
-border-radius:
-    10px;
-padding:
-    12px 8px;
-background:
-    #222;
-color:
-    #fff;
-font-size:
-    14px;
-font-weight:
-    bold;
-cursor:
-    pointer;
-
+    color:
+        #ffffff;
 }
+
+
+.status-action-btn:active,
+.detail-btn:active {
+    transform:
+        scale(0.96);
+}
+
 
 .status-action-btn:disabled {
+    background:
+        #dddddd;
 
-opacity:
-    .35;
-cursor:
-    not-allowed;
+    color:
+        #888888;
 
+    cursor:
+        not-allowed;
 }
+
+
+.cancel-order-btn {
+    background:
+        #fff0f0;
+
+    color:
+        #d62828;
+
+    border:
+        1px solid #ffd0d0;
+}
+
 
 .detail-btn {
+    grid-column:
+        1 / -1;
 
-grid-column:
-    span 2;
-border:
-    1px solid
-    #ddd;
-border-radius:
-    10px;
-padding:
-    10px;
-background:
-    #fff;
-color:
-    #555;
+    background:
+        #f4f4f4;
 
+    color:
+        #333333;
+
+    border:
+        1px solid #dddddd;
 }
 
-/* =========================================
+
+/* ==================================================
 Modal
-========================================= */
+================================================== */
 
 .modal {
+    position:
+        fixed;
 
-display:
-    none;
-position:
-    fixed;
-inset:
-    0;
-z-index:
-    999;
-padding:
-    20px;
-background:
-    rgba(0,0,0,.6);
-align-items:
-    center;
-justify-content:
-    center;
+    inset:
+        0;
 
+    z-index:
+        1000;
+
+    display:
+        none;
+
+    align-items:
+        flex-end;
+
+    justify-content:
+        center;
+
+    padding:
+        0;
+
+    background:
+        rgba(0, 0, 0, 0.55);
 }
+
 
 .modal.show {
-
-display:
-    flex;
-
+    display:
+        flex;
 }
+
 
 .modal-box {
+    width:
+        100%;
 
-position:
-    relative;
-width:
-    100%;
-max-width:
-    500px;
-max-height:
-    90vh;
-overflow-y:
-    auto;
-border-radius:
-    18px;
-background:
-    #fff;
+    max-width:
+        650px;
+
+    max-height:
+        90vh;
+
+    overflow-y:
+        auto;
+
+    padding:
+        20px;
+
+    background:
+        #ffffff;
+
+    border-radius:
+        20px 20px 0 0;
+
+    animation:
+        modalUp 0.2s ease;
+}
+
+
+@keyframes modalUp {
+
+    from {
+        transform:
+            translateY(100%);
+    }
+
+    to {
+        transform:
+            translateY(0);
+    }
 
 }
+
+
+.modal-header {
+    display:
+        flex;
+
+    align-items:
+        flex-start;
+
+    justify-content:
+        space-between;
+
+    gap:
+        15px;
+
+    padding-bottom:
+        15px;
+
+    border-bottom:
+        1px solid #eeeeee;
+}
+
+
+.modal-header h2 {
+    font-size:
+        20px;
+}
+
+
+.modal-header p {
+    margin-top:
+        4px;
+
+    color:
+        #888888;
+
+    font-size:
+        12px;
+}
+
 
 .close-modal {
+    width:
+        40px;
 
-position:
-    absolute;
-top:
-    12px;
-right:
-    12px;
-width:
-    36px;
-height:
-    36px;
-border:
-    0;
-border-radius:
-    50%;
-background:
-    #eee;
-font-size:
-    18px;
+    height:
+        40px;
 
+    border:
+        none;
+
+    border-radius:
+        50%;
+
+    background:
+        #f2f2f2;
+
+    color:
+        #333333;
+
+    font-size:
+        20px;
+
+    cursor:
+        pointer;
 }
 
-#order-detail {
 
-padding:
-    22px;
-
-}
-
-/* =========================================
-手機最佳化
-========================================= */
-
-@media (
-max-width: 600px
-) {
-
-.stats-grid {
-    gap:
-        7px;
-}
-.stat-card {
+.order-detail {
     padding:
-        12px 5px;
+        16px 0 10px;
 }
-.stat-card strong {
+
+
+.order-detail h2 {
+    display:
+        none;
+}
+
+
+.order-detail h3 {
+    margin:
+        15px 0 5px;
+
     font-size:
         17px;
 }
-.order-actions {
-    grid-template-columns:
-        1fr 1fr;
+
+
+.order-detail p {
+    margin:
+        8px 0;
+
+    color:
+        #555555;
+
+    font-size:
+        14px;
+
+    line-height:
+        1.6;
 }
+
+
+.order-detail hr {
+    margin:
+        15px 0;
+
+    border:
+        none;
+
+    border-top:
+        1px solid #eeeeee;
+}
+
+
+/* ==================================================
+平板 / 電腦
+================================================== */
+
+@media (
+    min-width: 700px
+) {
+
+    .pos-header {
+        padding:
+            16px 30px;
+    }
+
+
+    .stats-grid {
+        max-width:
+            900px;
+
+        margin:
+            0 auto;
+
+        padding:
+            20px 14px;
+    }
+
+
+    .filter-section {
+        max-width:
+            900px;
+
+        margin:
+            0 auto;
+
+        padding:
+            4px 14px 18px;
+    }
+
+
+    .modal {
+        align-items:
+            center;
+
+        padding:
+            20px;
+    }
+
+
+    .modal-box {
+        border-radius:
+            20px;
+
+        animation:
+            modalFade 0.2s ease;
+    }
+
+
+    @keyframes modalFade {
+
+        from {
+            opacity:
+                0;
+
+            transform:
+                scale(0.96);
+        }
+
+        to {
+            opacity:
+                1;
+
+            transform:
+                scale(1);
+        }
+
+    }
+
+}
+
+
+/* ==================================================
+小螢幕
+================================================== */
+
+@media (
+    max-width: 380px
+) {
+
+    .stats-grid {
+        gap:
+            6px;
+
+        padding:
+            10px;
+    }
+
+
+    .stat-card {
+        padding:
+            10px 7px;
+
+        gap:
+            5px;
+    }
+
+
+    .stat-icon {
+        font-size:
+            18px;
+    }
+
+
+    .stat-info span {
+        font-size:
+            9px;
+    }
+
+
+    .stat-info strong {
+        font-size:
+            15px;
+    }
+
+
+    .main-content {
+        padding:
+            0 10px 70px;
+    }
+
+
+    .order-card {
+        padding:
+            13px;
+    }
 
 }
