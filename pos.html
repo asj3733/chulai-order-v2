@@ -9,8 +9,12 @@
     name="viewport"
     content="width=device-width, initial-scale=1.0">
 
+<meta
+    name="theme-color"
+    content="#111111">
+
 <title>
-    初萊食麵｜POS 後台
+    初萊食麵｜POS 3.0
 </title>
 
 <link
@@ -23,27 +27,36 @@
 <body>
 
 
-<!-- =========================================
-頁首
-========================================= -->
+<!-- ==================================================
+頂部
+================================================== -->
 
 <header class="pos-header">
 
-    <div>
+    <div class="brand-area">
 
-        <h1>
-            🍜 初萊食麵
-        </h1>
+        <div class="brand-icon">
+            🍜
+        </div>
 
-        <p>
-            店家 POS 後台
-        </p>
+        <div>
+
+            <h1>
+                初萊食麵
+            </h1>
+
+            <p>
+                POS 後台 3.0
+            </p>
+
+        </div>
 
     </div>
 
 
     <button
         id="refresh-btn"
+        class="refresh-btn"
         type="button">
 
         🔄 更新
@@ -54,9 +67,9 @@
 
 
 
-<!-- =========================================
-系統狀態
-========================================= -->
+<!-- ==================================================
+系統連線狀態
+================================================== -->
 
 <div
     id="system-status"
@@ -68,40 +81,34 @@
 
 
 
-<!-- =========================================
-今日統計
-========================================= -->
+<!-- ==================================================
+今日營業統計
+================================================== -->
 
 <section class="stats-grid">
 
 
     <div class="stat-card">
 
-        <span>
-            📋 今日訂單
-        </span>
+        <div class="stat-icon">
+            📋
+        </div>
 
-        <strong id="today-order-count">
-            0
-        </strong>
+        <div class="stat-info">
 
-        <small>
-            筆
-        </small>
+            <span>
+                今日訂單
+            </span>
 
-    </div>
+            <strong id="today-order-count">
+                0
+            </strong>
 
+            <small>
+                筆
+            </small>
 
-
-    <div class="stat-card">
-
-        <span>
-            💰 今日營業額
-        </span>
-
-        <strong id="today-total">
-            NT$0
-        </strong>
+        </div>
 
     </div>
 
@@ -109,17 +116,47 @@
 
     <div class="stat-card">
 
-        <span>
-            🔴 待處理
-        </span>
+        <div class="stat-icon">
+            💰
+        </div>
 
-        <strong id="pending-count">
-            0
-        </strong>
+        <div class="stat-info">
 
-        <small>
-            筆
-        </small>
+            <span>
+                今日營業額
+            </span>
+
+            <strong id="today-total">
+                NT$0
+            </strong>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+            🔴
+        </div>
+
+        <div class="stat-info">
+
+            <span>
+                待處理
+            </span>
+
+            <strong id="pending-count">
+                0
+            </strong>
+
+            <small>
+                筆
+            </small>
+
+        </div>
 
     </div>
 
@@ -128,16 +165,17 @@
 
 
 
-<!-- =========================================
-訂單篩選
-========================================= -->
+<!-- ==================================================
+訂單狀態篩選
+================================================== -->
 
 <section class="filter-section">
 
 
     <button
         class="filter-btn active"
-        data-filter="全部">
+        data-filter="全部"
+        type="button">
 
         全部
 
@@ -146,7 +184,8 @@
 
     <button
         class="filter-btn"
-        data-filter="新訂單">
+        data-filter="新訂單"
+        type="button">
 
         🔴 新訂單
 
@@ -155,7 +194,8 @@
 
     <button
         class="filter-btn"
-        data-filter="已接單">
+        data-filter="已接單"
+        type="button">
 
         🟡 已接單
 
@@ -164,7 +204,8 @@
 
     <button
         class="filter-btn"
-        data-filter="製作中">
+        data-filter="製作中"
+        type="button">
 
         🟠 製作中
 
@@ -173,7 +214,8 @@
 
     <button
         class="filter-btn"
-        data-filter="可取餐">
+        data-filter="可取餐"
+        type="button">
 
         🟢 可取餐
 
@@ -182,9 +224,20 @@
 
     <button
         class="filter-btn"
-        data-filter="已完成">
+        data-filter="已完成"
+        type="button">
 
         ✅ 已完成
+
+    </button>
+
+
+    <button
+        class="filter-btn"
+        data-filter="取消"
+        type="button">
+
+        ❌ 取消
 
     </button>
 
@@ -193,31 +246,74 @@
 
 
 
-<!-- =========================================
-訂單列表
-========================================= -->
+<!-- ==================================================
+訂單區
+================================================== -->
 
-<main>
+<main class="main-content">
 
-    <div
-        id="orders-container"
-        class="orders-container">
 
-        <div class="loading">
+    <div class="section-title">
 
-            🔄 正在連線並載入訂單...
+        <div>
+
+            <h2>
+                📋 訂單管理
+            </h2>
+
+            <p>
+                即時查看與處理店內訂單
+            </p>
+
+        </div>
+
+
+        <div class="live-indicator">
+
+            <span></span>
+
+            即時同步
 
         </div>
 
     </div>
 
+
+
+    <!-- 訂單列表 -->
+
+    <div
+        id="orders-container"
+        class="orders-container">
+
+
+        <div class="loading-card">
+
+            <div class="loading-icon">
+                🔄
+            </div>
+
+            <p>
+                正在載入訂單...
+            </p>
+
+            <small>
+                請稍候
+            </small>
+
+        </div>
+
+
+    </div>
+
+
 </main>
 
 
 
-<!-- =========================================
-訂單詳細視窗
-========================================= -->
+<!-- ==================================================
+訂單詳細 Modal
+================================================== -->
 
 <div
     id="order-modal"
@@ -227,18 +323,43 @@
     <div class="modal-box">
 
 
-        <button
-            id="close-modal"
-            class="close-modal"
-            type="button">
+        <!-- Modal 頂部 -->
 
-            ✕
+        <div class="modal-header">
 
-        </button>
 
+            <div>
+
+                <h2>
+                    📋 訂單詳細
+                </h2>
+
+                <p>
+                    查看完整訂單資訊
+                </p>
+
+            </div>
+
+
+            <button
+                id="close-modal"
+                class="close-modal"
+                type="button">
+
+                ✕
+
+            </button>
+
+
+        </div>
+
+
+
+        <!-- 訂單詳細內容 -->
 
         <div
-            id="order-detail">
+            id="order-detail"
+            class="order-detail">
 
         </div>
 
@@ -250,11 +371,14 @@
 
 
 
-<!-- =========================================
-JS
-========================================= -->
+<!-- ==================================================
+JavaScript
+================================================== -->
 
-<script src="js/pos.js"></script>
+<script
+    src="js/pos.js">
+
+</script>
 
 
 </body>
