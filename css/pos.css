@@ -1,0 +1,689 @@
+/* =========================================
+初萊食麵
+POS 後台 V1
+========================================= */
+
+/* =========================================
+基本
+========================================= */
+
+* {
+    box-sizing:
+    border-box;
+
+}
+
+body {
+
+margin:
+    0;
+padding:
+    0;
+padding-bottom:
+    30px;
+font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Noto Sans TC",
+    "Microsoft JhengHei",
+    sans-serif;
+background:
+    #f3f3f3;
+color:
+    #333;
+
+}
+
+/* =========================================
+Header
+========================================= */
+
+.pos-header {
+
+position:
+    sticky;
+top:
+    0;
+z-index:
+    100;
+display:
+    flex;
+justify-content:
+    space-between;
+align-items:
+    center;
+padding:
+    16px;
+background:
+    #222;
+color:
+    #fff;
+box-shadow:
+    0 2px 10px
+    rgba(0,0,0,.2);
+
+}
+
+.pos-header h1 {
+
+margin:
+    0;
+font-size:
+    22px;
+
+}
+
+.pos-header p {
+
+margin:
+    4px 0 0;
+font-size:
+    13px;
+opacity:
+    .7;
+
+}
+
+#refresh-btn {
+
+border:
+    0;
+border-radius:
+    10px;
+padding:
+    10px 15px;
+background:
+    #d4af37;
+color:
+    #222;
+font-weight:
+    bold;
+cursor:
+    pointer;
+
+}
+
+/* =========================================
+系統狀態
+========================================= */
+
+.system-status {
+
+margin:
+    12px;
+padding:
+    10px 14px;
+border-radius:
+    10px;
+background:
+    #fff;
+font-size:
+    13px;
+text-align:
+    center;
+
+}
+
+/* =========================================
+統計
+========================================= */
+
+.stats-grid {
+
+display:
+    grid;
+grid-template-columns:
+    repeat(3, 1fr);
+gap:
+    10px;
+padding:
+    0 12px 12px;
+
+}
+
+.stat-card {
+
+padding:
+    14px 8px;
+border-radius:
+    14px;
+background:
+    #fff;
+text-align:
+    center;
+box-shadow:
+    0 2px 8px
+    rgba(0,0,0,.06);
+
+}
+
+.stat-card span {
+
+display:
+    block;
+font-size:
+    12px;
+color:
+    #777;
+
+}
+
+.stat-card strong {
+
+display:
+    block;
+margin:
+    6px 0;
+font-size:
+    20px;
+
+}
+
+.stat-card small {
+
+font-size:
+    12px;
+color:
+    #777;
+
+}
+
+/* =========================================
+篩選
+========================================= */
+
+.filter-section {
+
+display:
+    flex;
+gap:
+    8px;
+padding:
+    4px 12px 14px;
+overflow-x:
+    auto;
+
+}
+
+.filter-btn {
+
+flex:
+    0 0 auto;
+border:
+    1px solid
+    #ddd;
+border-radius:
+    999px;
+padding:
+    9px 14px;
+background:
+    #fff;
+color:
+    #555;
+font-size:
+    13px;
+cursor:
+    pointer;
+
+}
+
+.filter-btn.active {
+
+background:
+    #222;
+color:
+    #fff;
+border-color:
+    #222;
+
+}
+
+/* =========================================
+訂單區
+========================================= */
+
+.orders-container {
+
+padding:
+    0 12px;
+
+}
+
+.loading,
+.empty-orders {
+
+padding:
+    40px 20px;
+text-align:
+    center;
+color:
+    #888;
+
+}
+
+/* =========================================
+訂單卡片
+========================================= */
+
+.order-card {
+
+margin-bottom:
+    14px;
+border-radius:
+    16px;
+background:
+    #fff;
+overflow:
+    hidden;
+box-shadow:
+    0 3px 12px
+    rgba(0,0,0,.08);
+
+}
+
+.order-card-header {
+
+display:
+    flex;
+justify-content:
+    space-between;
+align-items:
+    center;
+padding:
+    14px;
+background:
+    #fafafa;
+border-bottom:
+    1px solid
+    #eee;
+
+}
+
+.order-id {
+
+font-weight:
+    bold;
+font-size:
+    14px;
+
+}
+
+.order-time {
+
+margin-top:
+    4px;
+font-size:
+    12px;
+color:
+    #888;
+
+}
+
+/* =========================================
+狀態
+========================================= */
+
+.order-status {
+
+display:
+    inline-block;
+padding:
+    6px 10px;
+border-radius:
+    999px;
+font-size:
+    12px;
+font-weight:
+    bold;
+
+}
+
+.status-new {
+
+background:
+    #ffe0e0;
+color:
+    #c62828;
+
+}
+
+.status-accepted {
+
+background:
+    #fff3cd;
+color:
+    #856404;
+
+}
+
+.status-making {
+
+background:
+    #ffe8d1;
+color:
+    #b45309;
+
+}
+
+.status-ready {
+
+background:
+    #dff7e7;
+color:
+    #16803c;
+
+}
+
+.status-completed {
+
+background:
+    #e8e8e8;
+color:
+    #555;
+
+}
+
+.status-cancelled {
+
+background:
+    #f1dede;
+color:
+    #9b2226;
+
+}
+
+/* =========================================
+顧客資訊
+========================================= */
+
+.order-customer {
+
+padding:
+    14px;
+border-bottom:
+    1px solid
+    #eee;
+
+}
+
+.customer-name {
+
+font-size:
+    18px;
+font-weight:
+    bold;
+
+}
+
+.customer-info {
+
+margin-top:
+    6px;
+font-size:
+    13px;
+color:
+    #666;
+line-height:
+    1.8;
+
+}
+
+/* =========================================
+餐點
+========================================= */
+
+.order-items {
+
+padding:
+    14px;
+
+}
+
+.order-item {
+
+display:
+    flex;
+justify-content:
+    space-between;
+gap:
+    10px;
+padding:
+    9px 0;
+border-bottom:
+    1px dashed
+    #ddd;
+
+}
+
+.order-item:last-child {
+
+border-bottom:
+    0;
+
+}
+
+.item-name {
+
+font-weight:
+    600;
+
+}
+
+.item-options {
+
+margin-top:
+    4px;
+font-size:
+    12px;
+color:
+    #777;
+
+}
+
+.item-price {
+
+white-space:
+    nowrap;
+font-weight:
+    bold;
+
+}
+
+/* =========================================
+金額
+========================================= */
+
+.order-total {
+
+display:
+    flex;
+justify-content:
+    space-between;
+padding:
+    14px;
+background:
+    #fafafa;
+font-size:
+    16px;
+
+}
+
+.order-total strong {
+
+font-size:
+    20px;
+
+}
+
+/* =========================================
+操作按鈕
+========================================= */
+
+.order-actions {
+
+display:
+    grid;
+grid-template-columns:
+    1fr 1fr;
+gap:
+    8px;
+padding:
+    12px;
+
+}
+
+.status-action-btn {
+
+border:
+    0;
+border-radius:
+    10px;
+padding:
+    12px 8px;
+background:
+    #222;
+color:
+    #fff;
+font-size:
+    14px;
+font-weight:
+    bold;
+cursor:
+    pointer;
+
+}
+
+.status-action-btn:disabled {
+
+opacity:
+    .35;
+cursor:
+    not-allowed;
+
+}
+
+.detail-btn {
+
+grid-column:
+    span 2;
+border:
+    1px solid
+    #ddd;
+border-radius:
+    10px;
+padding:
+    10px;
+background:
+    #fff;
+color:
+    #555;
+
+}
+
+/* =========================================
+Modal
+========================================= */
+
+.modal {
+
+display:
+    none;
+position:
+    fixed;
+inset:
+    0;
+z-index:
+    999;
+padding:
+    20px;
+background:
+    rgba(0,0,0,.6);
+align-items:
+    center;
+justify-content:
+    center;
+
+}
+
+.modal.show {
+
+display:
+    flex;
+
+}
+
+.modal-box {
+
+position:
+    relative;
+width:
+    100%;
+max-width:
+    500px;
+max-height:
+    90vh;
+overflow-y:
+    auto;
+border-radius:
+    18px;
+background:
+    #fff;
+
+}
+
+.close-modal {
+
+position:
+    absolute;
+top:
+    12px;
+right:
+    12px;
+width:
+    36px;
+height:
+    36px;
+border:
+    0;
+border-radius:
+    50%;
+background:
+    #eee;
+font-size:
+    18px;
+
+}
+
+#order-detail {
+
+padding:
+    22px;
+
+}
+
+/* =========================================
+手機最佳化
+========================================= */
+
+@media (
+max-width: 600px
+) {
+
+.stats-grid {
+    gap:
+        7px;
+}
+.stat-card {
+    padding:
+        12px 5px;
+}
+.stat-card strong {
+    font-size:
+        17px;
+}
+.order-actions {
+    grid-template-columns:
+        1fr 1fr;
+}
+
+}
