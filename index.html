@@ -10,88 +10,126 @@
         content="width=device-width, initial-scale=1.0">
 
     <title>
-        初萊食麵｜高雄三民區麵食・關東煮・大腸香腸・水餃｜線上點餐與外送
+        初萊食麵｜高雄三民區麵食・關東煮・大腸香腸・水餃｜線上點餐
     </title>
 
     <meta
         name="description"
-        content="初萊食麵｜高雄三民區麵食、關東煮、大腸香腸、水餃。提供內用、外帶、線上點餐與外送服務。立即線上點餐，或選擇 Uber Eats、foodpanda、foodomo。">
+        content="初萊食麵位於高雄市三民區，提供麵食、乾麵、湯麵、關東煮、大腸香腸、水餃等餐點。可直接使用官方線上點餐系統預訂餐點，到店取餐更方便。">
+
+    <meta
+        name="keywords"
+        content="初萊食麵,高雄麵店,三民區美食,高雄麵食,高雄乾麵,高雄關東煮,高雄水餃,大腸香腸,線上點餐,三民區麵店">
+
+    <meta
+        name="author"
+        content="初萊食麵">
 
     <meta
         name="robots"
         content="index, follow">
 
-    <meta
-        name="theme-color"
-        content="#151515">
-
-    <!--
-        Google Ads / SEO
-        正式使用自訂網域後，
-        建議把 canonical 改成你的正式網址。
-    -->
     <link
         rel="canonical"
-        href="https://asj3733.github.io/chulai-order-v2/">
+        href="https://asj3733.github.io/chulai-order-v2/index.html">
 
-    <!-- Open Graph -->
+
+    <!-- =========================
+         Open Graph
+    ========================== -->
+
     <meta
         property="og:type"
-        content="website">
+        content="restaurant">
 
     <meta
         property="og:title"
-        content="初萊食麵｜高雄三民區麵食・關東煮・大腸香腸">
+        content="初萊食麵｜高雄三民區麵食・關東煮・水餃">
 
     <meta
         property="og:description"
-        content="麵食、關東煮、大腸香腸、水餃｜提供線上點餐、外帶與外送">
+        content="高雄三民區在地麵食店，提供麵食、關東煮、大腸香腸、水餃等餐點，歡迎使用官方線上點餐。">
+
+    <meta
+        property="og:url"
+        content="https://asj3733.github.io/chulai-order-v2/index.html">
 
     <meta
         property="og:image"
         content="https://asj3733.github.io/chulai-order-v2/images/IMG_3543.jpeg">
 
     <meta
-        property="og:url"
-        content="https://asj3733.github.io/chulai-order-v2/">
-
-    <meta
         property="og:locale"
         content="zh_TW">
 
+
+    <!-- =========================
+         Twitter / Social
+    ========================== -->
+
+    <meta
+        name="twitter:card"
+        content="summary_large_image">
+
+    <meta
+        name="twitter:title"
+        content="初萊食麵｜高雄三民區麵食・關東煮・水餃">
+
+    <meta
+        name="twitter:description"
+        content="高雄三民區在地麵食店，提供麵食、關東煮、大腸香腸、水餃等餐點。">
+
+    <meta
+        name="twitter:image"
+        content="https://asj3733.github.io/chulai-order-v2/images/IMG_3543.jpeg">
+
+
+    <!-- =========================
+         Google / Browser
+    ========================== -->
+
+    <meta
+        name="theme-color"
+        content="#111111">
+
+    <link
+        rel="icon"
+        href="images/IMG_3543.jpeg">
+
+
+    <!-- =========================
+         CSS
+    ========================== -->
+
     <style>
 
-        /* =========================================================
-           初萊食麵｜Google Ads 一頁式首頁
-           v1.0
-        ========================================================= */
-
         :root {
+            --bg: #0d0d0d;
+            --bg-soft: #151515;
+            --bg-card: #191919;
 
-            --bg: #111111;
-            --bg-soft: #191919;
-            --card: #202020;
+            --gold: #d8a84e;
+            --gold-light: #f2cf7b;
 
-            --gold: #d4af37;
-            --gold-light: #f0cf68;
+            --text: #ffffff;
+            --text-soft: #c9c9c9;
+            --text-muted: #9b9b9b;
 
-            --white: #ffffff;
-            --text: #eeeeee;
-            --muted: #a9a9a9;
+            --border: rgba(255,255,255,0.10);
 
-            --green: #22c55e;
+            --max-width: 1180px;
 
-            --border: rgba(255,255,255,.10);
+            --radius: 18px;
 
-            --max: 1080px;
-
-            --radius: 20px;
-
+            --shadow:
+                0 18px 45px rgba(0,0,0,0.30);
         }
 
 
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
 
@@ -102,515 +140,361 @@
 
         body {
 
-            margin: 0;
-
-            background:
-                linear-gradient(
-                    180deg,
-                    #111111 0%,
-                    #171717 45%,
-                    #111111 100%
-                );
-
-            color: var(--text);
-
             font-family:
                 -apple-system,
                 BlinkMacSystemFont,
+                "Segoe UI",
                 "Noto Sans TC",
                 "PingFang TC",
                 "Microsoft JhengHei",
-                Arial,
                 sans-serif;
+
+            background: var(--bg);
+
+            color: var(--text);
 
             line-height: 1.7;
 
+            overflow-x: hidden;
+        }
+
+
+        a {
+            color: inherit;
+            text-decoration: none;
         }
 
 
         img {
-
             display: block;
-
             max-width: 100%;
-
         }
 
 
-        a {
-
-            color: inherit;
-
-            text-decoration: none;
-
-        }
-
-
-        button,
-        a {
-
-            -webkit-tap-highlight-color:
-                transparent;
-
-        }
-
-
-        :focus-visible {
-
-            outline:
-                3px solid var(--gold-light);
-
-            outline-offset: 4px;
-
+        button {
+            font: inherit;
         }
 
 
         .container {
 
-            width:
-                min(
-                    calc(100% - 32px),
-                    var(--max)
-                );
+            width: min(
+                calc(100% - 40px),
+                var(--max-width)
+            );
 
-            margin:
-                0 auto;
-
+            margin: 0 auto;
         }
 
 
-        /* =========================================================
-           跳過導覽
-        ========================================================= */
-
-        .skip-link {
-
-            position:
-                fixed;
-
-            left:
-                12px;
-
-            top:
-                -100px;
-
-            z-index:
-                9999;
-
-            padding:
-                10px 16px;
-
-            background:
-                var(--gold);
-
-            color:
-                #111;
-
-            font-weight:
-                800;
-
-            border-radius:
-                10px;
-
-        }
-
-
-        .skip-link:focus {
-
-            top:
-                12px;
-
-        }
-
-
-        /* =========================================================
-           頂部導覽
-        ========================================================= */
+        /* =========================
+           Header
+        ========================== */
 
         .topbar {
 
-            position:
-                sticky;
+            position: sticky;
 
-            top:
-                0;
+            top: 0;
 
-            z-index:
-                1000;
+            z-index: 1000;
 
             background:
-                rgba(17,17,17,.94);
+                rgba(13,13,13,0.94);
 
             backdrop-filter:
                 blur(12px);
 
             border-bottom:
                 1px solid var(--border);
-
         }
 
 
         .topbar-inner {
 
-            min-height:
-                64px;
+            min-height: 68px;
 
-            display:
-                flex;
+            display: flex;
 
-            align-items:
-                center;
+            align-items: center;
 
-            justify-content:
-                space-between;
+            justify-content: space-between;
 
-            gap:
-                16px;
-
+            gap: 20px;
         }
 
 
         .brand {
 
-            display:
-                flex;
+            display: flex;
 
-            align-items:
-                center;
+            align-items: center;
 
-            gap:
-                9px;
+            gap: 10px;
 
-            font-weight:
-                900;
+            font-size: 20px;
 
-            font-size:
-                18px;
+            font-weight: 800;
 
-            white-space:
-                nowrap;
+            letter-spacing: 0.03em;
 
+            white-space: nowrap;
         }
 
 
         .brand-mark {
 
-            width:
-                38px;
+            font-size: 25px;
+        }
 
-            height:
-                38px;
 
-            display:
-                grid;
+        .top-nav {
 
-            place-items:
-                center;
+            display: flex;
 
-            border-radius:
-                12px;
+            align-items: center;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    var(--gold-light),
-                    var(--gold)
-                );
+            gap: 22px;
+        }
 
-            color:
-                #151515;
 
+        .top-nav a {
+
+            color: var(--text-soft);
+
+            font-size: 14px;
+
+            transition: 0.2s ease;
+        }
+
+
+        .top-nav a:hover {
+
+            color: var(--gold-light);
         }
 
 
         .top-order {
 
-            padding:
-                9px 14px;
+            display: inline-flex;
 
-            border-radius:
-                999px;
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 10px 17px;
+
+            border-radius: 999px;
 
             background:
-                var(--gold);
+                linear-gradient(
+                    135deg,
+                    var(--gold),
+                    var(--gold-light)
+                );
 
-            color:
-                #151515;
+            color: #111 !important;
 
-            font-weight:
-                900;
+            font-weight: 800;
 
-            font-size:
-                14px;
-
+            box-shadow:
+                0 8px 25px rgba(216,168,78,0.18);
         }
 
 
-        /* =========================================================
+        /* =========================
            Hero
-        ========================================================= */
+        ========================== */
 
         .hero {
 
-            position:
-                relative;
+            position: relative;
 
-            overflow:
-                hidden;
+            min-height: 680px;
 
-            padding:
-                42px 0 38px;
+            display: flex;
 
-            border-bottom:
-                1px solid var(--border);
+            align-items: center;
 
-        }
-
-
-        .hero::before {
-
-            content:
-                "";
-
-            position:
-                absolute;
-
-            width:
-                420px;
-
-            height:
-                420px;
-
-            right:
-                -220px;
-
-            top:
-                -180px;
+            overflow: hidden;
 
             background:
                 radial-gradient(
-                    circle,
-                    rgba(212,175,55,.20),
-                    transparent 68%
+                    circle at 75% 25%,
+                    rgba(216,168,78,0.14),
+                    transparent 35%
+                ),
+                linear-gradient(
+                    180deg,
+                    #111 0%,
+                    #0d0d0d 100%
                 );
-
-            pointer-events:
-                none;
-
         }
 
 
-        .hero-grid {
+        .hero::after {
 
-            position:
-                relative;
+            content: "";
 
-            display:
-                grid;
+            position: absolute;
 
-            grid-template-columns:
-                1.05fr .95fr;
+            inset: 0;
 
-            gap:
-                42px;
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(13,13,13,0.96) 0%,
+                    rgba(13,13,13,0.80) 48%,
+                    rgba(13,13,13,0.35) 100%
+                );
 
-            align-items:
-                center;
+            pointer-events: none;
+        }
 
+
+        .hero-bg {
+
+            position: absolute;
+
+            inset: 0;
+
+            background-image:
+                url("images/IMG_3543.jpeg");
+
+            background-size: cover;
+
+            background-position: center;
+
+            opacity: 0.32;
+
+            filter: saturate(0.85);
         }
 
 
         .hero-content {
 
-            order:
-                1;
+            position: relative;
 
-        }
+            z-index: 2;
 
+            max-width: 720px;
 
-        .hero-photo {
-
-            order:
-                2;
-
+            padding: 90px 0;
         }
 
 
         .eyebrow {
 
-            display:
-                inline-flex;
+            display: inline-flex;
 
-            align-items:
-                center;
+            align-items: center;
 
-            gap:
-                7px;
+            gap: 8px;
 
-            padding:
-                7px 12px;
+            margin-bottom: 18px;
 
-            border:
-                1px solid rgba(212,175,55,.35);
+            color: var(--gold-light);
 
-            border-radius:
-                999px;
+            font-size: 14px;
 
-            color:
-                var(--gold-light);
+            font-weight: 700;
 
-            background:
-                rgba(212,175,55,.08);
+            letter-spacing: 0.08em;
+        }
+
+
+        .eyebrow::before {
+
+            content: "";
+
+            width: 28px;
+
+            height: 1px;
+
+            background: var(--gold);
+        }
+
+
+        .hero h1 {
 
             font-size:
-                13px;
+                clamp(
+                    42px,
+                    7vw,
+                    76px
+                );
 
-            font-weight:
-                800;
+            line-height: 1.1;
 
-            margin-bottom:
-                14px;
+            letter-spacing: -0.03em;
 
+            margin-bottom: 24px;
         }
 
 
-        .status-dot {
+        .hero h1 span {
 
-            width:
-                8px;
+            display: block;
 
-            height:
-                8px;
-
-            border-radius:
-                50%;
-
-            background:
-                var(--green);
-
-            box-shadow:
-                0 0 0 4px rgba(34,197,94,.12);
-
-        }
-
-
-        h1 {
-
-            margin:
-                0;
-
-            color:
-                var(--white);
-
-            font-size:
-                clamp(36px, 7vw, 64px);
-
-            line-height:
-                1.12;
-
-            letter-spacing:
-                .02em;
-
-        }
-
-
-        .hero-title-gold {
-
-            color:
-                var(--gold-light);
-
-        }
-
-
-        .hero-subtitle {
-
-            margin:
-                18px 0 0;
-
-            font-size:
-                clamp(18px, 3vw, 24px);
-
-            color:
-                #f2f2f2;
-
-            font-weight:
-                700;
-
+            color: var(--gold-light);
         }
 
 
         .hero-description {
 
-            margin:
-                14px 0 0;
+            max-width: 650px;
 
-            max-width:
-                620px;
-
-            color:
-                var(--muted);
+            color: #dedede;
 
             font-size:
-                15px;
+                clamp(
+                    16px,
+                    2.3vw,
+                    20px
+                );
 
+            margin-bottom: 30px;
         }
 
 
         .hero-actions {
 
-            display:
-                grid;
+            display: flex;
 
-            grid-template-columns:
-                1fr 1fr;
+            flex-wrap: wrap;
 
-            gap:
-                12px;
+            gap: 13px;
 
-            margin-top:
-                25px;
-
+            margin-bottom: 28px;
         }
 
 
         .btn {
 
-            min-height:
-                56px;
+            display: inline-flex;
 
-            padding:
-                13px 18px;
+            align-items: center;
 
-            border-radius:
-                15px;
+            justify-content: center;
 
-            display:
-                flex;
+            min-height: 52px;
 
-            align-items:
-                center;
+            padding: 0 24px;
 
-            justify-content:
-                center;
+            border-radius: 999px;
 
-            text-align:
-                center;
-
-            font-weight:
-                900;
+            font-weight: 800;
 
             transition:
-                transform .18s ease,
-                opacity .18s ease;
-
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                background 0.2s ease;
         }
 
 
         .btn:hover {
 
-            transform:
-                translateY(-2px);
-
+            transform: translateY(-2px);
         }
 
 
@@ -619,638 +503,388 @@
             background:
                 linear-gradient(
                     135deg,
-                    var(--gold-light),
-                    var(--gold)
+                    var(--gold),
+                    var(--gold-light)
                 );
 
-            color:
-                #151515;
+            color: #111;
 
             box-shadow:
-                0 12px 30px
-                rgba(212,175,55,.18);
-
+                0 12px 32px rgba(216,168,78,0.22);
         }
 
 
         .btn-secondary {
 
             border:
-                1px solid rgba(255,255,255,.18);
+                1px solid rgba(255,255,255,0.20);
 
             background:
-                rgba(255,255,255,.06);
+                rgba(255,255,255,0.05);
 
-            color:
-                var(--white);
-
-        }
-
-
-        .hero-notes {
-
-            display:
-                flex;
-
-            flex-wrap:
-                wrap;
-
-            gap:
-                9px;
-
-            margin-top:
-                16px;
-
+            color: white;
         }
 
 
         .hero-note {
 
-            padding:
-                7px 10px;
+            color: var(--text-muted);
 
-            border-radius:
-                10px;
-
-            background:
-                rgba(255,255,255,.06);
-
-            color:
-                #cfcfcf;
-
-            font-size:
-                13px;
-
+            font-size: 13px;
         }
 
 
-        .hero-photo-card {
+        /* =========================
+           Quick Actions
+        ========================== */
 
-            position:
-                relative;
+        .quick-section {
 
-            overflow:
-                hidden;
+            margin-top: -55px;
 
-            border-radius:
-                26px;
+            position: relative;
 
-            border:
-                1px solid rgba(212,175,55,.25);
-
-            background:
-                #1c1c1c;
-
-            box-shadow:
-                0 24px 70px
-                rgba(0,0,0,.35);
-
-        }
-
-
-        .hero-photo-card img {
-
-            width:
-                100%;
-
-            aspect-ratio:
-                4 / 4.3;
-
-            object-fit:
-                cover;
-
-        }
-
-
-        .hero-photo-overlay {
-
-            position:
-                absolute;
-
-            left:
-                14px;
-
-            right:
-                14px;
-
-            bottom:
-                14px;
-
-            padding:
-                13px 15px;
-
-            border-radius:
-                16px;
-
-            background:
-                rgba(0,0,0,.72);
-
-            backdrop-filter:
-                blur(8px);
-
-        }
-
-
-        .hero-photo-overlay strong {
-
-            display:
-                block;
-
-            color:
-                var(--gold-light);
-
-            font-size:
-                17px;
-
-        }
-
-
-        .hero-photo-overlay span {
-
-            display:
-                block;
-
-            margin-top:
-                3px;
-
-            color:
-                #ddd;
-
-            font-size:
-                13px;
-
-        }
-
-
-        /* =========================================================
-           快速入口
-        ========================================================= */
-
-        .quick-actions {
-
-            padding:
-                22px 0;
-
-            background:
-                #151515;
-
-            border-bottom:
-                1px solid var(--border);
-
+            z-index: 5;
         }
 
 
         .quick-grid {
 
-            display:
-                grid;
+            display: grid;
 
             grid-template-columns:
                 repeat(4, 1fr);
 
-            gap:
-                10px;
-
+            gap: 12px;
         }
 
 
         .quick-card {
 
-            min-height:
-                72px;
+            padding: 20px;
 
-            display:
-                flex;
-
-            flex-direction:
-                column;
-
-            justify-content:
-                center;
-
-            align-items:
-                center;
-
-            gap:
-                2px;
+            background:
+                rgba(25,25,25,0.94);
 
             border:
                 1px solid var(--border);
 
-            border-radius:
-                15px;
+            border-radius: var(--radius);
 
-            background:
-                rgba(255,255,255,.04);
+            box-shadow: var(--shadow);
 
-            text-align:
-                center;
+            transition: 0.2s ease;
+        }
 
+
+        .quick-card:hover {
+
+            transform: translateY(-3px);
+
+            border-color:
+                rgba(216,168,78,0.35);
         }
 
 
         .quick-icon {
 
-            font-size:
-                23px;
+            font-size: 25px;
 
+            margin-bottom: 7px;
         }
 
 
-        .quick-label {
+        .quick-card strong {
 
-            font-size:
-                13px;
+            display: block;
 
-            font-weight:
-                800;
+            margin-bottom: 4px;
 
+            font-size: 16px;
         }
 
 
-        /* =========================================================
-           共用 section
-        ========================================================= */
+        .quick-card span {
+
+            color: var(--text-muted);
+
+            font-size: 13px;
+        }
+
+
+        /* =========================
+           General Section
+        ========================== */
 
         section {
 
-            scroll-margin-top:
-                78px;
-
-        }
-
-
-        .section {
-
-            padding:
-                64px 0;
-
-        }
-
-
-        .section-alt {
-
-            background:
-                #171717;
-
+            padding: 95px 0;
         }
 
 
         .section-heading {
 
-            max-width:
-                720px;
+            max-width: 720px;
 
-            margin:
-                0 auto 30px;
-
-            text-align:
-                center;
-
+            margin-bottom: 42px;
         }
 
 
-        .section-kicker {
+        .section-label {
 
-            color:
-                var(--gold-light);
+            color: var(--gold-light);
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            letter-spacing: 0.12em;
+
+            text-transform: uppercase;
+
+            margin-bottom: 8px;
+        }
+
+
+        .section-heading h2 {
 
             font-size:
-                13px;
+                clamp(
+                    30px,
+                    5vw,
+                    46px
+                );
 
-            font-weight:
-                900;
+            line-height: 1.2;
 
-            letter-spacing:
-                .12em;
-
+            margin-bottom: 13px;
         }
 
 
-        .section-title {
+        .section-heading p {
 
-            margin:
-                7px 0 9px;
+            color: var(--text-soft);
 
-            color:
-                var(--white);
-
-            font-size:
-                clamp(27px, 5vw, 40px);
-
-            line-height:
-                1.25;
-
+            font-size: 16px;
         }
 
 
-        .section-description {
+        /* =========================
+           Menu
+        ========================== */
 
-            margin:
-                0;
+        .menu-grid {
 
-            color:
-                var(--muted);
-
-            font-size:
-                15px;
-
-        }
-
-
-        /* =========================================================
-           品項
-        ========================================================= */
-
-        .food-grid {
-
-            display:
-                grid;
+            display: grid;
 
             grid-template-columns:
                 repeat(3, 1fr);
 
-            gap:
-                16px;
-
+            gap: 18px;
         }
 
 
-        .food-card {
+        .menu-card {
 
-            overflow:
-                hidden;
-
-            border:
-                1px solid var(--border);
-
-            border-radius:
-                var(--radius);
+            overflow: hidden;
 
             background:
-                var(--card);
-
-        }
-
-
-        .food-card img {
-
-            width:
-                100%;
-
-            aspect-ratio:
-                4 / 3;
-
-            object-fit:
-                cover;
-
-        }
-
-
-        .food-body {
-
-            padding:
-                18px;
-
-        }
-
-
-        .food-body h3 {
-
-            margin:
-                0;
-
-            color:
-                var(--white);
-
-            font-size:
-                20px;
-
-        }
-
-
-        .food-body p {
-
-            margin:
-                7px 0 0;
-
-            color:
-                var(--muted);
-
-            font-size:
-                14px;
-
-        }
-
-
-        .food-price {
-
-            margin-top:
-                12px;
-
-            color:
-                var(--gold-light);
-
-            font-size:
-                17px;
-
-            font-weight:
-                900;
-
-        }
-
-
-        /* =========================================================
-           三大方式
-        ========================================================= */
-
-        .service-grid {
-
-            display:
-                grid;
-
-            grid-template-columns:
-                repeat(3, 1fr);
-
-            gap:
-                16px;
-
-        }
-
-
-        .service-card {
-
-            padding:
-                24px;
+                var(--bg-card);
 
             border:
                 1px solid var(--border);
 
             border-radius:
                 var(--radius);
+
+            box-shadow:
+                0 12px 35px rgba(0,0,0,0.18);
+
+            transition:
+                transform 0.2s ease,
+                border-color 0.2s ease;
+        }
+
+
+        .menu-card:hover {
+
+            transform: translateY(-4px);
+
+            border-color:
+                rgba(216,168,78,0.32);
+        }
+
+
+        .menu-image {
+
+            aspect-ratio: 16 / 10;
+
+            overflow: hidden;
+        }
+
+
+        .menu-image img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
+
+            transition:
+                transform 0.4s ease;
+        }
+
+
+        .menu-card:hover
+        .menu-image img {
+
+            transform: scale(1.04);
+        }
+
+
+        .menu-body {
+
+            padding: 22px;
+        }
+
+
+        .menu-body h3 {
+
+            font-size: 21px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .menu-body p {
+
+            color: var(--text-muted);
+
+            font-size: 14px;
+
+            margin-bottom: 14px;
+        }
+
+
+        .menu-price {
+
+            color: var(--gold-light);
+
+            font-weight: 800;
+
+            margin-bottom: 15px;
+        }
+
+
+        .menu-link {
+
+            color: var(--gold-light);
+
+            font-size: 14px;
+
+            font-weight: 800;
+        }
+
+
+        /* =========================
+           How to order
+        ========================== */
+
+        .steps {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+        }
+
+
+        .step {
+
+            padding: 28px;
 
             background:
                 linear-gradient(
-                    180deg,
-                    #222,
-                    #1b1b1b
+                    145deg,
+                    #181818,
+                    #121212
                 );
 
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                var(--radius);
+
+            position: relative;
         }
 
 
-        .service-icon {
+        .step-number {
 
-            font-size:
-                34px;
+            width: 44px;
 
+            height: 44px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background:
+                rgba(216,168,78,0.12);
+
+            border:
+                1px solid rgba(216,168,78,0.28);
+
+            color: var(--gold-light);
+
+            font-weight: 900;
+
+            margin-bottom: 18px;
         }
 
 
-        .service-card h3 {
+        .step h3 {
 
-            margin:
-                12px 0 7px;
+            font-size: 19px;
 
-            color:
-                var(--white);
-
-            font-size:
-                20px;
-
+            margin-bottom: 8px;
         }
 
 
-        .service-card p {
+        .step p {
 
-            margin:
-                0;
+            color: var(--text-muted);
 
-            color:
-                var(--muted);
-
-            font-size:
-                14px;
-
+            font-size: 14px;
         }
 
 
-        .service-card .btn {
+        /* =========================
+           Features
+        ========================== */
 
-            margin-top:
-                18px;
+        .features {
 
-            width:
-                100%;
-
-            min-height:
-                48px;
-
-        }
-
-
-        /* =========================================================
-           為什麼選初萊
-        ========================================================= */
-
-        .feature-grid {
-
-            display:
-                grid;
+            display: grid;
 
             grid-template-columns:
                 repeat(4, 1fr);
 
-            gap:
-                12px;
-
+            gap: 15px;
         }
 
 
         .feature {
 
-            padding:
-                20px 15px;
-
-            border-radius:
-                16px;
-
-            background:
-                rgba(255,255,255,.05);
-
-            border:
-                1px solid var(--border);
-
-            text-align:
-                center;
-
-        }
-
-
-        .feature-icon {
-
-            font-size:
-                28px;
-
-        }
-
-
-        .feature strong {
-
-            display:
-                block;
-
-            margin-top:
-                8px;
-
-            color:
-                var(--white);
-
-            font-size:
-                15px;
-
-        }
-
-
-        .feature span {
-
-            display:
-                block;
-
-            margin-top:
-                4px;
-
-            color:
-                var(--muted);
-
-            font-size:
-                12px;
-
-        }
-
-
-        /* =========================================================
-           店家資訊
-        ========================================================= */
-
-        .info-grid {
-
-            display:
-                grid;
-
-            grid-template-columns:
-                1fr 1fr;
-
-            gap:
-                18px;
-
-        }
-
-
-        .info-card {
-
-            padding:
-                24px;
+            padding: 25px;
 
             border:
                 1px solid var(--border);
@@ -1259,562 +893,473 @@
                 var(--radius);
 
             background:
-                var(--card);
-
+                #141414;
         }
 
 
-        .info-card h3 {
+        .feature-icon {
 
-            margin:
-                0 0 14px;
+            font-size: 28px;
 
-            color:
-                var(--gold-light);
-
-            font-size:
-                20px;
-
+            margin-bottom: 13px;
         }
 
 
-        .info-row {
+        .feature h3 {
 
-            display:
-                grid;
+            font-size: 17px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .feature p {
+
+            color: var(--text-muted);
+
+            font-size: 13px;
+        }
+
+
+        /* =========================
+           Store Info
+        ========================== */
+
+        .store-section {
+
+            background:
+                #101010;
+        }
+
+
+        .store-grid {
+
+            display: grid;
 
             grid-template-columns:
-                90px 1fr;
+                1.05fr 0.95fr;
 
-            gap:
-                8px;
+            gap: 25px;
 
-            padding:
-                9px 0;
-
-            border-bottom:
-                1px solid rgba(255,255,255,.07);
-
-            font-size:
-                14px;
-
+            align-items: stretch;
         }
 
 
-        .info-row:last-child {
+        .store-card {
 
-            border-bottom:
-                0;
+            padding: 32px;
 
-        }
-
-
-        .info-label {
-
-            color:
-                #999;
-
-        }
-
-
-        .info-value {
-
-            color:
-                #eee;
-
-        }
-
-
-        /* =========================================================
-           FAQ
-        ========================================================= */
-
-        .faq {
-
-            max-width:
-                800px;
-
-            margin:
-                0 auto;
-
-        }
-
-
-        details {
-
-            margin-bottom:
-                10px;
+            background:
+                #171717;
 
             border:
                 1px solid var(--border);
 
             border-radius:
-                15px;
+                var(--radius);
+        }
+
+
+        .store-card h3 {
+
+            font-size: 24px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .info-list {
+
+            display: grid;
+
+            gap: 14px;
+        }
+
+
+        .info-row {
+
+            display: grid;
+
+            grid-template-columns:
+                90px 1fr;
+
+            gap: 12px;
+
+            padding-bottom: 13px;
+
+            border-bottom:
+                1px solid var(--border);
+        }
+
+
+        .info-row:last-child {
+
+            border-bottom: none;
+        }
+
+
+        .info-label {
+
+            color: var(--gold-light);
+
+            font-size: 14px;
+
+            font-weight: 800;
+        }
+
+
+        .info-value {
+
+            color: var(--text-soft);
+
+            font-size: 14px;
+        }
+
+
+        .map-card {
+
+            min-height: 100%;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            align-items: center;
+
+            text-align: center;
+
+            padding: 40px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                var(--radius);
 
             background:
-                rgba(255,255,255,.04);
+                radial-gradient(
+                    circle at center,
+                    rgba(216,168,78,0.10),
+                    transparent 55%
+                ),
+                #151515;
+        }
 
-            overflow:
-                hidden;
 
+        .map-icon {
+
+            font-size: 48px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .map-card h3 {
+
+            font-size: 22px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .map-card p {
+
+            color: var(--text-muted);
+
+            margin-bottom: 20px;
+
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           FAQ
+        ========================== */
+
+        .faq {
+
+            display: grid;
+
+            gap: 12px;
+
+            max-width: 900px;
+        }
+
+
+        details {
+
+            background:
+                #151515;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                14px;
+
+            overflow: hidden;
         }
 
 
         summary {
 
-            cursor:
-                pointer;
+            cursor: pointer;
 
-            padding:
-                17px 18px;
+            list-style: none;
 
-            color:
-                var(--white);
+            padding: 20px 22px;
 
-            font-weight:
-                800;
+            font-weight: 800;
 
-            list-style:
-                none;
+            position: relative;
 
+            padding-right: 55px;
         }
 
 
         summary::-webkit-details-marker {
-
-            display:
-                none;
-
+            display: none;
         }
 
 
         summary::after {
 
-            content:
-                "＋";
+            content: "+";
 
-            float:
-                right;
+            position: absolute;
 
-            color:
-                var(--gold-light);
+            right: 22px;
 
-            font-size:
-                20px;
+            top: 17px;
 
+            color: var(--gold-light);
+
+            font-size: 24px;
+
+            font-weight: 400;
         }
 
 
         details[open] summary::after {
 
-            content:
-                "−";
-
+            content: "−";
         }
 
 
         .faq-answer {
 
             padding:
-                0 18px 18px;
+                0 22px 22px;
 
-            color:
-                var(--muted);
+            color: var(--text-muted);
 
-            font-size:
-                14px;
-
+            font-size: 14px;
         }
 
 
-        /* =========================================================
-           最後 CTA
-        ========================================================= */
+        /* =========================
+           CTA
+        ========================== */
 
-        .final-cta {
+        .cta-section {
+
+            padding-top: 80px;
+
+            padding-bottom: 110px;
+        }
+
+
+        .cta {
+
+            position: relative;
+
+            overflow: hidden;
 
             padding:
-                70px 0 110px;
+                clamp(35px, 7vw, 70px);
 
-            text-align:
-                center;
+            border:
+                1px solid rgba(216,168,78,0.25);
+
+            border-radius:
+                26px;
 
             background:
                 radial-gradient(
-                    circle at 50% 0%,
-                    rgba(212,175,55,.15),
-                    transparent 55%
+                    circle at 80% 20%,
+                    rgba(216,168,78,0.18),
+                    transparent 35%
+                ),
+                linear-gradient(
+                    135deg,
+                    #1b1b1b,
+                    #121212
                 );
 
+            text-align: center;
         }
 
 
-        .final-cta h2 {
-
-            margin:
-                0;
-
-            color:
-                var(--white);
+        .cta h2 {
 
             font-size:
-                clamp(28px, 6vw, 46px);
+                clamp(
+                    30px,
+                    5vw,
+                    50px
+                );
 
-            line-height:
-                1.25;
+            line-height: 1.2;
 
+            margin-bottom: 14px;
         }
 
 
-        .final-cta p {
+        .cta p {
+
+            max-width: 650px;
 
             margin:
-                12px auto 0;
+                0 auto 25px;
 
-            max-width:
-                600px;
-
-            color:
-                var(--muted);
-
+            color: var(--text-muted);
         }
 
 
-        .final-actions {
-
-            display:
-                flex;
-
-            flex-wrap:
-                wrap;
-
-            justify-content:
-                center;
-
-            gap:
-                10px;
-
-            margin-top:
-                24px;
-
-        }
-
-
-        .final-actions .btn {
-
-            min-width:
-                190px;
-
-        }
-
-
-        /* =========================================================
+        /* =========================
            Footer
-        ========================================================= */
+        ========================== */
 
         footer {
 
             padding:
-                30px 0 100px;
-
-            background:
-                #0c0c0c;
+                35px 0 95px;
 
             border-top:
                 1px solid var(--border);
 
-            text-align:
-                center;
+            background:
+                #0a0a0a;
+        }
 
+
+        .footer-inner {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 25px;
+
+            align-items: center;
         }
 
 
         .footer-brand {
 
-            color:
-                var(--gold-light);
-
-            font-size:
-                20px;
-
-            font-weight:
-                900;
-
+            font-weight: 800;
         }
 
 
-        .footer-info {
+        .footer-text {
 
-            margin-top:
-                7px;
+            color: var(--text-muted);
 
-            color:
-                #999;
+            font-size: 12px;
 
-            font-size:
-                13px;
-
-            line-height:
-                1.8;
-
+            margin-top: 5px;
         }
 
 
-        /* =========================================================
-           手機固定底部
-        ========================================================= */
+        .footer-links {
 
-        .mobile-bar {
+            display: flex;
 
-            position:
-                fixed;
+            gap: 18px;
 
-            left:
-                0;
+            color: var(--text-muted);
 
-            right:
-                0;
+            font-size: 13px;
+        }
 
-            bottom:
-                0;
 
-            z-index:
-                2000;
+        .footer-links a:hover {
 
-            display:
-                grid;
+            color: var(--gold-light);
+        }
 
-            grid-template-columns:
-                1.25fr 1fr 1fr;
 
-            gap:
-                7px;
+        /* =========================
+           Mobile Bottom CTA
+        ========================== */
 
-            padding:
-                8px;
+        .mobile-order-bar {
+
+            display: none;
+
+            position: fixed;
+
+            z-index: 2000;
+
+            left: 12px;
+
+            right: 12px;
+
+            bottom: 12px;
+
+            padding: 8px;
+
+            border-radius: 18px;
 
             background:
-                rgba(10,10,10,.96);
+                rgba(20,20,20,0.95);
 
-            border-top:
-                1px solid rgba(255,255,255,.12);
+            border:
+                1px solid rgba(255,255,255,0.12);
 
             backdrop-filter:
-                blur(14px);
+                blur(15px);
 
+            box-shadow:
+                0 12px 40px rgba(0,0,0,0.45);
         }
 
 
-        .mobile-bar a {
+        .mobile-order-bar a {
 
-            min-height:
-                48px;
+            min-height: 50px;
 
-            display:
-                flex;
+            display: flex;
 
-            align-items:
-                center;
+            align-items: center;
 
-            justify-content:
-                center;
+            justify-content: center;
 
-            border-radius:
-                12px;
-
-            font-size:
-                13px;
-
-            font-weight:
-                900;
-
-            text-align:
-                center;
-
-        }
-
-
-        .mobile-order {
+            border-radius: 13px;
 
             background:
-                var(--gold);
+                linear-gradient(
+                    135deg,
+                    var(--gold),
+                    var(--gold-light)
+                );
 
-            color:
-                #111;
+            color: #111;
 
+            font-weight: 900;
         }
 
 
-        .mobile-delivery {
+        /* =========================
+           Responsive
+        ========================== */
 
-            background:
-                #252525;
+        @media (max-width: 900px) {
 
-            color:
-                #fff;
-
-            border:
-                1px solid rgba(255,255,255,.10);
-
-        }
-
-
-        .mobile-map {
-
-            background:
-                #252525;
-
-            color:
-                #fff;
-
-            border:
-                1px solid rgba(255,255,255,.10);
-
-        }
-
-
-        /* =========================================================
-           桌機
-        ========================================================= */
-
-        @media (min-width: 801px) {
-
-            .mobile-bar {
+            .top-nav a:not(.top-order) {
                 display: none;
-            }
-
-        }
-
-
-        /* =========================================================
-           平板
-        ========================================================= */
-
-        @media (max-width: 800px) {
-
-            .hero {
-                padding-top: 32px;
-            }
-
-            .hero-grid {
-
-                grid-template-columns:
-                    1fr;
-
-                gap:
-                    26px;
-
-            }
-
-            .hero-content {
-                order: 1;
-            }
-
-            .hero-photo {
-                order: 2;
-            }
-
-            .hero-photo-card img {
-
-                aspect-ratio:
-                    16 / 11;
-
-            }
-
-            .food-grid,
-            .service-grid {
-
-                grid-template-columns:
-                    repeat(2, 1fr);
-
-            }
-
-            .feature-grid {
-
-                grid-template-columns:
-                    repeat(2, 1fr);
-
-            }
-
-        }
-
-
-        /* =========================================================
-           手機
-        ========================================================= */
-
-        @media (max-width: 560px) {
-
-            .container {
-
-                width:
-                    min(
-                        calc(100% - 24px),
-                        var(--max)
-                    );
-
-            }
-
-
-            .topbar-inner {
-
-                min-height:
-                    58px;
-
-            }
-
-
-            .brand {
-
-                font-size:
-                    16px;
-
-            }
-
-
-            .brand-mark {
-
-                width:
-                    34px;
-
-                height:
-                    34px;
-
-            }
-
-
-            .top-order {
-
-                padding:
-                    8px 11px;
-
-                font-size:
-                    12px;
-
-            }
-
-
-            .hero {
-
-                padding:
-                    28px 0 30px;
-
-            }
-
-
-            .hero-actions {
-
-                grid-template-columns:
-                    1fr;
-
-            }
-
-
-            .hero-photo-card {
-
-                border-radius:
-                    20px;
-
             }
 
 
@@ -1822,59 +1367,217 @@
 
                 grid-template-columns:
                     repeat(2, 1fr);
-
             }
 
 
-            .section {
+            .menu-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+
+            .steps {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .features {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+
+            .store-grid {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+        }
+
+
+        @media (max-width: 640px) {
+
+            .container {
+
+                width:
+                    min(
+                        calc(100% - 28px),
+                        var(--max-width)
+                    );
+            }
+
+
+            .topbar-inner {
+
+                min-height: 60px;
+            }
+
+
+            .brand {
+
+                font-size: 17px;
+            }
+
+
+            .top-order {
 
                 padding:
-                    48px 0;
+                    8px 13px;
 
+                font-size: 13px;
             }
 
 
-            .food-grid,
-            .service-grid {
+            .hero {
 
-                grid-template-columns:
-                    1fr;
-
+                min-height:
+                    650px;
             }
 
 
-            .info-grid {
+            .hero-content {
+
+                padding:
+                    80px 0 110px;
+            }
+
+
+            .hero h1 {
+
+                font-size:
+                    clamp(
+                        40px,
+                        13vw,
+                        58px
+                    );
+            }
+
+
+            .hero-description {
+
+                font-size: 15px;
+            }
+
+
+            .hero-actions {
+
+                flex-direction:
+                    column;
+
+                align-items:
+                    stretch;
+            }
+
+
+            .btn {
+
+                width: 100%;
+            }
+
+
+            .quick-section {
+
+                margin-top: -30px;
+            }
+
+
+            .quick-grid {
+
+                gap: 9px;
+            }
+
+
+            .quick-card {
+
+                padding: 17px;
+            }
+
+
+            section {
+
+                padding:
+                    72px 0;
+            }
+
+
+            .menu-grid {
 
                 grid-template-columns:
                     1fr;
+            }
 
+
+            .features {
+
+                grid-template-columns:
+                    1fr 1fr;
+            }
+
+
+            .store-card {
+
+                padding: 23px;
             }
 
 
             .info-row {
 
                 grid-template-columns:
-                    78px 1fr;
-
+                    76px 1fr;
             }
 
 
-            .final-cta {
+            .footer-inner {
 
-                padding-bottom:
-                    90px;
+                flex-direction:
+                    column;
 
+                align-items:
+                    flex-start;
+            }
+
+
+            .mobile-order-bar {
+
+                display: block;
+            }
+
+
+            footer {
+
+                padding-bottom: 95px;
             }
 
         }
 
 
+        @media (max-width: 420px) {
+
+            .features {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .quick-card span {
+
+                font-size: 12px;
+            }
+
+        }
+
     </style>
 
 
-    <!-- =========================================================
-         Google / Search 結構化資料
-         ========================================================= -->
+    <!-- =========================
+         Structured Data
+    ========================== -->
 
     <script type="application/ld+json">
 
@@ -1884,8 +1587,7 @@
 
         "name": "初萊食麵",
 
-        "url":
-            "https://asj3733.github.io/chulai-order-v2/",
+        "description": "高雄市三民區麵食店，提供麵食、關東煮、大腸香腸、水餃等餐點，並提供官方線上點餐服務。",
 
         "image": [
             "https://asj3733.github.io/chulai-order-v2/images/IMG_3543.jpeg",
@@ -1894,25 +1596,26 @@
             "https://asj3733.github.io/chulai-order-v2/images/IMG_3517.jpeg"
         ],
 
-        "telephone":
-            "+886903392687",
+        "url": "https://asj3733.github.io/chulai-order-v2/index.html",
 
-        "priceRange":
-            "$$",
+        "telephone": "+886903392687",
 
         "servesCuisine": [
             "麵食",
+            "台灣料理",
             "關東煮",
-            "小吃",
             "水餃"
         ],
+
+        "priceRange": "$$",
+
+        "menu": "https://sharings.com.tw/StoreInformation.html?sid=f84d5f53-70be-4b8f-b9ab-1375556fb373",
 
         "address": {
             "@type": "PostalAddress",
             "streetAddress": "遼寧二街168號",
             "addressLocality": "三民區",
             "addressRegion": "高雄市",
-            "postalCode": "807",
             "addressCountry": "TW"
         },
 
@@ -1941,24 +1644,67 @@
                 "closes": "18:30"
             }
 
-        ],
-
-        "menu":
-            "https://asj3733.github.io/chulai-order-v2/order.html"
-
+        ]
     }
 
     </script>
 
 
-    <!-- =========================================================
-         Google Ads / GA4
-         
-         目前不要填假的 ID。
-         
-         等你建立 Google Ads / GA4 後，
-         再把 Google 官方提供的程式碼放這裡。
-    ========================================================= -->
+    <!-- =========================
+         Google Ads / GA4 Event Hook
+         若之後加入 gtag，此事件會自動送出
+    ========================== -->
+
+    <script>
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                const orderLinks =
+                    document.querySelectorAll(
+                        '[data-conversion="order"]'
+                    );
+
+
+                orderLinks.forEach(
+                    function (link) {
+
+                        link.addEventListener(
+                            "click",
+                            function () {
+
+                                if (
+                                    typeof window.gtag ===
+                                    "function"
+                                ) {
+
+                                    window.gtag(
+                                        "event",
+                                        "click_order",
+                                        {
+                                            event_category:
+                                                "ordering",
+
+                                            event_label:
+                                                "SHARINGS 官方線上點餐",
+
+                                            value: 1
+                                        }
+                                    );
+
+                                }
+
+                            }
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+    </script>
 
 </head>
 
@@ -1966,714 +1712,763 @@
 <body>
 
 
-<a
-    href="#main"
-    class="skip-link">
-    跳到主要內容
-</a>
+    <!-- =========================
+         Header
+    ========================== -->
 
+    <header class="topbar">
 
-<!-- =========================================================
-     頂部
-========================================================= -->
-
-<header class="topbar">
-
-    <div class="container topbar-inner">
-
-        <a
-            href="index.html"
-            class="brand"
-            aria-label="初萊食麵首頁">
-
-            <span class="brand-mark">
-                🍜
-            </span>
-
-            <span>
-                初萊食麵
-            </span>
-
-        </a>
-
-
-        <a
-            href="https://sharings.com.tw/StoreInformation.html?sid=f84d5f53-70be-4b8f-b9ab-1375556fb373"
-            class="top-order"
-            data-conversion="order">
-
-            🍜 立即點餐
-
-        </a>
-
-    </div>
-
-</header>
-
-
-
-<main id="main">
-
-
-<!-- =========================================================
-     HERO
-========================================================= -->
-
-<section class="hero">
-
-    <div class="container hero-grid">
-
-
-        <div class="hero-content">
-
-
-            <div class="eyebrow">
-
-                <span class="status-dot"></span>
-
-                今日正常營業
-
-            </div>
-
-
-            <h1>
-
-                初萊食麵
-
-                <br>
-
-                <span class="hero-title-gold">
-                    用心做好每一碗麵
-                </span>
-
-            </h1>
-
-
-            <p class="hero-subtitle">
-
-                麵食・關東煮・大腸香腸・水餃
-
-            </p>
-
-
-            <p class="hero-description">
-
-                高雄三民區的初萊食麵，
-                提供內用、外帶、線上點餐與外送。
-                想吃什麼，選擇適合你的方式即可。
-
-            </p>
-
-
-            <div class="hero-actions">
-
-
-<a
-    href="https://sharings.com.tw/StoreInformation.html?sid=f84d5f53-70be-4b8f-b9ab-1375556fb373"
-    class="btn btn-primary">
-    🍜 立即線上點餐
-</a>
-
-
-                <a
-                    href="delivery.html"
-                    class="btn btn-secondary"
-                    data-conversion="delivery">
-
-                    🛵 我要外送
-
-                </a>
-
-
-            </div>
-
-
-            <div class="hero-notes">
-
-                <span class="hero-note">
-                    📍 高雄三民區
-                </span>
-
-                <span class="hero-note">
-                    ⏰ 約 15 分鐘取餐
-                </span>
-
-                <span class="hero-note">
-                    📦 外帶取餐
-                </span>
-
-            </div>
-
-
-        </div>
-
-
-
-        <div class="hero-photo">
-
-
-            <div class="hero-photo-card">
-
-                <img
-                    src="images/IMG_3543.jpeg"
-                    alt="初萊食麵店家照片"
-                    fetchpriority="high"
-                    width="800"
-                    height="860">
-
-
-                <div class="hero-photo-overlay">
-
-                    <strong>
-                        初萊食麵
-                    </strong>
-
-                    <span>
-                        高雄市三民區遼寧二街168號
-                    </span>
-
-                </div>
-
-            </div>
-
-
-        </div>
-
-
-    </div>
-
-</section>
-
-
-
-<!-- =========================================================
-     快速入口
-========================================================= -->
-
-<section class="quick-actions">
-
-    <div class="container quick-grid">
-
-
-        <a
-            href="https://sharings.com.tw/StoreInformation.html?sid=f84d5f53-70be-4b8f-b9ab-1375556fb373"
-            class="quick-card"
-            data-conversion="order">
-
-            <span class="quick-icon">
-                🍜
-            </span>
-
-            <span class="quick-label">
-                線上點餐
-            </span>
-
-        </a>
-
-
-        <a
-            href="delivery.html"
-            class="quick-card"
-            data-conversion="delivery">
-
-            <span class="quick-icon">
-                🛵
-            </span>
-
-            <span class="quick-label">
-                外送平台
-            </span>
-
-        </a>
-
-
-        <a
-            href="tel:0903392687"
-            class="quick-card"
-            data-conversion="phone">
-
-            <span class="quick-icon">
-                📞
-            </span>
-
-            <span class="quick-label">
-                撥打電話
-            </span>
-
-        </a>
-
-
-        <a
-            href="https://maps.app.goo.gl/u7re7YuqQW4EPbeF6?g_st=ic"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="quick-card"
-            data-conversion="map">
-
-            <span class="quick-icon">
-                📍
-            </span>
-
-            <span class="quick-label">
-                導航到店
-            </span>
-
-        </a>
-
-
-    </div>
-
-</section>
-
-
-
-<!-- =========================================================
-     商品
-========================================================= -->
-
-<section
-    class="section"
-    id="menu">
-
-    <div class="container">
-
-
-        <div class="section-heading">
-
-            <div class="section-kicker">
-                MENU
-            </div>
-
-            <h2 class="section-title">
-                想吃什麼，直接點
-            </h2>
-
-            <p class="section-description">
-                從麵食、關東煮到水餃，
-                線上點餐可以直接選擇商品與客製化內容。
-            </p>
-
-        </div>
-
-
-
-        <div class="food-grid">
-
-
-            <article class="food-card">
-
-                <img
-                    src="images/IMG_3516.jpeg"
-                    alt="初萊食麵肉燥乾麵"
-                    loading="lazy"
-                    width="600"
-                    height="450">
-
-                <div class="food-body">
-
-                    <h3>
-                        🍜 肉燥乾麵
-                    </h3>
-
-                    <p>
-                        初萊食麵麵食選擇，
-                        可依線上點餐頁面的選項客製。
-                    </p>
-
-                    <div class="food-price">
-                        NT$55 起
-                    </div>
-
-                </div>
-
-            </article>
-
-
-
-            <article class="food-card">
-
-                <img
-                    src="images/IMG_3515.jpeg"
-                    alt="初萊食麵水餃"
-                    loading="lazy"
-                    width="600"
-                    height="450">
-
-                <div class="food-body">
-
-                    <h3>
-                        🥟 水餃
-                    </h3>
-
-                    <p>
-                        可直接進入線上點餐頁面選擇數量與相關選項。
-                    </p>
-
-                    <div class="food-price">
-                        NT$50
-                    </div>
-
-                </div>
-
-            </article>
-
-
-
-            <article class="food-card">
-
-                <img
-                    src="images/IMG_3517.jpeg"
-                    alt="初萊食麵黑輪與關東煮"
-                    loading="lazy"
-                    width="600"
-                    height="450">
-
-                <div class="food-body">
-
-                    <h3>
-                        🍢 關東煮
-                    </h3>
-
-                    <p>
-                        關東煮與小吃，
-                        可以選擇外帶、到店取餐或外送。
-                    </p>
-
-                    <div class="food-price">
-                        NT$10 起
-                    </div>
-
-                </div>
-
-            </article>
-
-
-        </div>
-
-
-        <div
-            style="
-                margin-top:22px;
-                text-align:center;
-            ">
+        <div class="container topbar-inner">
 
             <a
-                href="https://sharings.com.tw/StoreInformation.html?sid=f84d5f53-70be-4b8f-b9ab-1375556fb373"
-                class="btn btn-primary"
-                data-conversion="order"
-                style="
-                    display:inline-flex;
-                    min-width:220px;
-                ">
+                href="index.html"
+                class="brand">
 
-                🍜 查看完整菜單・開始點餐
+                <span class="brand-mark">
+                    🍜
+                </span>
+
+                <span>
+                    初萊食麵
+                </span>
 
             </a>
 
-        </div>
 
+            <nav class="top-nav">
 
-    </div>
+                <a href="#menu">
+                    招牌餐點
+                </a>
 
-</section>
+                <a href="#how">
+                    怎麼點餐
+                </a>
 
-
-
-<!-- =========================================================
-     點餐 / 外送 / 到店
-========================================================= -->
-
-<section
-    class="section section-alt"
-    id="how-to-order">
-
-    <div class="container">
-
-
-        <div class="section-heading">
-
-            <div class="section-kicker">
-                HOW TO ORDER
-            </div>
-
-            <h2 class="section-title">
-                你可以選擇最方便的方式
-            </h2>
-
-            <p class="section-description">
-                不一定要使用外送平台，也可以直接使用初萊食麵線上點餐。
-            </p>
-
-        </div>
-
-
-
-        <div class="service-grid">
-
-
-            <article class="service-card">
-
-                <div class="service-icon">
-                    🍜
-                </div>
-
-                <h3>
-                    官方線上點餐
-                </h3>
-
-                <p>
-                    直接選商品、客製化、數量，
-                    再進入結帳流程。
-                    適合到店取餐或外帶。
-                </p>
+                <a href="#store">
+                    店家資訊
+                </a>
 
                 <a
                     href="https://sharings.com.tw/StoreInformation.html?sid=f84d5f53-70be-4b8f-b9ab-1375556fb373"
-                    class="btn btn-primary"
-                    data-conversion="order">
-
-                    立即點餐
-
-                </a>
-
-            </article>
-
-
-
-            <article class="service-card">
-
-                <div class="service-icon">
-                    🛵
-                </div>
-
-                <h3>
-                    外送平台
-                </h3>
-
-                <p>
-                    想直接送到家，
-                    可以前往外送平台頁面，
-                    選擇你習慣的平台。
-                </p>
-
-                <a
-                    href="delivery.html"
-                    class="btn btn-secondary"
-                    data-conversion="delivery">
-
-                    查看外送
-
-                </a>
-
-            </article>
-
-
-
-            <article class="service-card">
-
-                <div class="service-icon">
-                    📍
-                </div>
-
-                <h3>
-                    到店用餐 / 外帶
-                </h3>
-
-                <p>
-                    位於高雄市三民區遼寧二街，
-                    可以直接導航到店。
-                </p>
-
-                <a
-                    href="https://maps.app.goo.gl/u7re7YuqQW4EPbeF6?g_st=ic"
+                    class="top-order"
+                    data-conversion="order"
                     target="_blank"
-                    rel="noopener noreferrer"
-                    class="btn btn-secondary"
-                    data-conversion="map">
+                    rel="noopener">
 
-                    導航到店
+                    🍜 立即點餐
 
                 </a>
 
-            </article>
-
-
-        </div>
-
-
-    </div>
-
-</section>
-
-
-
-<!-- =========================================================
-     特色
-========================================================= -->
-
-<section class="section">
-
-    <div class="container">
-
-
-        <div class="section-heading">
-
-            <div class="section-kicker">
-                WHY CHULAI
-            </div>
-
-            <h2 class="section-title">
-                點餐方式簡單，選你習慣的就好
-            </h2>
+            </nav>
 
         </div>
 
-
-
-        <div class="feature-grid">
-
-
-            <div class="feature">
-
-                <div class="feature-icon">
-                    📱
-                </div>
-
-                <strong>
-                    手機直接點
-                </strong>
-
-                <span>
-                    不需要另外下載 App
-                </span>
-
-            </div>
+    </header>
 
 
 
-            <div class="feature">
+    <!-- =========================
+         Hero
+    ========================== -->
 
-                <div class="feature-icon">
-                    🛒
-                </div>
+    <main>
 
-                <strong>
-                    線上購物車
-                </strong>
+        <section class="hero">
 
-                <span>
-                    商品與數量一次整理
-                </span>
-
-            </div>
+            <div class="hero-bg"></div>
 
 
+            <div class="container">
 
-            <div class="feature">
+                <div class="hero-content">
 
-                <div class="feature-icon">
-                    🌶️
-                </div>
+                    <div class="eyebrow">
 
-                <strong>
-                    可以客製
-                </strong>
+                        高雄市三民區・初萊食麵
 
-                <span>
-                    辣度與部分選項可調整
-                </span>
-
-            </div>
-
-
-
-            <div class="feature">
-
-                <div class="feature-icon">
-                    🛵
-                </div>
-
-                <strong>
-                    外送選擇
-                </strong>
-
-                <span>
-                    提供多種外送平台
-                </span>
-
-            </div>
-
-
-        </div>
-
-
-    </div>
-
-</section>
-
-
-
-<!-- =========================================================
-     店家資訊
-========================================================= -->
-
-<section
-    class="section section-alt"
-    id="info">
-
-    <div class="container">
-
-
-        <div class="section-heading">
-
-            <div class="section-kicker">
-                STORE INFORMATION
-            </div>
-
-            <h2 class="section-title">
-                初萊食麵在哪裡？
-            </h2>
-
-        </div>
-
-
-
-        <div class="info-grid">
-
-
-            <div class="info-card">
-
-                <h3>
-                    📍 店家資訊
-                </h3>
-
-
-                <div class="info-row">
-
-                    <div class="info-label">
-                        地址
                     </div>
 
-                    <div class="info-value">
-                        高雄市三民區遼寧二街168號
-                    </div>
 
-                </div>
+                    <h1>
+
+                        用心做好
+                        <span>每一碗麵</span>
+
+                    </h1>
 
 
-                <div class="info-row">
+                    <p class="hero-description">
 
-                    <div class="info-label">
-                        電話
-                    </div>
+                        麵食、關東煮、大腸香腸、水餃等日常美味，
+                        想吃就來初萊食麵。
+                        也可以直接使用官方線上點餐，
+                        提前訂餐、到店取餐更方便。
 
-                    <div class="info-value">
+                    </p>
+
+
+                    <div class="hero-actions">
 
                         <a
-                            href="tel:0903392687"
-                            data-conversion="phone">
+                            href="https://sharings.com.tw/StoreInformation.html?sid=f84d5f53-70be-4b8f-b9ab-1375556fb373"
+                            class="btn btn-primary"
+                            data-conversion="order"
+                            target="_blank"
+                            rel="noopener">
 
+                            🍜 立即線上點餐
+
+                        </a>
+
+
+                        <a
+                            href="#menu"
+                            class="btn btn-secondary">
+
+                            查看招牌餐點
+
+                        </a>
+
+                    </div>
+
+
+                    <p class="hero-note">
+
+                        官方線上點餐｜依目前系統提供的餐點與取餐方式為準
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             Quick Actions
+        ========================== -->
+
+        <section
+            class="quick-section"
+            aria-label="快速功能">
+
+            <div class="container">
+
+                <div class="quick-grid">
+
+
+                    <a
+                        href="https://sharings.com.tw/StoreInformation.html?sid=f84d5f53-70be-4b8f-b9ab-1375556fb373"
+                        class="quick-card"
+                        data-conversion="order"
+                        target="_blank"
+                        rel="noopener">
+
+                        <div class="quick-icon">
+                            🍜
+                        </div>
+
+                        <strong>
+                            線上點餐
+                        </strong>
+
+                        <span>
+                            直接進入官方點餐系統
+                        </span>
+
+                    </a>
+
+
+                    <a
+                        href="tel:0903392687"
+                        class="quick-card">
+
+                        <div class="quick-icon">
+                            📞
+                        </div>
+
+                        <strong>
+                            電話聯絡
+                        </strong>
+
+                        <span>
                             0903-392-687
+                        </span>
+
+                    </a>
+
+
+                    <a
+                        href="https://maps.app.goo.gl/u7re7YuqQW4EPbeF6?g_st=ic"
+                        class="quick-card"
+                        target="_blank"
+                        rel="noopener">
+
+                        <div class="quick-icon">
+                            📍
+                        </div>
+
+                        <strong>
+                            導航到店
+                        </strong>
+
+                        <span>
+                            高雄市三民區遼寧二街168號
+                        </span>
+
+                    </a>
+
+
+                    <a
+                        href="#faq"
+                        class="quick-card">
+
+                        <div class="quick-icon">
+                            ❓
+                        </div>
+
+                        <strong>
+                            常見問題
+                        </strong>
+
+                        <span>
+                            點餐與取餐方式
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             Menu
+        ========================== -->
+
+        <section id="menu">
+
+            <div class="container">
+
+                <div class="section-heading">
+
+                    <div class="section-label">
+                        MENU
+                    </div>
+
+                    <h2>
+                        想吃什麼，就來一碗
+                    </h2>
+
+                    <p>
+                        初萊食麵提供日常吃得到、吃得飽的麵食與小吃。
+                        實際供應品項與價格請以官方線上點餐系統為準。
+                    </p>
+
+                </div>
+
+
+                <div class="menu-grid">
+
+
+                    <article class="menu-card">
+
+                        <div class="menu-image">
+
+                            <img
+                                src="images/IMG_3516.jpeg"
+                                alt="初萊食麵麵食"
+                                loading="lazy">
+
+                        </div>
+
+
+                        <div class="menu-body">
+
+                            <h3>
+                                麵食
+                            </h3>
+
+                            <p>
+                                乾麵、湯麵等日常主食，
+                                適合一個人簡單吃一餐。
+                            </p>
+
+                            <div class="menu-price">
+                                招牌麵食 NT$55 起
+                            </div>
+
+                            <a
+                                href="https://sharings.com.tw/StoreInformation.html?sid=f84d5f53-70be-4b8f-b9ab-1375556fb373"
+                                class="menu-link"
+                                data-conversion="order"
+                                target="_blank"
+                                rel="noopener">
+
+                                查看菜單 →
+                            </a>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <article class="menu-card">
+
+                        <div class="menu-image">
+
+                            <img
+                                src="images/IMG_3515.jpeg"
+                                alt="初萊食麵關東煮"
+                                loading="lazy">
+
+                        </div>
+
+
+                        <div class="menu-body">
+
+                            <h3>
+                                關東煮
+                            </h3>
+
+                            <p>
+                                多種關東煮食材，
+                                想吃幾樣就選幾樣。
+                            </p>
+
+                            <div class="menu-price">
+                                關東煮 NT$10 起
+                            </div>
+
+                            <a
+                                href="https://sharings.com.tw/StoreInformation.html?sid=f84d5f53-70be-4b8f-b9ab-1375556fb373"
+                                class="menu-link"
+                                data-conversion="order"
+                                target="_blank"
+                                rel="noopener">
+
+                                查看菜單 →
+                            </a>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <article class="menu-card">
+
+                        <div class="menu-image">
+
+                            <img
+                                src="images/IMG_3517.jpeg"
+                                alt="初萊食麵水餃與小吃"
+                                loading="lazy">
+
+                        </div>
+
+
+                        <div class="menu-body">
+
+                            <h3>
+                                水餃・小吃
+                            </h3>
+
+                            <p>
+                                水餃、大腸香腸等小吃，
+                                適合搭配主食一起享用。
+                            </p>
+
+                            <div class="menu-price">
+                                水餃 NT$50 起
+                            </div>
+
+                            <a
+                                href="https://sharings.com.tw/StoreInformation.html?sid=f84d5f53-70be-4b8f-b9ab-1375556fb373"
+                                class="menu-link"
+                                data-conversion="order"
+                                target="_blank"
+                                rel="noopener">
+
+                                查看菜單 →
+                            </a>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+
+                <div
+                    style="
+                        text-align:center;
+                        margin-top:32px;
+                    ">
+
+                    <a
+                        href="https://sharings.com.tw/StoreInformation.html?sid=f84d5f53-70be-4b8f-b9ab-1375556fb373"
+                        class="btn btn-primary"
+                        data-conversion="order"
+                        target="_blank"
+                        rel="noopener">
+
+                        🍜 查看完整菜單・開始點餐
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             How To Order
+        ========================== -->
+
+        <section
+            id="how"
+            style="background:#101010;">
+
+            <div class="container">
+
+                <div class="section-heading">
+
+                    <div class="section-label">
+                        HOW TO ORDER
+                    </div>
+
+                    <h2>
+                        線上點餐很簡單
+                    </h2>
+
+                    <p>
+                        使用官方線上點餐系統，
+                        選擇餐點後依系統提示完成訂單即可。
+                    </p>
+
+                </div>
+
+
+                <div class="steps">
+
+
+                    <div class="step">
+
+                        <div class="step-number">
+                            1
+                        </div>
+
+                        <h3>
+                            進入官方點餐
+                        </h3>
+
+                        <p>
+                            點擊網站上的「立即線上點餐」，
+                            進入初萊食麵官方線上點餐頁面。
+                        </p>
+
+                    </div>
+
+
+
+                    <div class="step">
+
+                        <div class="step-number">
+                            2
+                        </div>
+
+                        <h3>
+                            選擇想吃的餐點
+                        </h3>
+
+                        <p>
+                            依照目前系統提供的菜單，
+                            選擇餐點與數量。
+                        </p>
+
+                    </div>
+
+
+
+                    <div class="step">
+
+                        <div class="step-number">
+                            3
+                        </div>
+
+                        <h3>
+                            依系統完成訂單
+                        </h3>
+
+                        <p>
+                            確認訂單內容與取餐方式，
+                            完成線上點餐後依系統通知取餐。
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             Features
+        ========================== -->
+
+        <section>
+
+            <div class="container">
+
+                <div class="section-heading">
+
+                    <div class="section-label">
+                        WHY CHULAI
+                    </div>
+
+                    <h2>
+                        想吃麵，就來初萊食麵
+                    </h2>
+
+                </div>
+
+
+                <div class="features">
+
+
+                    <div class="feature">
+
+                        <div class="feature-icon">
+                            🍜
+                        </div>
+
+                        <h3>
+                            日常麵食
+                        </h3>
+
+                        <p>
+                            適合平常午餐、晚餐，
+                            簡單吃一碗熱騰騰的麵。
+                        </p>
+
+                    </div>
+
+
+
+                    <div class="feature">
+
+                        <div class="feature-icon">
+                            🍢
+                        </div>
+
+                        <h3>
+                            關東煮
+                        </h3>
+
+                        <p>
+                            多種食材可以自由搭配，
+                            想吃幾樣就選幾樣。
+                        </p>
+
+                    </div>
+
+
+
+                    <div class="feature">
+
+                        <div class="feature-icon">
+                            🥟
+                        </div>
+
+                        <h3>
+                            水餃小吃
+                        </h3>
+
+                        <p>
+                            主食之外，
+                            也可以搭配水餃與小吃。
+                        </p>
+
+                    </div>
+
+
+
+                    <div class="feature">
+
+                        <div class="feature-icon">
+                            📱
+                        </div>
+
+                        <h3>
+                            官方線上點餐
+                        </h3>
+
+                        <p>
+                            不用現場慢慢看菜單，
+                            可直接進入線上系統點餐。
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             Store
+        ========================== -->
+
+        <section
+            id="store"
+            class="store-section">
+
+            <div class="container">
+
+                <div class="section-heading">
+
+                    <div class="section-label">
+                        STORE
+                    </div>
+
+                    <h2>
+                        找到初萊食麵
+                    </h2>
+
+                    <p>
+                        位於高雄市三民區遼寧二街，
+                        歡迎直接導航到店。
+                    </p>
+
+                </div>
+
+
+                <div class="store-grid">
+
+
+                    <div class="store-card">
+
+                        <h3>
+                            初萊食麵
+                        </h3>
+
+
+                        <div class="info-list">
+
+
+                            <div class="info-row">
+
+                                <div class="info-label">
+                                    地址
+                                </div>
+
+                                <div class="info-value">
+                                    高雄市三民區遼寧二街168號
+                                </div>
+
+                            </div>
+
+
+                            <div class="info-row">
+
+                                <div class="info-label">
+                                    電話
+                                </div>
+
+                                <div class="info-value">
+
+                                    <a href="tel:0903392687">
+                                        0903-392-687
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="info-row">
+
+                                <div class="info-label">
+                                    平日
+                                </div>
+
+                                <div class="info-value">
+                                    11:30–20:30
+                                </div>
+
+                            </div>
+
+
+                            <div class="info-row">
+
+                                <div class="info-label">
+                                    週末
+                                </div>
+
+                                <div class="info-value">
+                                    11:30–18:30
+                                </div>
+
+                            </div>
+
+
+                            <div class="info-row">
+
+                                <div class="info-label">
+                                    點餐
+                                </div>
+
+                                <div class="info-value">
+                                    官方線上點餐系統
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="map-card">
+
+                        <div class="map-icon">
+                            📍
+                        </div>
+
+                        <h3>
+                            遼寧二街168號
+                        </h3>
+
+                        <p>
+                            高雄市三民區・初萊食麵
+                        </p>
+
+
+                        <a
+                            href="https://maps.app.goo.gl/u7re7YuqQW4EPbeF6?g_st=ic"
+                            class="btn btn-secondary"
+                            target="_blank"
+                            rel="noopener">
+
+                            🗺️ 開啟 Google 地圖
 
                         </a>
 
@@ -2681,412 +2476,317 @@
 
                 </div>
 
+            </div>
 
-                <div class="info-row">
+        </section>
 
-                    <div class="info-label">
-                        平日
+
+
+        <!-- =========================
+             FAQ
+        ========================== -->
+
+        <section id="faq">
+
+            <div class="container">
+
+                <div class="section-heading">
+
+                    <div class="section-label">
+                        FAQ
                     </div>
 
-                    <div class="info-value">
-                        11:30–20:30
-                    </div>
+                    <h2>
+                        常見問題
+                    </h2>
 
                 </div>
 
 
-                <div class="info-row">
+                <div class="faq">
 
-                    <div class="info-label">
-                        六日
-                    </div>
 
-                    <div class="info-value">
-                        11:30–18:30
-                    </div>
+                    <details>
+
+                        <summary>
+                            要怎麼線上點餐？
+                        </summary>
+
+                        <div class="faq-answer">
+
+                            點擊網站上的「立即線上點餐」，
+                            會直接進入初萊食麵目前使用的官方 SHARINGS 線上點餐系統，
+                            再依照頁面指示選擇餐點與完成訂單。
+
+                        </div>
+
+                    </details>
+
+
+
+                    <details>
+
+                        <summary>
+                            線上點餐是初萊食麵自己的系統嗎？
+                        </summary>
+
+                        <div class="faq-answer">
+
+                            目前初萊食麵的線上點餐頁面是使用
+                            SHARINGS／共饗提供的線上點餐系統。
+                            從本網站點擊「立即線上點餐」即可直接進入目前使用的點餐頁面。
+
+                        </div>
+
+                    </details>
+
+
+
+                    <details>
+
+                        <summary>
+                            線上點餐後要去哪裡取餐？
+                        </summary>
+
+                        <div class="faq-answer">
+
+                            實際取餐方式、可選時間及訂單資訊，
+                            請以官方線上點餐系統當下顯示內容為準。
+
+                        </div>
+
+                    </details>
+
+
+
+                    <details>
+
+                        <summary>
+                            菜單與價格會不會變動？
+                        </summary>
+
+                        <div class="faq-answer">
+
+                            餐點供應與價格可能依店內實際狀況調整，
+                            最完整、最新的菜單請以官方線上點餐系統顯示內容為準。
+
+                        </div>
+
+                    </details>
+
+
+
+                    <details>
+
+                        <summary>
+                            可以直接打電話詢問嗎？
+                        </summary>
+
+                        <div class="faq-answer">
+
+                            可以。
+
+                            <a
+                                href="tel:0903392687"
+                                style="color:var(--gold-light);font-weight:800;">
+
+                                0903-392-687
+
+                            </a>
+
+                            若店內忙碌時可能較不方便接聽，
+                            也可以直接使用線上點餐系統。
+
+                        </div>
+
+                    </details>
 
                 </div>
 
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             Final CTA
+        ========================== -->
+
+        <section class="cta-section">
+
+            <div class="container">
+
+                <div class="cta">
+
+                    <h2>
+                        今天想吃什麼？
+                    </h2>
+
+                    <p>
+                        直接進入初萊食麵官方線上點餐，
+                        查看目前菜單與餐點。
+                    </p>
+
+
+                    <a
+                        href="https://sharings.com.tw/StoreInformation.html?sid=f84d5f53-70be-4b8f-b9ab-1375556fb373"
+                        class="btn btn-primary"
+                        data-conversion="order"
+                        target="_blank"
+                        rel="noopener">
+
+                        🍜 立即線上點餐
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =========================
+         Footer
+    ========================== -->
+
+    <footer>
+
+        <div class="container footer-inner">
+
+            <div>
+
+                <div class="footer-brand">
+                    🍜 初萊食麵
+                </div>
+
+                <div class="footer-text">
+                    高雄市三民區遼寧二街168號
+                </div>
+
+                <div class="footer-text">
+                    © 2026 初萊食麵
+                </div>
 
             </div>
 
 
+            <div class="footer-links">
 
-            <div class="info-card">
+                <a href="#menu">
+                    菜單
+                </a>
 
-                <h3>
-                    🚗 到店方式
-                </h3>
+                <a href="#store">
+                    店家資訊
+                </a>
 
-
-                <p
-                    style="
-                        color:#aaa;
-                        margin-top:0;
-                    ">
-
-                    點擊下面按鈕，
-                    可以直接開啟 Google 地圖導航到初萊食麵。
-
-                </p>
-
+                <a href="#faq">
+                    常見問題
+                </a>
 
                 <a
-                    href="https://maps.app.goo.gl/u7re7YuqQW4EPbeF6?g_st=ic"
+                    href="https://sharings.com.tw/StoreInformation.html?sid=f84d5f53-70be-4b8f-b9ab-1375556fb373"
+                    data-conversion="order"
                     target="_blank"
-                    rel="noopener noreferrer"
-                    class="btn btn-primary"
-                    data-conversion="map">
+                    rel="noopener">
 
-                    📍 Google 地圖導航
-
+                    線上點餐
                 </a>
-
-
-                <a
-                    href="tel:0903392687"
-                    class="btn btn-secondary"
-                    data-conversion="phone"
-                    style="margin-top:10px;">
-
-                    📞 0903-392-687
-
-                </a>
-
 
             </div>
 
-
         </div>
 
+    </footer>
+
+
+
+    <!-- =========================
+         Mobile Fixed CTA
+    ========================== -->
+
+    <div class="mobile-order-bar">
+
+        <a
+            href="https://sharings.com.tw/StoreInformation.html?sid=f84d5f53-70be-4b8f-b9ab-1375556fb373"
+            data-conversion="order"
+            target="_blank"
+            rel="noopener">
+
+            🍜 線上點餐
+
+        </a>
 
     </div>
 
-</section>
 
 
+    <!-- =========================
+         Order Click Tracking
+    ========================== -->
 
-<!-- =========================================================
-     FAQ
-========================================================= -->
+    <script>
 
-<section
-    class="section"
-    id="faq">
-
-    <div class="container">
-
-
-        <div class="section-heading">
-
-            <div class="section-kicker">
-                FAQ
-            </div>
-
-            <h2 class="section-title">
-                常見問題
-            </h2>
-
-        </div>
-
-
-
-        <div class="faq">
-
-
-            <details>
-
-                <summary>
-                    可以直接線上點餐嗎？
-                </summary>
-
-                <div class="faq-answer">
-
-                    可以。
-                    點擊「立即線上點餐」即可進入初萊食麵線上點餐頁面，
-                    選擇商品後再進入結帳。
-
-                </div>
-
-            </details>
-
-
-
-            <details>
-
-                <summary>
-                    可以外帶嗎？
-                </summary>
-
-                <div class="faq-answer">
-
-                    可以。
-                    可以使用線上點餐後到店取餐，
-                    或依現場提供的方式點餐。
-
-                </div>
-
-            </details>
-
-
-
-            <details>
-
-                <summary>
-                    有外送嗎？
-                </summary>
-
-                <div class="faq-answer">
-
-                    有。
-                    點擊「外送平台」即可查看目前店家提供的外送平台。
-
-                </div>
-
-            </details>
-
-
-
-            <details>
-
-                <summary>
-                    線上點餐可以調整辣度嗎？
-                </summary>
-
-                <div class="faq-answer">
-
-                    部分商品提供辣度及其他客製化選項，
-                    實際可選內容會依線上點餐頁面的商品設定為準。
-
-                </div>
-
-            </details>
-
-
-
-            <details>
-
-                <summary>
-                    店家在哪裡？
-                </summary>
-
-                <div class="faq-answer">
-
-                    初萊食麵位於
-                    高雄市三民區遼寧二街168號。
-                    點擊「導航到店」即可開啟 Google 地圖。
-
-                </div>
-
-            </details>
-
-
-        </div>
-
-
-    </div>
-
-</section>
-
-
-
-<!-- =========================================================
-     最後 CTA
-========================================================= -->
-
-<section class="final-cta">
-
-    <div class="container">
-
-
-        <h2>
-            今天想吃初萊食麵？
-        </h2>
-
-
-        <p>
-            直接線上點餐，
-            或選擇你習慣的外送平台。
-        </p>
-
-
-        <div class="final-actions">
-
-
-            <a
-                href="https://sharings.com.tw/StoreInformation.html?sid=f84d5f53-70be-4b8f-b9ab-1375556fb373"
-                class="btn btn-primary"
-                data-conversion="order">
-
-                🍜 立即線上點餐
-
-            </a>
-
-
-            <a
-                href="delivery.html"
-                class="btn btn-secondary"
-                data-conversion="delivery">
-
-                🛵 查看外送平台
-
-            </a>
-
-
-        </div>
-
-
-    </div>
-
-</section>
-
-
-</main>
-
-
-
-<!-- =========================================================
-     Footer
-========================================================= -->
-
-<footer>
-
-    <div class="container">
-
-        <div class="footer-brand">
-            🍜 初萊食麵
-        </div>
-
-
-        <div class="footer-info">
-
-            高雄市三民區遼寧二街168號
-            <br>
-
-            0903-392-687
-            <br>
-
-            星期一～星期五 11:30–20:30
-            ｜星期六～星期日 11:30–18:30
-            <br><br>
-
-            © 2026 初萊食麵 All Rights Reserved.
-
-        </div>
-
-    </div>
-
-</footer>
-
-
-
-<!-- =========================================================
-     手機固定 CTA
-========================================================= -->
-
-<nav
-    class="mobile-bar"
-    aria-label="快速操作">
-
-
-    <a
-        href="https://sharings.com.tw/StoreInformation.html?sid=f84d5f53-70be-4b8f-b9ab-1375556fb373"
-        class="mobile-order"
-        data-conversion="order">
-
-        🍜 線上點餐
-
-    </a>
-
-
-    <a
-        href="delivery.html"
-        class="mobile-delivery"
-        data-conversion="delivery">
-
-        🛵 外送
-
-    </a>
-
-
-    <a
-        href="https://maps.app.goo.gl/u7re7YuqQW4EPbeF6?g_st=ic"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="mobile-map"
-        data-conversion="map">
-
-        📍 導航
-
-    </a>
-
-
-</nav>
-
-
-
-<!-- =========================================================
-     Google Ads / GA4 轉換事件掛點
-
-     目前不會自行載入任何不存在的追蹤碼。
-
-     等你有 Google Ads / GA4 ID 後，
-     只要把官方 gtag 程式碼加入 head，
-     這裡的事件就可以開始送出。
-========================================================= -->
-
-<script>
-
-(function () {
-
-    const conversionLinks =
-        document.querySelectorAll(
-            '[data-conversion]'
-        );
-
-
-    conversionLinks.forEach(function (link) {
-
-        link.addEventListener(
-            'click',
+        document.addEventListener(
+            "DOMContentLoaded",
             function () {
 
-                const type =
-                    link.dataset.conversion;
-
-
-                /*
-                 * 如果未來已安裝 Google tag，
-                 * 就會自動送出自訂事件。
-                 */
-
-                if (
-                    typeof window.gtag ===
-                    "function"
-                ) {
-
-                    window.gtag(
-                        'event',
-                        'click_' + type,
-                        {
-                            event_category:
-                                'landing_page',
-
-                            event_label:
-                                link.href
-                        }
+                const orderLinks =
+                    document.querySelectorAll(
+                        '[data-conversion="order"]'
                     );
 
-                }
+
+                orderLinks.forEach(
+                    function (link) {
+
+                        link.addEventListener(
+                            "click",
+                            function () {
+
+                                /*
+                                 * 如果未來網站加入 Google Analytics 4
+                                 * / Google Ads gtag，
+                                 * 會自動送出 click_order 事件。
+                                 */
+
+                                if (
+                                    typeof window.gtag ===
+                                    "function"
+                                ) {
+
+                                    window.gtag(
+                                        "event",
+                                        "click_order",
+                                        {
+                                            event_category:
+                                                "ordering",
+
+                                            event_label:
+                                                "SHARINGS 官方線上點餐",
+
+                                            transport_type:
+                                                "beacon"
+                                        }
+                                    );
+
+                                }
+
+                            }
+                        );
+
+                    }
+                );
 
             }
         );
 
-    });
-
-})();
-
-</script>
+    </script>
 
 
 </body>
