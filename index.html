@@ -1,71 +1,40 @@
+
 <!DOCTYPE html>
 <html lang="zh-Hant-TW">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>初萊食麵｜高雄三民區麵店・黑輪・菜頭湯｜線上點餐</title>
-
-  <meta
-    name="description"
-    content="初萊食麵位於高雄市三民區遼寧二街，提供麵食、水餃、黑輪、菜頭湯等餐點。可線上點餐，也可透過 Uber Eats、foodpanda、foodomo 外送。"
-  >
-
-  <meta
-    name="keywords"
-    content="初萊食麵,高雄美食,三民區美食,遼寧二街美食,高雄麵店,高雄黑輪,高雄菜頭湯,高雄水餃,線上點餐,Uber Eats,foodpanda,foodomo"
-  >
-
+  <meta name="description" content="初萊食麵位於高雄市三民區遼寧二街，提供麵食、水餃、黑輪、菜頭湯。支援 SHARINGS 線上點餐、Uber Eats、foodpanda、foodomo 外送及 LINE 官方帳號。">
+  <meta name="keywords" content="初萊食麵,高雄美食,三民區美食,遼寧二街美食,高雄麵店,高雄黑輪,高雄菜頭湯,高雄水餃,線上點餐,Uber Eats,foodpanda,foodomo">
   <meta name="author" content="初萊食麵">
   <meta name="robots" content="index,follow">
-
   <meta name="theme-color" content="#111111">
 
-  <link
-    rel="canonical"
-    href="https://asj3733.github.io/chulai-order-v2/index.html"
-  >
+  <link rel="canonical" href="https://asj3733.github.io/chulai-order-v2/index.html">
 
-  <!-- Open Graph -->
-  <meta property="og:type" content="restaurant">
+  <meta property="og:type" content="website">
   <meta property="og:title" content="初萊食麵｜高雄三民區麵店">
-  <meta
-    property="og:description"
-    content="用心做好每一碗麵。提供麵食、水餃、黑輪、菜頭湯，可線上點餐與外送。"
-  >
-  <meta
-    property="og:url"
-    content="https://asj3733.github.io/chulai-order-v2/index.html"
-  >
-  <meta
-    property="og:image"
-    content="https://asj3733.github.io/chulai-order-v2/images/IMG_3543.jpeg"
-  >
+  <meta property="og:description" content="用心做好每一碗麵。提供麵食、水餃、黑輪、菜頭湯，可線上點餐、外送及加入 LINE 官方帳號。">
+  <meta property="og:url" content="https://asj3733.github.io/chulai-order-v2/index.html">
+  <meta property="og:image" content="https://asj3733.github.io/chulai-order-v2/images/IMG_3543.jpeg">
   <meta property="og:locale" content="zh_TW">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="初萊食麵｜高雄三民區麵店">
-  <meta
-    name="twitter:description"
-    content="高雄三民區初萊食麵｜麵食、水餃、黑輪、菜頭湯｜線上點餐與外送"
-  >
-  <meta
-    name="twitter:image"
-    content="https://asj3733.github.io/chulai-order-v2/images/IMG_3543.jpeg"
-  >
+  <meta name="twitter:description" content="高雄三民區初萊食麵，提供麵食、水餃、黑輪、菜頭湯、線上點餐及外送。">
+  <meta name="twitter:image" content="https://asj3733.github.io/chulai-order-v2/images/IMG_3543.jpeg">
 
   <style>
     :root {
       --bg: #0f0f0f;
-      --bg2: #171717;
       --card: #1d1d1d;
-      --card2: #242424;
       --text: #f5f1e8;
       --muted: #aaa39a;
       --gold: #d7ad62;
       --gold-light: #f0ce86;
-      --line: rgba(255,255,255,.08);
-      --white: #ffffff;
+      --line: rgba(255,255,255,.09);
       --green: #35c759;
     }
 
@@ -77,25 +46,16 @@
 
     html {
       scroll-behavior: smooth;
+      scroll-padding-top: 80px;
     }
 
     body {
-      font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Noto Sans TC",
-        "Microsoft JhengHei",
-        sans-serif;
-      background:
-        radial-gradient(
-          circle at top,
-          #292116 0,
-          #111 38%,
-          #0b0b0b 100%
-        );
+      font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC",
+        "Microsoft JhengHei", sans-serif;
+      background: radial-gradient(circle at top, #292116 0, #111 38%, #0b0b0b 100%);
       color: var(--text);
       line-height: 1.7;
-      padding-bottom: 78px;
+      padding-bottom: 0;
     }
 
     a {
@@ -113,15 +73,11 @@
       margin: auto;
     }
 
-    /* =========================
-       Header
-    ========================= */
-
     header {
       position: sticky;
       top: 0;
       z-index: 1000;
-      background: rgba(15,15,15,.9);
+      background: rgba(15,15,15,.92);
       backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--line);
     }
@@ -155,15 +111,11 @@
 
     .nav-order {
       background: var(--gold);
-      color: #17120a;
+      color: #17120a !important;
       padding: 9px 16px;
       border-radius: 999px;
       font-weight: 800;
     }
-
-    /* =========================
-       Buttons
-    ========================= */
 
     .btn {
       display: inline-flex;
@@ -177,6 +129,7 @@
       font-weight: 800;
       transition: .2s ease;
       cursor: pointer;
+      text-align: center;
     }
 
     .btn:hover {
@@ -209,16 +162,13 @@
       color: #07140a;
     }
 
-    /* =========================
-       Hero
-    ========================= */
-
     .hero {
       min-height: 680px;
       display: grid;
       align-items: center;
       position: relative;
       overflow: hidden;
+      isolation: isolate;
     }
 
     .hero::before {
@@ -226,12 +176,7 @@
       position: absolute;
       inset: 0;
       background:
-        linear-gradient(
-          90deg,
-          rgba(0,0,0,.94) 0%,
-          rgba(0,0,0,.72) 42%,
-          rgba(0,0,0,.25) 100%
-        ),
+        linear-gradient(90deg, rgba(0,0,0,.94) 0%, rgba(0,0,0,.72) 42%, rgba(0,0,0,.25) 100%),
         url("images/IMG_3543.jpeg") center/cover no-repeat;
       opacity: .95;
       z-index: -2;
@@ -241,12 +186,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background:
-        linear-gradient(
-          180deg,
-          rgba(0,0,0,.1),
-          rgba(0,0,0,.7)
-        );
+      background: linear-gradient(180deg, rgba(0,0,0,.1), rgba(0,0,0,.7));
       z-index: -1;
     }
 
@@ -290,10 +230,6 @@
       gap: 12px;
     }
 
-    /* =========================
-       Sections
-    ========================= */
-
     section {
       padding: 82px 0;
       scroll-margin-top: 80px;
@@ -322,10 +258,6 @@
       max-width: 720px;
     }
 
-    /* =========================
-       Quick Actions
-    ========================= */
-
     .quick {
       margin-top: -42px;
       position: relative;
@@ -334,11 +266,12 @@
 
     .quick-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 12px;
     }
 
     .quick-card {
+      display: block;
       background: rgba(29,29,29,.96);
       border: 1px solid var(--line);
       border-radius: 18px;
@@ -368,13 +301,9 @@
       font-size: 13px;
     }
 
-    /* =========================
-       Menu
-    ========================= */
-
     .menu-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 18px;
     }
 
@@ -423,22 +352,13 @@
       margin-top: 12px;
     }
 
-    /* =========================
-       Delivery
-    ========================= */
-
     #delivery {
-      background:
-        linear-gradient(
-          180deg,
-          rgba(215,173,98,.045),
-          transparent
-        );
+      background: linear-gradient(180deg, rgba(215,173,98,.045), transparent);
     }
 
     .delivery-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 18px;
     }
 
@@ -496,13 +416,9 @@
       font-weight: 800;
     }
 
-    /* =========================
-       Steps
-    ========================= */
-
     .steps {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 18px;
     }
 
@@ -534,13 +450,9 @@
       font-size: 14px;
     }
 
-    /* =========================
-       Features
-    ========================= */
-
     .feature-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 18px;
     }
 
@@ -566,10 +478,6 @@
       color: var(--muted);
       font-size: 14px;
     }
-
-    /* =========================
-       Store
-    ========================= */
 
     .store-box {
       display: grid;
@@ -622,10 +530,6 @@
       margin-top: 14px;
     }
 
-    /* =========================
-       FAQ
-    ========================= */
-
     .faq {
       display: grid;
       gap: 12px;
@@ -649,19 +553,10 @@
       font-size: 14px;
     }
 
-    /* =========================
-       CTA
-    ========================= */
-
     .final-cta {
       text-align: center;
       padding: 92px 20px;
-      background:
-        radial-gradient(
-          circle at center,
-          rgba(215,173,98,.13),
-          transparent 55%
-        );
+      background: radial-gradient(circle at center, rgba(215,173,98,.13), transparent 55%);
     }
 
     .final-cta h2 {
@@ -674,13 +569,9 @@
       margin-bottom: 28px;
     }
 
-    /* =========================
-       Footer
-    ========================= */
-
     footer {
       border-top: 1px solid var(--line);
-      padding: 34px 0 90px;
+      padding: 34px 0 100px;
       color: var(--muted);
       font-size: 13px;
     }
@@ -697,39 +588,17 @@
       font-weight: 800;
     }
 
-    /* =========================
-       Mobile Bottom CTA
-    ========================= */
-
     .mobile-cta {
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 2000;
       display: none;
-      padding: 10px;
-      background: rgba(10,10,10,.94);
-      backdrop-filter: blur(12px);
-      border-top: 1px solid var(--line);
     }
-
-    .mobile-cta a {
-      width: 100%;
-    }
-
-    /* =========================
-       Responsive
-    ========================= */
 
     @media (max-width: 900px) {
-
       .nav-links a:not(.nav-order) {
         display: none;
       }
 
       .quick-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
       .menu-grid,
@@ -755,13 +624,12 @@
     }
 
     @media (max-width: 600px) {
-
       body {
-        padding-bottom: 76px;
+        padding-bottom: 82px;
       }
 
       .container {
-        width: min(100% - 24px, 1120px);
+        width: calc(100% - 24px);
       }
 
       .hero {
@@ -818,6 +686,28 @@
 
       .mobile-cta {
         display: block;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 2000;
+        padding: 10px;
+        background: rgba(10,10,10,.96);
+        backdrop-filter: blur(12px);
+        border-top: 1px solid var(--line);
+      }
+
+      .mobile-cta-inner {
+        display: grid;
+        grid-template-columns: 1.6fr 1fr;
+        gap: 8px;
+      }
+
+      .mobile-cta-inner .btn {
+        width: 100%;
+        min-height: 48px;
+        padding: 0 10px;
+        font-size: 14px;
       }
 
       .nav {
@@ -830,7 +720,6 @@
     }
   </style>
 
-  <!-- Restaurant Structured Data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -848,31 +737,23 @@
       "addressRegion": "高雄市",
       "addressCountry": "TW"
     },
-    "servesCuisine": [
-      "麵食",
-      "水餃",
-      "關東煮"
-    ],
+    "servesCuisine": ["麵食", "水餃", "關東煮"],
     "priceRange": "$$",
-    "menu": "https://sharings.com.tw/StoreInformation.html?sid=f84d5f53-70be-4b8f-b9ab-1375556fb373"
+    "menu": "https://sharings.com.tw/StoreInformation.html?sid=f84d5f53-70be-4b8f-b9ab-1375556fb373",
+    "sameAs": [
+      "https://lin.ee/ZKitARId"
+    ]
   }
   </script>
 </head>
 
 <body>
 
-  <!-- =========================
-       Header
-  ========================= -->
-
   <header>
     <div class="container nav">
+      <a href="#top" class="logo">🍜 初萊食麵</a>
 
-      <a href="#top" class="logo">
-        🍜 初萊食麵
-      </a>
-
-      <nav class="nav-links">
+      <nav class="nav-links" aria-label="主要導覽">
         <a href="#menu">菜單</a>
         <a href="#delivery">外送</a>
         <a href="#store">店家資訊</a>
@@ -882,35 +763,20 @@
           target="_blank"
           rel="noopener"
           data-conversion="order"
-        >
-          🍜 立即點餐
-        </a>
+        >🍜 立即點餐</a>
       </nav>
-
     </div>
   </header>
 
-
   <main id="top">
 
-    <!-- =========================
-         Hero
-    ========================= -->
-
+    <!-- 首頁主視覺 -->
     <section class="hero">
-
       <div class="container">
-
         <div class="hero-content">
+          <div class="eyebrow">高雄三民區・遼寧二街</div>
 
-          <div class="eyebrow">
-            高雄三民區・遼寧二街
-          </div>
-
-          <h1>
-            用心做好<br>
-            <span>每一碗麵</span>
-          </h1>
+          <h1>用心做好<br><span>每一碗麵</span></h1>
 
           <p>
             初萊食麵，提供麵食、水餃、黑輪、菜頭湯等餐點。
@@ -918,41 +784,30 @@
           </p>
 
           <div class="hero-actions">
-
             <a
               href="https://sharings.com.tw/StoreInformation.html?sid=f84d5f53-70be-4b8f-b9ab-1375556fb373"
               class="btn btn-primary"
               target="_blank"
               rel="noopener"
               data-conversion="order"
-            >
-              🍜 官方線上點餐
-            </a>
+            >🍜 官方線上點餐</a>
+
+            <a href="#delivery" class="btn btn-outline">🛵 外送平台</a>
 
             <a
-              href="#delivery"
-              class="btn btn-outline"
-            >
-              🛵 外送平台
-            </a>
-
+              href="https://lin.ee/ZKitARId"
+              class="btn btn-green"
+              target="_blank"
+              rel="noopener noreferrer"
+            >💬 LINE 官方帳號</a>
           </div>
-
         </div>
-
       </div>
-
     </section>
 
-
-    <!-- =========================
-         Quick Actions
-    ========================= -->
-
+    <!-- 首頁快速入口 -->
     <div class="quick">
-
       <div class="container">
-
         <div class="quick-grid">
 
           <a
@@ -967,19 +822,13 @@
             <small>官方點餐系統</small>
           </a>
 
-          <a
-            class="quick-card"
-            href="#delivery"
-          >
+          <a class="quick-card" href="#delivery">
             <div class="quick-icon">🛵</div>
             <strong>外送平台</strong>
             <small>Uber Eats・foodpanda</small>
           </a>
 
-          <a
-            class="quick-card"
-            href="tel:0903392687"
-          >
+          <a class="quick-card" href="tel:0903392687">
             <div class="quick-icon">📞</div>
             <strong>電話訂餐</strong>
             <small>0903-392-687</small>
@@ -996,184 +845,97 @@
             <small>Google 地圖</small>
           </a>
 
+          <a
+            class="quick-card"
+            href="https://lin.ee/ZKitARId"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="加入初萊食麵 LINE 官方帳號"
+          >
+            <div class="quick-icon">💬</div>
+            <strong>LINE 官方帳號</strong>
+            <small>加入好友・聯絡店家</small>
+          </a>
+
         </div>
-
       </div>
-
     </div>
 
-
-    <!-- =========================
-         Menu
-    ========================= -->
-
+    <!-- 菜單介紹 -->
     <section id="menu">
-
       <div class="container">
-
         <div class="section-head">
           <div class="section-label">MENU</div>
-
           <h2>想吃什麼，直接點</h2>
-
-          <p>
-            常見餐點先讓你快速了解，完整菜單與即時可點品項請進入官方線上點餐。
-          </p>
+          <p>常見餐點先讓你快速了解，完整菜單與即時可點品項請進入官方線上點餐。</p>
         </div>
-
 
         <div class="menu-grid">
 
           <article class="menu-card">
-
             <div class="menu-image">
-              <img
-                src="images/IMG_3516.jpeg"
-                alt="初萊食麵麵食"
-                loading="lazy"
-              >
+              <img src="images/IMG_3516.jpeg" alt="初萊食麵麵食" loading="lazy">
             </div>
-
             <div class="menu-content">
-
               <h3>🍜 招牌麵食</h3>
-
-              <p>
-                麵食為店內主要餐點，適合平日午餐、晚餐快速享用。
-              </p>
-
-              <div class="price">
-                NT$55 起
-              </div>
-
+              <p>麵食為店內主要餐點，適合平日午餐、晚餐快速享用。</p>
+              <div class="price">NT$55 起</div>
             </div>
-
           </article>
 
-
           <article class="menu-card">
-
             <div class="menu-image">
-              <img
-                src="images/IMG_3515.jpeg"
-                alt="初萊食麵水餃"
-                loading="lazy"
-              >
+              <img src="images/IMG_3515.jpeg" alt="初萊食麵水餃" loading="lazy">
             </div>
-
             <div class="menu-content">
-
               <h3>🥟 水餃</h3>
-
-              <p>
-                想吃麵之外，也可以搭配水餃一起享用。
-              </p>
-
-              <div class="price">
-                NT$50 起
-              </div>
-
+              <p>想吃麵之外，也可以搭配水餃一起享用。</p>
+              <div class="price">NT$50 起</div>
             </div>
-
           </article>
 
-
           <article class="menu-card">
-
             <div class="menu-image">
-              <img
-                src="images/IMG_3517.jpeg"
-                alt="初萊食麵黑輪與菜頭湯"
-                loading="lazy"
-              >
+              <img src="images/IMG_3517.jpeg" alt="初萊食麵黑輪與菜頭湯" loading="lazy">
             </div>
-
             <div class="menu-content">
-
               <h3>🍢 黑輪・菜頭湯</h3>
-
-              <p>
-                黑輪、菜頭湯等小菜，適合單點或搭配主餐。
-              </p>
-
-              <div class="price">
-                NT$10 起
-              </div>
-
+              <p>黑輪、菜頭湯等小菜，適合單點或搭配主餐。</p>
+              <div class="price">NT$10 起</div>
             </div>
-
           </article>
 
         </div>
 
-
-        <div style="text-align:center;margin-top:30px;">
-
+        <div style="text-align:center;margin-top:30px">
           <a
             href="https://sharings.com.tw/StoreInformation.html?sid=f84d5f53-70be-4b8f-b9ab-1375556fb373"
             class="btn btn-primary"
             target="_blank"
             rel="noopener"
             data-conversion="order"
-          >
-            查看完整菜單・開始點餐 →
-          </a>
-
+          >查看完整菜單・開始點餐 →</a>
         </div>
-
       </div>
-
     </section>
 
-
-    <!-- =========================
-         Delivery
-    ========================= -->
-
+    <!-- 外送平台 -->
     <section id="delivery">
-
       <div class="container">
-
         <div class="section-head">
-
-          <div class="section-label">
-            DELIVERY
-          </div>
-
-          <h2>
-            不方便到店？也可以外送
-          </h2>
-
-          <p>
-            可透過你習慣的外送平台查看目前配送範圍、外送費、
-            優惠活動與即時可訂餐狀態。
-          </p>
-
+          <div class="section-label">DELIVERY</div>
+          <h2>不方便到店？也可以外送</h2>
+          <p>可透過你習慣的外送平台查看目前配送範圍、外送費、優惠活動與即時可訂餐狀態。</p>
         </div>
-
 
         <div class="delivery-grid">
 
-          <!-- Uber Eats -->
-
           <article class="delivery-card">
-
             <div>
-
-              <div class="delivery-icon">
-                🟢
-              </div>
-
-              <h3>
-                Uber Eats
-              </h3>
-
-              <p>
-                透過 Uber Eats 查看目前可配送的餐點與外送資訊。
-              </p>
-
+              <div class="delivery-icon">🟢</div>
+              <h3>Uber Eats</h3>
+              <p>透過 Uber Eats 查看目前可配送的餐點與外送資訊。</p>
             </div>
-
             <a
               href="https://www.ubereats.com/tw/store/%E5%88%9D%E8%90%8A%E9%A3%9F%E9%BA%B5%7C%E5%A4%A7%E8%85%B8%E9%A6%99%E8%85%B8%E3%80%81%E9%97%9C%E6%9D%B1%E7%85%AE/9-pIirZHWkWxCprbnjgzBQ?diningMode=PICKUP&ps=1&sc=SEARCH_SUGGESTION"
               class="btn btn-outline"
@@ -1181,33 +943,15 @@
               rel="noopener"
               data-conversion="delivery"
               data-platform="Uber Eats"
-            >
-              前往 Uber Eats →
-            </a>
-
+            >前往 Uber Eats →</a>
           </article>
 
-
-          <!-- foodpanda -->
-
           <article class="delivery-card">
-
             <div>
-
-              <div class="delivery-icon">
-                🩷
-              </div>
-
-              <h3>
-                foodpanda
-              </h3>
-
-              <p>
-                透過 foodpanda 查看目前配送範圍與可訂餐點。
-              </p>
-
+              <div class="delivery-icon">🩷</div>
+              <h3>foodpanda</h3>
+              <p>透過 foodpanda 查看目前配送範圍與可訂餐點。</p>
             </div>
-
             <a
               href="https://foodpanda.com.tw/restaurant/o32y/chu-lai-shi-mian"
               class="btn btn-outline"
@@ -1215,33 +959,15 @@
               rel="noopener"
               data-conversion="delivery"
               data-platform="foodpanda"
-            >
-              前往 foodpanda →
-            </a>
-
+            >前往 foodpanda →</a>
           </article>
 
-
-          <!-- foodomo -->
-
           <article class="delivery-card">
-
             <div>
-
-              <div class="delivery-icon">
-                🟠
-              </div>
-
-              <h3>
-                foodomo
-              </h3>
-
-              <p>
-                也可以透過 foodomo 查看初萊食麵的外送服務。
-              </p>
-
+              <div class="delivery-icon">🟠</div>
+              <h3>foodomo</h3>
+              <p>透過 foodomo 查看初萊食麵的外送服務。</p>
             </div>
-
             <a
               href="https://www.foodomo.com/store?stid=163737&number=0903392687"
               class="btn btn-outline"
@@ -1249,454 +975,210 @@
               rel="noopener"
               data-conversion="delivery"
               data-platform="foodomo"
-            >
-              前往 foodomo →
-            </a>
-
+            >前往 foodomo →</a>
           </article>
 
         </div>
 
-
         <div class="delivery-note">
-          ※ 外送平台的外送費、優惠、配送範圍、營業狀態及實際可訂餐點，
-          以各平台當下顯示為準。
+          ※ 外送平台的外送費、優惠、配送範圍、營業狀態及實際可訂餐點，以各平台當下顯示為準。
         </div>
-
 
         <a
           href="https://g.page/r/CQl3fUEN40_CEBM/review"
           class="review-link"
           target="_blank"
           rel="noopener"
-        >
-          ⭐ 吃過初萊食麵？歡迎留下 Google 評論 →
-        </a>
-
+        >⭐ 吃過初萊食麵？歡迎留下 Google 評論 →</a>
       </div>
-
     </section>
 
-
-    <!-- =========================
-         How to Order
-    ========================= -->
-
+    <!-- 線上點餐步驟 -->
     <section>
-
       <div class="container">
-
         <div class="section-head">
-
-          <div class="section-label">
-            HOW TO ORDER
-          </div>
-
-          <h2>
-            線上點餐很簡單
-          </h2>
-
-          <p>
-            不需要另外找菜單，直接進入官方線上點餐頁面即可。
-          </p>
-
+          <div class="section-label">HOW TO ORDER</div>
+          <h2>線上點餐很簡單</h2>
+          <p>直接進入官方線上點餐頁面，選擇餐點並確認訂單。</p>
         </div>
-
 
         <div class="steps">
-
           <div class="step">
-
-            <div class="step-number">
-              1
-            </div>
-
-            <h3>
-              選擇餐點
-            </h3>
-
-            <p>
-              進入官方線上點餐系統，選擇想吃的麵食、水餃、黑輪等餐點。
-            </p>
-
+            <div class="step-number">1</div>
+            <h3>選擇餐點</h3>
+            <p>進入官方線上點餐系統，選擇想吃的麵食、水餃、黑輪等餐點。</p>
           </div>
 
-
           <div class="step">
-
-            <div class="step-number">
-              2
-            </div>
-
-            <h3>
-              確認訂單
-            </h3>
-
-            <p>
-              選擇數量與餐點內容後確認訂單。
-            </p>
-
+            <div class="step-number">2</div>
+            <h3>確認訂單</h3>
+            <p>選擇數量與餐點內容後確認訂單。</p>
           </div>
 
-
           <div class="step">
-
-            <div class="step-number">
-              3
-            </div>
-
-            <h3>
-              到店取餐
-            </h3>
-
-            <p>
-              依照訂單資訊到店取餐，減少現場等待時間。
-            </p>
-
+            <div class="step-number">3</div>
+            <h3>到店取餐</h3>
+            <p>依照訂單資訊到店取餐，實際取餐時間以系統顯示或店家確認為準。</p>
           </div>
-
         </div>
-
       </div>
-
     </section>
 
-
-    <!-- =========================
-         Features
-    ========================= -->
-
+    <!-- 店家特色 -->
     <section>
-
       <div class="container">
-
         <div class="section-head">
-
-          <div class="section-label">
-            WHY CHOOSE US
-          </div>
-
-          <h2>
-            想吃麵，就來初萊
-          </h2>
-
+          <div class="section-label">WHY CHOOSE US</div>
+          <h2>想吃麵，就來初萊</h2>
         </div>
-
 
         <div class="feature-grid">
-
           <div class="feature">
-
-            <div class="feature-icon">
-              🍜
-            </div>
-
+            <div class="feature-icon">🍜</div>
             <div>
-
-              <h3>
-                麵食主餐
-              </h3>
-
-              <p>
-                以麵食為主，搭配各式小菜與湯品。
-              </p>
-
+              <h3>麵食主餐</h3>
+              <p>以麵食為主，搭配各式小菜與湯品。</p>
             </div>
-
           </div>
 
-
           <div class="feature">
-
-            <div class="feature-icon">
-              🍢
-            </div>
-
+            <div class="feature-icon">🍢</div>
             <div>
-
-              <h3>
-                黑輪小菜
-              </h3>
-
-              <p>
-                黑輪、菜頭湯等小菜可以自由搭配。
-              </p>
-
+              <h3>黑輪小菜</h3>
+              <p>黑輪、菜頭湯等小菜可以自由搭配。</p>
             </div>
-
           </div>
 
-
           <div class="feature">
-
-            <div class="feature-icon">
-              📱
-            </div>
-
+            <div class="feature-icon">📱</div>
             <div>
-
-              <h3>
-                線上點餐
-              </h3>
-
-              <p>
-                不必到店排隊，可以先在線上完成點餐。
-              </p>
-
+              <h3>線上點餐</h3>
+              <p>可以先在線上選擇餐點，再依訂單資訊取餐。</p>
             </div>
-
           </div>
 
-
           <div class="feature">
-
-            <div class="feature-icon">
-              🛵
-            </div>
-
+            <div class="feature-icon">🛵</div>
             <div>
-
-              <h3>
-                多種外送方式
-              </h3>
-
-              <p>
-                提供 Uber Eats、foodpanda、foodomo 外送選擇。
-              </p>
-
+              <h3>多種外送方式</h3>
+              <p>提供 Uber Eats、foodpanda、foodomo 平台入口。</p>
             </div>
-
           </div>
 
+          <div class="feature">
+            <div class="feature-icon">💬</div>
+            <div>
+              <h3>LINE 官方帳號</h3>
+              <p>加入初萊食麵 LINE 官方帳號，方便找到店家聯絡入口。</p>
+              <p style="margin-top:10px">
+                <a href="https://lin.ee/ZKitARId" target="_blank" rel="noopener noreferrer" style="color:var(--gold-light);font-weight:800">加入 LINE 好友 →</a>
+              </p>
+            </div>
+          </div>
         </div>
-
       </div>
-
     </section>
 
-
-    <!-- =========================
-         Store
-    ========================= -->
-
+    <!-- 店家資訊 -->
     <section id="store">
-
       <div class="container">
-
         <div class="section-head">
-
-          <div class="section-label">
-            STORE
-          </div>
-
-          <h2>
-            找到初萊食麵
-          </h2>
-
+          <div class="section-label">STORE</div>
+          <h2>找到初萊食麵</h2>
         </div>
 
-
         <div class="store-box">
-
           <div class="store-photo">
-
-            <img
-              src="images/IMG_3543.jpeg"
-              alt="初萊食麵店家"
-              loading="lazy"
-            >
-
+            <img src="images/IMG_3543.jpeg" alt="初萊食麵店家" loading="lazy">
           </div>
 
-
           <div class="store-info">
-
-            <h2>
-              初萊食麵
-            </h2>
-
+            <h2>初萊食麵</h2>
 
             <div class="info-row">
-
-              <div class="info-icon">
-                📍
-              </div>
-
-              <div>
-                高雄市三民區遼寧二街168號
-              </div>
-
+              <div class="info-icon">📍</div>
+              <div>高雄市三民區遼寧二街168號</div>
             </div>
-
 
             <div class="info-row">
-
-              <div class="info-icon">
-                📞
-              </div>
-
-              <div>
-                <a href="tel:0903392687">
-                  0903-392-687
-                </a>
-              </div>
-
+              <div class="info-icon">📞</div>
+              <div><a href="tel:0903392687">0903-392-687</a></div>
             </div>
-
 
             <div class="info-row">
-
-              <div class="info-icon">
-                🕐
-              </div>
-
-              <div>
-                平日 11:30–20:30<br>
-                週末 11:30–18:30
-              </div>
-
+              <div class="info-icon">🕐</div>
+              <div>平日 11:30–20:30<br>週末 11:30–18:30</div>
             </div>
-
 
             <div class="store-actions">
-
               <a
                 href="https://maps.app.goo.gl/u7re7YuqQW4EPbeF6?g_st=ic"
                 class="btn btn-outline"
                 target="_blank"
                 rel="noopener"
-              >
-                📍 Google 地圖
-              </a>
+              >📍 Google 地圖</a>
+
+              <a href="tel:0903392687" class="btn btn-outline">📞 打電話</a>
 
               <a
-                href="tel:0903392687"
-                class="btn btn-outline"
-              >
-                📞 打電話
-              </a>
-
+                href="https://lin.ee/ZKitARId"
+                class="btn btn-green"
+                target="_blank"
+                rel="noopener noreferrer"
+              >💬 加入 LINE 好友</a>
             </div>
-
           </div>
-
         </div>
-
       </div>
-
     </section>
 
-
-    <!-- =========================
-         FAQ
-    ========================= -->
-
+    <!-- 常見問題 -->
     <section>
-
       <div class="container">
-
         <div class="section-head">
-
-          <div class="section-label">
-            FAQ
-          </div>
-
-          <h2>
-            常見問題
-          </h2>
-
+          <div class="section-label">FAQ</div>
+          <h2>常見問題</h2>
         </div>
-
 
         <div class="faq">
-
           <details>
-
-            <summary>
-              初萊食麵可以線上點餐嗎？
-            </summary>
-
-            <p>
-              可以。點擊網站上的「官方線上點餐」即可進入 SHARINGS 線上點餐系統。
-            </p>
-
+            <summary>初萊食麵可以線上點餐嗎？</summary>
+            <p>可以。點擊網站上的「官方線上點餐」即可進入 SHARINGS 線上點餐系統。</p>
           </details>
 
-
           <details>
-
-            <summary>
-              有外送嗎？
-            </summary>
-
-            <p>
-              有。可以透過 Uber Eats、foodpanda、foodomo 查看外送服務。
-              實際配送範圍與費用以各平台當下顯示為準。
-            </p>
-
+            <summary>有外送嗎？</summary>
+            <p>可以透過 Uber Eats、foodpanda、foodomo 查看外送服務。實際配送範圍與費用以各平台當下顯示為準。</p>
           </details>
 
-
           <details>
-
-            <summary>
-              可以電話訂餐嗎？
-            </summary>
-
-            <p>
-              可以撥打 0903-392-687 詢問與訂餐。
-            </p>
-
+            <summary>可以電話訂餐嗎？</summary>
+            <p>可以撥打 <a href="tel:0903392687">0903-392-687</a> 詢問與訂餐。</p>
           </details>
 
-
           <details>
-
-            <summary>
-              店家在哪裡？
-            </summary>
-
-            <p>
-              初萊食麵位於高雄市三民區遼寧二街168號。
-            </p>
-
+            <summary>如何加入 LINE 官方帳號？</summary>
+            <p>點擊首頁的 LINE 官方帳號按鈕，即可前往初萊食麵 LINE 加好友入口。</p>
           </details>
 
-
           <details>
-
-            <summary>
-              完整菜單在哪裡？
-            </summary>
-
-            <p>
-              完整且即時的可點餐內容，請直接進入官方線上點餐系統查看。
-            </p>
-
+            <summary>店家在哪裡？</summary>
+            <p>初萊食麵位於高雄市三民區遼寧二街168號，可點擊 Google 地圖查看位置。</p>
           </details>
 
+          <details>
+            <summary>完整菜單在哪裡？</summary>
+            <p>完整且即時的可點餐內容，請進入官方線上點餐系統查看。</p>
+          </details>
         </div>
-
       </div>
-
     </section>
 
-
-    <!-- =========================
-         Final CTA
-    ========================= -->
-
+    <!-- 最後點餐入口 -->
     <section class="final-cta">
-
       <div class="container">
-
-        <h2>
-          今天吃什麼？
-        </h2>
-
-        <p>
-          直接線上點餐，選好餐點再到店取餐。
-        </p>
+        <h2>今天吃什麼？</h2>
+        <p>直接線上點餐，選好餐點再依訂單資訊取餐。</p>
 
         <a
           href="https://sharings.com.tw/StoreInformation.html?sid=f84d5f53-70be-4b8f-b9ab-1375556fb373"
@@ -1704,116 +1186,81 @@
           target="_blank"
           rel="noopener"
           data-conversion="order"
-        >
-          🍜 立即開始點餐 →
-        </a>
+        >🍜 立即開始點餐 →</a>
 
+        <div style="margin-top:16px">
+          <a
+            href="https://lin.ee/ZKitARId"
+            class="btn btn-green"
+            target="_blank"
+            rel="noopener noreferrer"
+          >💬 加入 LINE 官方帳號</a>
+        </div>
       </div>
-
     </section>
 
   </main>
 
-
-  <!-- =========================
-       Footer
-  ========================= -->
-
+  <!-- 頁尾 -->
   <footer>
-
     <div class="container">
-
       <div class="footer-inner">
-
         <div>
-          <div class="footer-brand">
-            🍜 初萊食麵
-          </div>
-
-          <div>
-            高雄市三民區遼寧二街168號
-          </div>
+          <div class="footer-brand">🍜 初萊食麵</div>
+          <div>高雄市三民區遼寧二街168號</div>
+          <div><a href="tel:0903392687">電話：0903-392-687</a></div>
         </div>
-
-
-        <div>
-          © 2026 初萊食麵
-        </div>
-
+        <div>© 2026 初萊食麵</div>
       </div>
-
     </div>
-
   </footer>
 
-
-  <!-- =========================
-       Mobile CTA
-  ========================= -->
-
+  <!-- 手機版底部固定按鈕 -->
   <div class="mobile-cta">
+    <div class="mobile-cta-inner">
+      <a
+        href="https://sharings.com.tw/StoreInformation.html?sid=f84d5f53-70be-4b8f-b9ab-1375556fb373"
+        class="btn btn-primary"
+        target="_blank"
+        rel="noopener"
+        data-conversion="order"
+      >🍜 立即點餐</a>
 
-    <a
-      href="https://sharings.com.tw/StoreInformation.html?sid=f84d5f53-70be-4b8f-b9ab-1375556fb373"
-      class="btn btn-primary"
-      target="_blank"
-      rel="noopener"
-      data-conversion="order"
-    >
-      🍜 官方線上點餐
-    </a>
-
+      <a
+        href="https://lin.ee/ZKitARId"
+        class="btn btn-green"
+        target="_blank"
+        rel="noopener noreferrer"
+      >💬 LINE</a>
+    </div>
   </div>
 
-
-  <!-- =========================
-       Google Ads / GA4 Event Tracking
-  ========================= -->
-
+  <!-- 點餐與外送點擊事件：若網站已載入 gtag，才會送出事件 -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-
-      document
-        .querySelectorAll('[data-conversion="order"]')
-        .forEach(function (link) {
-
-          link.addEventListener("click", function () {
-
-            if (typeof gtag === "function") {
-
-              gtag("event", "click_order", {
-                event_category: "ordering",
-                event_label: "SHARINGS 官方線上點餐",
-                value: 1
-              });
-
-            }
-
-          });
-
+      document.querySelectorAll('[data-conversion="order"]').forEach(function (link) {
+        link.addEventListener("click", function () {
+          if (typeof gtag === "function") {
+            gtag("event", "click_order", {
+              event_category: "ordering",
+              event_label: "SHARINGS 官方線上點餐",
+              value: 1
+            });
+          }
         });
+      });
 
-
-      document
-        .querySelectorAll('[data-conversion="delivery"]')
-        .forEach(function (link) {
-
-          link.addEventListener("click", function () {
-
-            if (typeof gtag === "function") {
-
-              gtag("event", "click_delivery", {
-                event_category: "delivery",
-                event_label: link.dataset.platform || "外送平台",
-                value: 1
-              });
-
-            }
-
-          });
-
+      document.querySelectorAll('[data-conversion="delivery"]').forEach(function (link) {
+        link.addEventListener("click", function () {
+          if (typeof gtag === "function") {
+            gtag("event", "click_delivery", {
+              event_category: "delivery",
+              event_label: link.dataset.platform || "外送平台",
+              value: 1
+            });
+          }
         });
-
+      });
     });
   </script>
 
